@@ -1,22 +1,13 @@
 const stage=document.querySelector('.editorial');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 const action=document.querySelector('#review-action');
-const captions=['Start with your own argument.','Examine the assumption behind the claim.','Bring evidence into the review.','Revise the claim to reflect what you know.','You approve the change.'];
 const buttons=['🔎 Review argument','📎 Add evidence','✍️ Propose revision','✅ Approve revision','📝 Start again'];
-const hints=['Try the review. You stay in control.','A stronger claim starts with what you know.','Now test the argument against your evidence.','Read the change before you accept it.','Your decision. Your words.'];
+const statuses=['Ready to review','Assumption found','Evidence included','Revision ready','Approved'];
 let phase=0,timer;
-function paint(n){phase=n;stage.dataset.phase=n;action.textContent=buttons[n];document.querySelector('#action-hint').textContent=hints[n];document.querySelector('#review-status').textContent=['Ready to review','Assumption found','Evidence included','Revision ready','Approved'][n];}
-function stop(){clearTimeout(timer);}
+function paint(n){phase=n;stage.dataset.phase=n;action.textContent=buttons[n];document.querySelector('#review-status').textContent=statuses[n];}
 function advance(){paint((phase+1)%5);}
+function stop(){clearTimeout(timer);}
 action.addEventListener('click',()=>{stop();advance();});
 function tour(){if(reduced.matches)return;timer=setTimeout(()=>{advance();if(phase<4)tour();},3000);}
-const notes={Onboarding:['📝','Should we simplify onboarding?','A shorter setup will improve activation and reduce churn.','We see customers leave during setup. Before committing the quarter, we need to understand what stops them.','18 of 40 accounts stopped during setup. We have not established why.','Drop-off does not establish that setup length is the cause.','Could low intent or unclear value explain it?','Test whether a shorter setup improves activation. Measure retention separately before committing the quarter.'],Launch:['🚀','Should we launch this month?','Launching now will increase customer adoption.','The release is ready, but readiness and customer demand are different questions.','Six customers asked to join a pilot. Broad demand has not been measured.','Pilot interest does not establish broad adoption.','Could a smaller pilot reveal issues before a full launch?','Run a six-customer pilot this month. Set adoption and reliability criteria before a broader launch.'],Pricing:['🏷️','Should we raise the price?','A higher price will increase revenue.','Customers value the product. We need to understand how demand changes with price.','Eight customers renewed at the current price. Their willingness to pay more is unknown.','Renewals at this price do not establish demand at a higher price.','Could churn outweigh the higher revenue per customer?','Test the proposed price with a defined cohort. Track conversion, retention, and total revenue.'],Research:['📚','What should we investigate next?','More interviews will tell us which feature to build.','We have several competing customer problems and limited research time.','Five interviews surfaced three different problems. The sample is small.','More interviews alone do not guarantee a clear priority.','Are we interviewing the right customer segment?','Choose one segment and test the three problems with consistent questions before prioritizing a feature.']};
-function openNote(name){stop();const d=notes[name];document.querySelector("#window-tab").textContent=name;document.querySelector('#page-emoji').textContent=d[0];document.querySelector('#breadcrumb').textContent=d[0]+' '+name;['memo-title','draft-text','draft-context','evidence-text','review-text','objection-text','revision-text'].forEach((id,i)=>document.getElementById(id).textContent=d[i+1]);document.querySelectorAll('[data-note]').forEach(b=>b.classList.toggle('selected',b.dataset.note===name));paint(0);}
-document.querySelectorAll('[data-note]').forEach(b=>b.addEventListener('click',()=>openNote(b.dataset.note)));
-document.querySelector('#note-search').addEventListener('input',e=>{document.querySelectorAll('[data-note]').forEach(b=>b.hidden=!b.dataset.note.toLowerCase().includes(e.target.value.toLowerCase()));});
-document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{stop();document.querySelectorAll('[data-view]').forEach(item=>item.classList.toggle('active',item===b));document.querySelector('#note-search').focus();}));
-reduced.addEventListener('change',()=>{stop();paint(0);});paint(0);tour();
-
-document.querySelector('#new-chat').addEventListener('click',()=>{stop();document.querySelector('#question-form').hidden=false;document.querySelector('#review-question').focus();});
-document.querySelector('#question-form').addEventListener('submit',e=>{e.preventDefault();stop();paint(1);document.querySelector('#question-form').hidden=true;});
-document.querySelector('#library').addEventListener('click',()=>{document.querySelector('#note-search').value='';document.querySelectorAll('[data-note]').forEach(b=>b.hidden=false);document.querySelector('#question-form').hidden=true;openNote('Research');});
+reduced.addEventListener('change',()=>{stop();paint(0);});
+paint(0);tour();
