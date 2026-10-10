@@ -16,3 +16,7 @@ document.querySelectorAll('[data-note]').forEach(b=>b.addEventListener('click',(
 document.querySelector('#note-search').addEventListener('input',e=>{document.querySelectorAll('[data-note]').forEach(b=>b.hidden=!b.dataset.note.toLowerCase().includes(e.target.value.toLowerCase()));});
 document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{stop();document.querySelectorAll('[data-view]').forEach(item=>item.classList.toggle('active',item===b));document.querySelector('#note-search').focus();}));
 reduced.addEventListener('change',()=>{stop();paint(0);});paint(0);tour();
+
+document.querySelector('#new-chat').addEventListener('click',()=>{stop();document.querySelector('#question-form').hidden=false;document.querySelector('#review-question').focus();});
+document.querySelector('#question-form').addEventListener('submit',e=>{e.preventDefault();stop();paint(1);document.querySelector('#question-form').hidden=true;});
+document.querySelector('#library').addEventListener('click',()=>{document.querySelector('#note-search').value='';document.querySelectorAll('[data-note]').forEach(b=>b.hidden=false);document.querySelector('#question-form').hidden=true;openNote('Research');});
