@@ -1,4 +1,13 @@
-const weight=document.querySelector('#weight');
-function update(){const learning=Number(weight.value),speed=100-learning;const a=Math.round((50*learning+90*speed)/100),b=Math.round((90*learning+40*speed)/100);document.querySelector('#weight-label').textContent=learning+'% learning · '+speed+'% speed';document.querySelector('#score-a').textContent=a+' / 100';document.querySelector('#score-b').textContent=b+' / 100';document.querySelector('#bar-a').style.width=a+'%';document.querySelector('#bar-b').style.width=b+'%';document.querySelector('#recommendation').textContent=a===b?'The experiments tie at these weights.':a>b?'This model favors testing a shorter setup.':'This model favors testing a guided first success.';}
-weight.addEventListener('input',update);update();
-document.querySelector('#play').addEventListener('click',()=>{const scene=document.querySelector('.model-scene');scene.classList.remove('replaying');void scene.offsetWidth;scene.classList.add('replaying');scene.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});});
+const stage = document.querySelector('.editorial');
+const caption = document.querySelector('#scene-caption');
+const pause = document.querySelector('#pause');
+const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+const scenes = ['Start with your own argument.', 'Examine the assumption behind the claim.', 'Bring evidence into the review.', 'Revise the claim to reflect what you know.', 'You approve the change.'];
+let elapsed = 0, previous = performance.now(), stopped = reduced.matches;
+function paint(){ const phase = Math.min(4, Math.floor((elapsed % 16000)/3200)); stage.dataset.phase = reduced.matches ? '4' : String(phase); caption.textContent = scenes[reduced.matches ? 4 : phase]; }
+function tick(now){ if(!stopped) elapsed += now-previous; previous=now; paint(); requestAnimationFrame(tick); }
+pause.textContent=stopped?'Play':'Pause';
+pause.addEventListener('click',()=>{ stopped=!stopped; pause.textContent=stopped?'Play':'Pause'; stage.classList.toggle('paused',stopped); });
+document.querySelector('#replay').addEventListener('click',()=>{elapsed=0; stopped=false; pause.textContent='Pause'; stage.classList.remove('paused'); paint();});
+reduced.addEventListener('change',()=>{stopped=reduced.matches; pause.textContent=stopped?'Play':'Pause'; paint();});
+paint(); requestAnimationFrame(tick);
