@@ -17,3 +17,16 @@ action.addEventListener('click',()=>{stop();paint((phase+1)%phases.length);});
 function tour(){if(reduced.matches)return;timer=setTimeout(()=>{paint(phase+1);if(phase<5)tour();},3600);}
 reduced.addEventListener('change',()=>{stop();paint(0);});
 paint(0);tour();
+
+const adminPanels={
+usage:'<div class="admin-row"><span>Review journeys this month</span><span>128 / 200</span></div><div class="usage-meter" aria-label="64 percent of sample allowance used"><i></i></div><p class="admin-caption">72 journeys remain in the sample workspace.</p><div class="admin-row"><span>Overage policy</span><span>Stop at allowance</span></div><div class="admin-row"><span>Billing access</span><span>Paid period active</span></div>',
+members:'<div class="admin-row"><span>Alex Morgan</span><span>Workspace admin</span></div><div class="admin-row"><span>Sam Rivera</span><span>Writer</span></div><div class="admin-row"><span>Jordan Lee</span><span>Writer</span></div><p class="admin-caption">Every draft retains its author and approval history. Roles shown here are a planned feature.</p>',
+deployment:'<div class="admin-row"><span>Hosting</span><span>Managed or self-hosted</span></div><div class="admin-row"><span>AI provider</span><span>Replaceable adapter</span></div><div class="admin-row"><span>Draft access</span><span>Granted Notion pages</span></div><p class="admin-caption">Cloud and model choices illustrate the architecture direction. Supported combinations will be listed after validation.</p>'
+};
+const adminContent=document.getElementById('admin-content');
+function showAdmin(name){adminContent.innerHTML=adminPanels[name];document.querySelectorAll('[data-admin]').forEach(button=>{const selected=button.dataset.admin===name;button.setAttribute('aria-selected',selected);button.tabIndex=selected?0:-1;});}
+document.querySelectorAll('[data-admin]').forEach(button=>{button.addEventListener('click',()=>showAdmin(button.dataset.admin));button.addEventListener('keydown',event=>{if(!['ArrowRight','ArrowLeft','Home','End'].includes(event.key))return;event.preventDefault();const buttons=[...document.querySelectorAll('[data-admin]')];let index=buttons.indexOf(button);index=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;showAdmin(buttons[index].dataset.admin);buttons[index].focus();});});
+showAdmin('usage');
+const interestDialog=document.getElementById('interest-dialog');
+document.querySelectorAll('[data-onboarding],[data-sales]').forEach(button=>button.addEventListener('click',()=>{document.getElementById('interest-title').textContent=button.hasAttribute('data-sales')?'Let’s shape your team’s writing workflow.':'The hosted product is taking shape.';interestDialog.showModal();}));
+interestDialog.addEventListener('click',event=>{if(event.target===interestDialog){const bounds=interestDialog.getBoundingClientRect();if(event.clientX<bounds.left||event.clientX>bounds.right||event.clientY<bounds.top||event.clientY>bounds.bottom)interestDialog.close();}});
