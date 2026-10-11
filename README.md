@@ -1,4 +1,4 @@
-# 🪔 diyalamp — website
+# 🪔 diyalamp: website
 
 **Defensible writing with AI in Notion.**
 
@@ -26,9 +26,15 @@ Changes pushed to main are deployed to GitHub Pages by the workflow in .github/w
 
 ## Product direction
 
-The application is in development. It will read selected Notion drafts, help inspect claims, evidence, assumptions, and objections, and propose individually approved revisions. Reviews support judgment; they do not certify truth.
+A hosted, Notion-first writing workflow for product managers and enterprises. Customers would connect Notion, request the five phases from the writing workspace, supply evidence, and approve results. The website presents this direction, not a live subscription service.
 
-Codex is the only AI reviewer. Reviews reuse the Codex CLI sign-in and follow that account’s access and usage limits. Notion tokens are entered privately and kept in memory, outside documents and the repository.
+The page includes a decision-document example, sourced methods, a short attributed Paul Graham quote, an interactive enterprise control preview, and proposed Free, Personal, and Enterprise plans. Prices and allowances are unvalidated proposals. Setup and sales buttons open an explanatory dialog with a public GitHub inquiry link; they do not connect accounts, collect cards, submit forms, or start reviews.
+
+The existing Java release supports local Codex reviews and Notion import/publication. Hosted OAuth onboarding, company-funded AI calls, billing and usage gates, and enterprise administration are planned. Cloud and model portability is an architecture direction; broader support will be advertised only after validation. The application, website, billing logic, and deployment templates are intended to stay open source, while operating credentials and customer data stay private.
+
+## Verification
+
+Check desktop, tablet, and phone layouts; the five-phase review action; enterprise preview tabs (including keyboard navigation); dialog opening and closing; reduced-motion behavior; and new-tab link targets. This static site has no customer data or service credentials.
 
 ## Credits
 
