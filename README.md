@@ -28,7 +28,7 @@ Changes pushed to main are deployed to GitHub Pages by the workflow in .github/w
 
 The application is in development. It will read selected Notion drafts, help inspect claims, evidence, assumptions, and objections, and propose individually approved revisions. Reviews support judgment; they do not certify truth.
 
-Hosted AI provider API billing is separate from chat subscriptions. Provider keys belong in local credential storage, outside Notion documents and the repository.
+Codex is the only AI reviewer. Reviews reuse the Codex CLI sign-in and follow that account’s access and usage limits. Notion tokens are entered privately and kept in memory, outside documents and the repository.
 
 ## Credits
 
