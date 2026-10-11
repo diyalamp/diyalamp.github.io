@@ -2,5 +2,5 @@
 
 .signin-card{max-width:460px;margin:70px auto}.signin-card h1{font-size:40px;letter-spacing:-1.5px}.signin-providers{display:grid;gap:12px;margin:28px 0}.signin-providers .button:disabled{cursor:not-allowed;color:#85837d;opacity:.75}@media(max-width:650px){.signin-card{margin:40px auto}.signin-card h1{font-size:34px}}
 
-/* Shared typography: semibold at one size, with the hero headline as the exception. */
-body{font-weight:600}body :where(a,button,input,textarea,select,p,span,small,strong,b,em,i,li,label,summary,blockquote,figcaption,h2,h3,h4,h5,h6){font-weight:600;font-size:14px}.price span{font-weight:600}.close{font-size:14px}.signin-card h1{font-size:14px;letter-spacing:normal}
+/* Regular text and bold titles, with natural character spacing throughout. */
+body{font-weight:400;letter-spacing:normal}body :where(a,button,input,textarea,select,p,span,small,em,i,li,label,summary,blockquote,figcaption){font-weight:400;font-size:14px;letter-spacing:normal}h1,h2,h3,h4,h5,h6,strong,b,.brand{font-weight:700;letter-spacing:normal}h1{font-size:52px;line-height:1.18}.price,.price span{font-weight:400}.close{font-size:14px}.signin-card h1{font-size:14px;letter-spacing:normal}@media(max-width:650px){h1{font-size:38px;letter-spacing:normal}}
