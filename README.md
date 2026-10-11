@@ -30,7 +30,7 @@ A hosted, Notion-first writing workflow for product managers and enterprises. Cu
 
 The page includes a decision-document example, sourced methods, a short attributed Paul Graham quote, an interactive enterprise control preview, and proposed Free, Personal, and Enterprise plans. Prices and allowances are unvalidated proposals. Setup and sales buttons open an explanatory dialog with a public GitHub inquiry link; they do not connect accounts, collect cards, submit forms, or start reviews.
 
-The existing Java release supports local Codex reviews and Notion import/publication. Hosted OAuth onboarding, company-funded AI calls, billing and usage gates, and enterprise administration are planned. Cloud and model portability is an architecture direction; broader support will be advertised only after validation. The application, website, billing logic, and deployment templates are intended to stay open source, while operating credentials and customer data stay private.
+The existing Java release supports local Codex reviews and Notion import/publication. Hosted OAuth onboarding, company-funded AI calls, billing and usage gates, and enterprise administration are planned. Cloud and model portability is an architecture direction; broader support will be advertised only after validation. The writing engine, review prompts, model adapters, and Notion connector form the open core. Hosted accounts, billing, usage controls, administration, and production operations belong to the private managed service. Operating credentials and customer data stay private.
 
 ## Verification
 
