@@ -29,3 +29,5 @@
 @media(max-width:800px){.document-grid,.enterprise-grid,.open-source{grid-template-columns:1fr;gap:22px}.pricing-grid{grid-template-columns:1fr}.price-card{padding:24px}.hero h1{font-size:38px}.hero-principles{gap:14px}.hero-copy{padding-top:8px}}
 @media(max-width:650px){.product-section::before{left:22px;right:22px}.product-section{padding-top:32px;padding-bottom:32px}.hero h1{font-size:34px;letter-spacing:-1px}.hero-principles{display:grid;gap:10px}.admin-body,.decision-document{padding:20px}.nav{height:64px}.hero{padding-bottom:32px}.admin-row{gap:10px}.admin-tabs{gap:16px}footer{padding-bottom:12px}}
 @media(prefers-reduced-motion:no-preference){#admin-content{animation:appear .25s ease}.usage-meter i{animation:meter-in .8s ease}@keyframes meter-in{from{width:0}to{width:64%}}}
+
+.hero-quote{max-width:690px;margin:26px 0 24px;padding:18px 22px;background:#fafaf7;border-left:3px solid #d8d5c9;border-radius:0 5px 5px 0}.hero-quote blockquote{border:0;padding:0;margin:0 0 10px;color:#373733}.hero-quote figcaption{color:#777;font-weight:500;line-height:1.7}.hero-quote a{text-decoration:underline;text-underline-offset:3px}
