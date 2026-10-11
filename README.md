@@ -1,41 +1,41 @@
 # 🪔 diyalamp: website
 
-**Defensible writing with AI in Notion.**
+**Write clearly. Think for yourself.**
 
-AI that helps you test your argument and sharpen your writing. In Notion. With evidence, explicit assumptions, and edits you approve.
+A standalone AI-assisted writing course: short lessons, critique of the learner’s own draft, deliberate revision, and fresh independent practice. The design keeps the quiet document-style branding; the product pitch does not depend on Notion.
 
-This repository contains the public website and an animated concept preview of the writing workflow: argument mapping, stress-testing, assumption checking, decision framing, and final structure. The preview illustrates reasoning review, author-supplied evidence, and an approved revision; it does not call AI or connect to Notion.
+## What this site contains
+
+- A clear course outcome and proposed two-week curriculum.
+- An interactive, fictional lesson with an original draft, a reasoning critique, a careful revision, and a fresh exercise.
+- Illustrative draft assessment criteria, not fabricated customer ratings or validated learning results.
+- Proposed Free, Writing Foundations, and Practice Plus offers. Paid enrollment is not available.
+- Sources for the established methods informing the open writing engine.
+
+The sample self-check is a local checklist. It does not run AI, grade text, collect drafts, or send data. Enrollment buttons open an availability dialog, not checkout. The hosted application and payment flow still require implementation and validation.
 
 ## Links
 
-- [Live website](https://diyalamp.github.io/)
-- [Java application source](https://github.com/diyalamp/diyalamp)
+- [Website](https://diyalamp.com/)
+- [Open writing engine](https://github.com/diyalamp/diyalamp)
 - [Paul Graham: Good Writing](https://paulgraham.com/goodwriting.html)
 
-## Preview locally
+## Local preview
 
 ```sh
-python3 -m http.server 4173 --bind 127.0.0.1 --directory dist
+python3 -m http.server 4174 --bind 127.0.0.1 --directory dist
 ```
 
-Open http://127.0.0.1:4173/. The site uses plain HTML, CSS, and JavaScript, with no build step. The review panel moves through the five phases, stops for author approval, and respects reduced-motion preferences. Sidebar buttons are decorative. The layout adapts to mobile screens.
-
-## Publishing
-
-Changes pushed to main are deployed to GitHub Pages by the workflow in .github/workflows/pages.yml. Published assets live in dist. The previous hypothesis-model design remains recoverable through the archived-site-design tag and Git history.
-
-## Product direction
-
-A hosted, Notion-first writing workflow for product managers and enterprises. Customers would connect Notion, request the five phases from the writing workspace, supply evidence, and approve results. The website presents this direction, not a live subscription service.
-
-The page includes a decision-document example, sourced methods, a short attributed Paul Graham quote, an interactive enterprise control preview, and proposed Free, Personal, and Enterprise plans. Prices and allowances are unvalidated proposals. Setup and sales buttons open an explanatory dialog with a public GitHub inquiry link; they do not connect accounts, collect cards, submit forms, or start reviews.
-
-The existing Java release supports local Codex reviews and Notion import/publication. Hosted OAuth onboarding, company-funded AI calls, billing and usage gates, and enterprise administration are planned. Cloud and model portability is an architecture direction; broader support will be advertised only after validation. The writing engine, review prompts, model adapters, and Notion connector form the open core. Hosted accounts, billing, usage controls, administration, and production operations belong to the private managed service. Operating credentials and customer data stay private.
+The site uses plain HTML, CSS, and JavaScript without a build step. Assets live in `dist`. Main-branch pushes deploy through the existing GitHub Pages workflow.
 
 ## Verification
 
-Check desktop, tablet, and phone layouts; the five-phase review action; enterprise preview tabs (including keyboard navigation); dialog opening and closing; reduced-motion behavior; and new-tab link targets. This static site has no customer data or service credentials.
+Check the four lesson states, independent exercise and checklist, enrollment dialogs, keyboard focus, phone layout, reduced-motion behavior, and new-tab link targets. All non-hero text uses a consistent base size. No credentials or customer data belong in this repository.
+
+## Business boundary
+
+The engine’s review workflow, prompts, and provider interface are public. Course content, hosted accounts, billing, allowances, and production operations are managed privately. This website describes the selected direction, not a completed paid service.
 
 ## Credits
 
-JRXNA. Typography uses Inter via Google Fonts. Branding uses the literal 🪔 emoji; its appearance depends on the platform. See THIRD_PARTY_NOTICES.md for asset attribution.
+JRXNA. System typography and platform emoji. See THIRD_PARTY_NOTICES.md for existing asset attribution.
