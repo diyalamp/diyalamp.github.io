@@ -22,3 +22,5 @@
 .notion-sidebar,.paper,.review-margin{min-width:0}.note-nav{min-width:0;max-width:100%}@media(max-width:950px){.editor-stage{grid-template-columns:minmax(0,1fr)}}@media(max-width:600px){.notion-shell{grid-template-columns:minmax(0,1fr)}}
 
 .hero-phases{max-width:760px;margin:0 0 20px;padding-left:22px}.hero-phases li{padding-left:4px;margin-bottom:5px}
+
+.hero-phases a{text-decoration:underline;text-decoration-color:#c8c8c8;text-underline-offset:3px}
