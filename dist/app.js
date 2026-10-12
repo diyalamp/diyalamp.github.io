@@ -14,8 +14,16 @@ function renderSpine(){const list=$('spine-list');list.replaceChildren();for(con
 $('claim').onclick=examine;$('examine').onclick=examine;$('brief').onclick=showBrief;$('shape').onclick=()=>{$('spine').hidden=!$('spine').hidden;renderSpine();};$('move-first').onclick=()=>{orderPreview=true;renderSpine();$('shape-status').textContent='Preview only: lead with the recommendation, then explain the evidence.';};$('apply-order').onclick=()=>{if(!orderPreview){$('shape-status').textContent='Choose a preview first.';return;}const article=document.querySelector('.lesson-page');article.insertBefore($('recommendation'),article.querySelector('h2').nextSibling);orderApplied=true;$('shape-status').textContent='Recommendation moved first. Wording is unchanged; check the transitions before sharing.';};$('reset-order').onclick=()=>{if(orderApplied)$('claim').after($('recommendation'));orderApplied=false;orderPreview=false;renderSpine();$('shape-status').textContent='Original order restored.';};
 const modal=$('availability');document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{$('plan-name').textContent=b.dataset.plan;modal.showModal();});document.querySelector('.close').onclick=()=>modal.close();$('modal-sample').onclick=()=>{modal.close();$('practice').scrollIntoView({behavior:'smooth'});$('examine').focus({preventScroll:true});};
 
-// Gentle sequential emphasis, with no sample-draft copy.
+// Selectable, sequential method emphasis without extra explanatory copy.
 const methodRows=[...document.querySelectorAll('.hero-methods li')];
 let methodIndex=0;
-function highlightMethod(){methodRows.forEach((row,index)=>row.classList.toggle('method-active',index===methodIndex));methodIndex=(methodIndex+1)%methodRows.length;}
-if(methodRows.length){highlightMethod();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{if(!document.hidden)highlightMethod();},2400);}
+let methodInteracting=false;
+function selectMethod(index){methodIndex=index;methodRows.forEach((row,i)=>{row.classList.toggle('method-active',i===index);row.querySelector('button')?.setAttribute('aria-pressed',String(i===index));});}
+methodRows.forEach((row,index)=>{
+ const number=row.querySelector('.step-number');const name=row.querySelector('.method-name');
+ const button=document.createElement('button');button.className='method-select';button.append(number,name);row.prepend(button);
+ button.addEventListener('click',()=>selectMethod(index));
+});
+const methodPanel=document.querySelector('.hero-methods');
+if(methodPanel){methodPanel.addEventListener('mouseenter',()=>methodInteracting=true);methodPanel.addEventListener('mouseleave',()=>methodInteracting=false);methodPanel.addEventListener('focusin',()=>methodInteracting=true);methodPanel.addEventListener('focusout',event=>{if(!methodPanel.contains(event.relatedTarget))methodInteracting=false;});}
+if(methodRows.length){selectMethod(0);if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{if(!document.hidden&&!methodInteracting)selectMethod((methodIndex+1)%methodRows.length);},2400);}
