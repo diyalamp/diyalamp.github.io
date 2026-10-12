@@ -7,3 +7,5 @@ GitHub Pages publishes `dist`. The page distinguishes planned Personal, Teams, a
 The demo supports examining a causal claim, accepting/undoing a revision, reconsidering its dependent recommendation, previewing/applying/undoing narrative order, and viewing a decision brief. All example data is fictional and browser-local. The pilot link opens an email draft; it does not send anything automatically.
 
 Serve `dist` with a static HTTP server for preview. Keep credentials and customer documents out of this public repository.
+
+The hero uses “Defensible writing with AI” and links the five source methods. These inform the workflow; they do not establish that the combined product is scientifically validated. The interactive demo is separate from the hero.
