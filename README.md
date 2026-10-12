@@ -8,4 +8,4 @@ The demo supports examining a causal claim, accepting/undoing a revision, recons
 
 Serve `dist` with a static HTTP server for preview. Keep credentials and customer documents out of this public repository.
 
-The hero uses “Defensible writing with AI” and links the five source methods. These inform the workflow; they do not establish that the combined product is scientifically validated. The interactive demo is separate from the hero.
+The hero uses “Defensive Writing with AI” and links the five source methods. These inform the workflow; they do not establish that the combined product is scientifically validated. The interactive demo is separate from the hero.
