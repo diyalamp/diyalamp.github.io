@@ -17,13 +17,10 @@ const modal=$('availability');document.querySelectorAll('[data-plan]').forEach(b
 // Selectable, sequential method emphasis without extra explanatory copy.
 const methodRows=[...document.querySelectorAll('.hero-methods li')];
 let methodIndex=0;
-let methodInteracting=false;
 function selectMethod(index){methodIndex=index;methodRows.forEach((row,i)=>{row.classList.toggle('method-active',i===index);row.querySelector('button')?.setAttribute('aria-pressed',String(i===index));});}
 methodRows.forEach((row,index)=>{
  const number=row.querySelector('.step-number');const name=row.querySelector('.method-name');
  const button=document.createElement('button');button.className='method-select';button.append(number,name);row.prepend(button);
  button.addEventListener('click',()=>selectMethod(index));
 });
-const methodPanel=document.querySelector('.hero-methods');
-if(methodPanel){methodPanel.addEventListener('mouseenter',()=>methodInteracting=true);methodPanel.addEventListener('mouseleave',()=>methodInteracting=false);methodPanel.addEventListener('focusin',()=>methodInteracting=true);methodPanel.addEventListener('focusout',event=>{if(!methodPanel.contains(event.relatedTarget))methodInteracting=false;});}
-if(methodRows.length){selectMethod(0);if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{if(!document.hidden&&!methodInteracting)selectMethod((methodIndex+1)%methodRows.length);},2400);}
+if(methodRows.length){selectMethod(0);if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{if(!document.hidden)selectMethod((methodIndex+1)%methodRows.length);},2400);}
