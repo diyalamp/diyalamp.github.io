@@ -14,20 +14,8 @@ function renderSpine(){const list=$('spine-list');list.replaceChildren();for(con
 $('claim').onclick=examine;$('examine').onclick=examine;$('brief').onclick=showBrief;$('shape').onclick=()=>{$('spine').hidden=!$('spine').hidden;renderSpine();};$('move-first').onclick=()=>{orderPreview=true;renderSpine();$('shape-status').textContent='Preview only: lead with the recommendation, then explain the evidence.';};$('apply-order').onclick=()=>{if(!orderPreview){$('shape-status').textContent='Choose a preview first.';return;}const article=document.querySelector('.lesson-page');article.insertBefore($('recommendation'),article.querySelector('h2').nextSibling);orderApplied=true;$('shape-status').textContent='Recommendation moved first. Wording is unchanged; check the transitions before sharing.';};$('reset-order').onclick=()=>{if(orderApplied)$('claim').after($('recommendation'));orderApplied=false;orderPreview=false;renderSpine();$('shape-status').textContent='Original order restored.';};
 const modal=$('availability');document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{$('plan-name').textContent=b.dataset.plan;modal.showModal();});document.querySelector('.close').onclick=()=>modal.close();$('modal-sample').onclick=()=>{modal.close();$('practice').scrollIntoView({behavior:'smooth'});$('examine').focus({preventScroll:true});};
 
-// A bounded, user-controlled illustration; no AI calls or automatic playback.
-const methodDrafts=[
- 'Conversion fell. Price objections are evidence, not proof of the cause.',
- 'What if a lower price fails to recover revenue? Test the failure case.',
- 'Pricing may contribute. Traffic quality and onboarding may also explain the decline.',
- 'Run a limited pricing experiment. Define success and stopping conditions.',
- 'Recommendation: test first. Rationale: uncertain cause. Reconsider after measured results.'
-];
-document.querySelectorAll('[data-method]').forEach(button=>button.addEventListener('click',()=>{
- const index=Number(button.dataset.method);
- document.querySelectorAll('[data-method]').forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
- $('method-version').textContent='Draft · '+(index+1);
- $('method-preview').textContent=methodDrafts[index];
- const preview=$('method-preview');
- if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)preview.animate([{opacity:0,transform:'translateY(4px)'},{opacity:1,transform:'translateY(0)'}],{duration:240,easing:'ease-out'});
-}));
-$('method-preview').textContent=methodDrafts[0];
+// Gentle sequential emphasis, with no sample-draft copy.
+const methodRows=[...document.querySelectorAll('.hero-methods li')];
+let methodIndex=0;
+function highlightMethod(){methodRows.forEach((row,index)=>row.classList.toggle('method-active',index===methodIndex));methodIndex=(methodIndex+1)%methodRows.length;}
+if(methodRows.length){highlightMethod();if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)setInterval(()=>{if(!document.hidden)highlightMethod();},2400);}
