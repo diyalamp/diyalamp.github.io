@@ -6,3 +6,5 @@
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 
 .hero-promise{font-weight:700;margin:0 0 12px}.hero-promise+.intro{margin-top:0}
+
+.case-number{display:inline-flex;color:var(--accent);margin-bottom:18px;font-variant-numeric:tabular-nums}.use-case-grid .price-card{background:linear-gradient(155deg,#fff,#fbfaf6);transition:border-color .25s,box-shadow .25s}.use-case-grid .price-card:hover{border-color:#c9c2ae;box-shadow:0 6px 20px #302f2b05}.use-case-grid .output{margin-top:auto}.use-case-grid .muted{margin-bottom:24px}

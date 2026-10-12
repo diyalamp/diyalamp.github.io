@@ -12,8 +12,6 @@ function reset(){stage='original';setClaim(originalClaim,'Needs review · causal
 $('examine').onclick=examine;
 $('later-edit').onclick=()=>{stage='changed';setClaim(strongerClaim,'Check reopened · wording changed');$('later-edit').disabled=true;insight('A smoother sentence has become a stronger claim.','“Prove” and “will improve” go beyond the linked interview passage. The earlier review belongs to the previous wording.',[['Review changed claim',examine],['Undo stronger rewrite',restoreWording]]);};
 $('reset-demo').onclick=reset;
-const modal=$('availability');document.querySelectorAll('[data-plan]').forEach(b=>b.onclick=()=>{$('plan-name').textContent=b.dataset.plan;modal.showModal();});document.querySelector('.close').onclick=()=>modal.close();$('modal-sample').onclick=()=>{modal.close();$('practice').scrollIntoView({behavior:'smooth'});$('examine').focus({preventScroll:true});};
-
 // Selectable, sequential method emphasis without extra explanatory copy.
 const methodRows=[...document.querySelectorAll('.hero-methods li')];
 let methodIndex=0;
