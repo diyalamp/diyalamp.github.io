@@ -89,3 +89,20 @@ address with owner launch approval, payment-provider activation and fulfillment,
 and an independent customer's completed payment. These are not implied by a
 successful website deployment. No backend, writing-desk, account, or payment
 changes were made during this landing-page release.
+
+### Writing-desk preview follow-up
+
+The landing-page example now uses the actual private Next.js writing desk as a
+visual reference: notebook navigation, a manuscript, and a separate evidence and
+review rail. It is an idealized static recreation, not an embedded authenticated
+app. The profile, notebook rows and formatting indicators are fictional static
+context; they are not account or editing controls. The existing scoped review,
+rewrite, undo and explicit recheck controls remain functional.
+
+The focus toggle changes only the preview's palette. Escape leaves focus and
+returns keyboard focus to its button. It starts no audio, account, storage or AI
+request. The source and review remain readable and interactive. Desktop and
+390px mobile review checks pass; 320px and 768px have no horizontal overflow.
+A mobile heading word-joining defect found during QA was corrected. Existing
+interaction-harness and JavaScript syntax checks pass. Production app launch and
+live AI availability are unchanged.

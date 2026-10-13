@@ -149,3 +149,21 @@ if (!reducedMotion.matches && 'IntersectionObserver' in window) {
   }, { threshold: .08 });
   document.querySelectorAll('.section,.demo-section').forEach(section => { section.classList.add('reveal'); observer.observe(section); });
 }
+
+// The public desk is a fictional, local-only preview. Focus changes its ambience,
+// never starts audio, creates an account, saves writing, or requests a review.
+const deskPreview = $('practice');
+const deskFocus = $('demo-focus');
+if (deskPreview && deskFocus) {
+  function setDeskFocus(enabled) {
+    deskPreview.classList.toggle('demo-is-focused', enabled);
+    deskFocus.setAttribute('aria-pressed', String(enabled));
+  }
+  deskFocus.addEventListener('click', () => setDeskFocus(deskFocus.getAttribute('aria-pressed') !== 'true'));
+  deskPreview.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && deskFocus.getAttribute('aria-pressed') === 'true') {
+      setDeskFocus(false);
+      deskFocus.focus({ preventScroll: true });
+    }
+  });
+}
