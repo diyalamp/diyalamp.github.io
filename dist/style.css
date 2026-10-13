@@ -12,3 +12,30 @@
 .motion-control{display:block;margin:2px 4px 6px auto;padding:4px 8px;border:1px solid var(--line);border-radius:4px;background:transparent;color:var(--muted);font:inherit}.motion-control:hover{background:var(--wash)}#insight-title:focus{outline:2px solid var(--accent);outline-offset:4px}
 
 .window-dots{display:inline-flex;align-items:center;gap:7px;flex-shrink:0}.window-dots i{display:block;width:10px;height:10px;border-radius:50%;background:#ff5f57}.window-dots i:nth-child(2){background:#febc2e}.window-dots i:nth-child(3){background:#28c840}
+
+/* A quiet paper-and-ink finish keeps the decision memo itself in focus. */
+:root{--muted:#69685f;--line:#e6e2d8;--paper:#fbfaf6}
+body{background:linear-gradient(180deg,#fcfbf7 0,#fff 880px);font-weight:400}
+.nav .brand{font-size:16px}.nav a:hover{text-decoration:underline;text-underline-offset:6px}
+.hero{position:relative;background:radial-gradient(ellipse at 86% 28%,#eee7d570,transparent 50%)}
+.hero h1{line-height:1.12;text-wrap:balance;letter-spacing:normal}
+.hero-copy>.eyebrow{display:inline-flex;align-items:center;gap:9px;color:#726141}
+.hero-copy>.eyebrow:before{content:"";width:6px;height:6px;border-radius:50%;background:#b29355;box-shadow:0 0 0 4px #b2935512}
+.hero-promise{max-width:440px;font-size:16px;line-height:1.65}
+.intro{line-height:1.85}.quote{margin-top:30px}.quote figcaption{font-size:12px}
+.button{min-height:44px;border-radius:7px}.button.primary{box-shadow:0 3px 7px #302f2b18}
+.hero-methods{padding:12px;border-color:#ddd6c7;border-radius:12px;background:#fffdf9;box-shadow:0 3px 5px #302f2b03,0 20px 44px #7464430d}
+.hero-methods li{padding:15px 12px;border-radius:7px}.hero-methods li.method-active{background:#f0eadb;box-shadow:inset 3px 0 #aa8b50}
+.motion-control{font-size:12px;margin-bottom:10px}.step-number{font-size:12px;font-variant-numeric:tabular-nums}
+.demo-heading{align-items:baseline}.demo-heading>.eyebrow{color:var(--ink);font-weight:700}
+.app-window{border-color:#d8d3c7;border-radius:12px;box-shadow:0 4px 12px #302f2b05,0 24px 64px #7567440c}
+.window-bar{background:#f5f3ed;min-height:50px}.window-location{color:#78766c}.preview-tag{font-size:12px}
+.lesson-page>h2{font-size:22px;line-height:1.4;letter-spacing:normal}
+.source-card{border-radius:8px}.claim{border-radius:5px;line-height:1.85}.check-state{font-size:12px}
+.section h2{font-size:26px;line-height:1.35;letter-spacing:normal;max-width:620px}
+.section .eyebrow{font-size:12px;color:#7c6c4c;margin-bottom:12px}
+.section h3{font-size:16px;line-height:1.5}.curriculum article,.price-card{border-radius:10px;padding:28px}
+.case-number{width:32px;height:32px;align-items:center;justify-content:center;background:#f2eddf;border-radius:50%;font-size:12px;margin-bottom:22px}
+.faq summary{padding-right:10px}.faq details[open]{padding-bottom:20px}.faq details[open] summary{font-weight:700}
+.closing{background:linear-gradient(125deg,#fcfbf7,#f4f0e4);border-radius:12px;margin-bottom:28px}.closing h2{font-size:30px;letter-spacing:normal}
+@media(max-width:720px){.hero-methods{padding:8px}.hero-methods li{padding:13px 12px}.section h2{font-size:23px}.lesson-page>h2{font-size:20px}.closing h2{font-size:26px}.curriculum article,.price-card{padding:23px}.demo-heading p:last-child{font-size:12px}.window-bar .preview-tag{flex-basis:100%;padding-left:0}.closing{border-radius:0;margin-bottom:0}}
