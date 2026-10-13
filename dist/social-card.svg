@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+<rect width="1200" height="630" fill="#faf9f5"/>
+<rect x="30" y="30" width="1140" height="570" rx="16" fill="none" stroke="#dfdcd2"/>
+<g font-family="Arial, sans-serif" fill="#302f2b">
+<text x="80" y="115" font-size="28" font-weight="700">diyalamp</text>
+<text x="80" y="255" font-size="66" font-weight="700" letter-spacing="-2">Defensive Writing.</text>
+<text x="80" y="337" font-size="66" font-weight="700" letter-spacing="-2">Stronger decisions.</text>
+<text x="80" y="410" font-size="27" fill="#646158">Find the weak claim before someone else does.</text>
+<path d="M80 480H1120" stroke="#dfdcd2"/>
+<text x="80" y="543" font-size="22" fill="#766747">Claims. Sources. Revisions.</text>
+<text x="970" y="543" font-size="22">diyalamp.com</text>
+</g>
+<g transform="translate(1010 70)">
+<path d="M0 62Q50 107 100 62Z" fill="#766747"/>
+<path d="M51 62C17 39 65 27 55 0C92 37 77 53 51 62Z" fill="#c09652"/>
+<path d="M51 60C40 47 60 34 60 24C73 48 61 58 51 60Z" fill="#efdba8"/>
+</g>
+</svg>

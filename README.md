@@ -1,6 +1,6 @@
 # 🪔 diyalamp website
 
-A decision-memo review workspace for product managers preparing roadmap, launch, or investment recommendations for leadership. The public promise is “Defensive Writing for product decisions,” with the concrete benefit to investigate: finding weak claims before leadership review.
+An evidence-aware writing workspace for product managers and founders preparing consequential decision memos. The public promise is “Defensive Writing. Stronger decisions.” The concrete benefit to investigate is finding weak claims before someone else does, while keeping the relationship between claim, source, and review visible through revisions.
 
 GitHub Pages publishes `dist`. Hosted AI, subscriptions, and checkout are not advertised as available. The pilot invitation opens an email draft with memo type, deadline, and review bottleneck; it does not send a message or upload a document. Scope, confidentiality, delivery, and pricing must be agreed before a pilot.
 
@@ -42,3 +42,33 @@ Pricing hypothesis, not a published offer: compare a bounded $19 single-memo rev
 Reachable audience hypothesis: PMs with a decision memo due within two weeks, followed by product leads reviewing several memos. A permitted PM community demo or an introduction from an existing participant can reach this audience. First outreach should ask about a concrete review bottleneck, not claim measured productivity gains. No outreach or social posts are authorized by this document.
 
 Accessibility repair: explicit pause/play for automatic method highlights follows [W3C pause/stop/hide guidance](https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html); normal hover and selection still do not pause motion. Reduced-motion preferences remain respected. Replaced feedback controls restore keyboard focus to their result, and the pilot email address remains readable when no email client is configured. These source-level checks are not a full accessibility certification.
+
+
+## Landing-page refinement release, October 14, 2026
+
+This release contains 18 concrete refinement passes, followed by integrated browser QA. These are documented changes, not claims of conversion lift or 18 separate user studies.
+
+| Pass | Change | Verification |
+| --- | --- | --- |
+| 1 | Hero offer: Defensive Writing, stronger decisions, a concrete weak-claim benefit | One primary heading; buyer-facing payoff visible above CTA |
+| 2 | Demo copy explains evidence drift through revisions | Fictional/scripted label retained; existing hooks preserved |
+| 3 | Benefits framed as four consequential review questions | Reduced abstract and repetitive pitch language |
+| 4 | PM/founder situations and one-memo pilot scope | Consistent use cases and explicit agreed delivery/pricing |
+| 5 | ChatGPT objection, availability FAQ, matching closing invitation | No exclusivity, guaranteed outcome, or false launch claims |
+| 6 | Cohesive warm-paper colors, body type, controls and shadows | Desktop render inspected |
+| 7 | Compact five-method hero and active-state hierarchy | All five methods preserved; source links remain separate |
+| 8 | Document demo and evidence/feedback surfaces | Actual review interaction inspected in browser |
+| 9 | Section, card, FAQ and pilot hierarchy | Consistent layout and conversion destination |
+| 10 | Responsive, reduced-motion and forced-color treatment | 320px, 390px, 768px and desktop widths checked; no horizontal overflow |
+| 11 | Keyboard method navigation and focus recovery | End selects final method; harness checks arrows/Home/End and focus |
+| 12 | Feedback entrance and controlled automatic emphasis | Interaction harness covers manual pause, reduced motion and hidden tabs |
+| 13 | Explicit recheck and undo correctness | Browser: review, stronger rewrite, undo remains open, explicit confirmation |
+| 14 | Crawl scope: robots, canonical homepage sitemap, preview noindex | XML parses; preview excluded from sitemap and marked noindex |
+| 15 | Search title/description and truthful structured data | JSON-LD parses; one canonical URL; no invented ratings or offers |
+| 16 | Branded social sharing image and metadata | Original SVG rendered to exact 1200×630 PNG and inspected |
+| 17 | Keyboard skip link and target | Accessible link and focusable main landmark; visible focus styling |
+| 18 | Deferred script and lightweight local assets | No framework/runtime/remote font requests; core HTML+CSS+JS ~14KB gzip equivalent |
+
+Integrated checks: JavaScript syntax, interaction harness, internal anchors, unique IDs, external-tab safety, JSON-LD, sitemap, asset existence, and whitespace validation pass. Browser verification covered desktop and mobile layout, explicit review/recheck, reset, method keyboard selection and pause. Reduced-motion/hidden-tab behavior was verified by the interaction harness and source inspection; this is not a full accessibility audit or a Lighthouse score. No live AI, account creation, payment, tracking, or upload is added to this public demo.
+
+Publishing remains the existing GitHub Pages workflow. `social-card.svg` is the editable source for the sharing image. The sign-in placeholder stays reachable for existing links but is excluded from search indexing.
