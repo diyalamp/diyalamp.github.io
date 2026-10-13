@@ -72,3 +72,20 @@ This release contains 18 concrete refinement passes, followed by integrated brow
 Integrated checks: JavaScript syntax, interaction harness, internal anchors, unique IDs, external-tab safety, JSON-LD, sitemap, asset existence, and whitespace validation pass. Browser verification covered desktop and mobile layout, explicit review/recheck, reset, method keyboard selection and pause. Reduced-motion/hidden-tab behavior was verified by the interaction harness and source inspection; this is not a full accessibility audit or a Lighthouse score. No live AI, account creation, payment, tracking, or upload is added to this public demo.
 
 Publishing remains the existing GitHub Pages workflow. `social-card.svg` is the editable source for the sharing image. The sign-in placeholder stays reachable for existing links but is excluded from search indexing.
+
+### Published release verification
+
+The October 14 landing-page release was deployed successfully by the existing
+GitHub Pages workflow. Fresh HTTPS requests for the homepage, robots.txt,
+sitemap.xml, social-card.png, and sign-in.html all returned 200 with the expected
+content types and matched the committed release byte-for-byte. The live browser
+render shows the revised headline, all five methods, and the pilot invitation;
+no browser console errors were reported during that verification.
+
+The website milestone is complete. Revenue is not yet established: the public
+funnel still ends in a pilot discussion, not a usable hosted paid account. The
+next revenue gates remain live review acceptance, a verified production app
+address with owner launch approval, payment-provider activation and fulfillment,
+and an independent customer's completed payment. These are not implied by a
+successful website deployment. No backend, writing-desk, account, or payment
+changes were made during this landing-page release.
