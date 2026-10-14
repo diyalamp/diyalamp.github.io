@@ -1,0 +1,19 @@
+{
+  "release": "personal-agent-concept",
+  "scope": "Local final homepage, mobile Lighthouse; desktop and phone UI inspection performed separately",
+  "lighthouseVersion": "13.5.0",
+  "fetchTime": "2026-10-14T09:15:34.380Z",
+  "scores": {
+    "performance": 100,
+    "accessibility": 100,
+    "best-practices": 100,
+    "seo": 100
+  },
+  "metrics": {
+    "first-contentful-paint": 971.557,
+    "largest-contentful-paint": 1501.557,
+    "total-blocking-time": 20,
+    "cumulative-layout-shift": 0
+  },
+  "limitations": "Lab scores do not prove demand, security, backend operation or every-device performance. Scripted fictional preview only."
+}

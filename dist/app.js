@@ -1,173 +1,27 @@
-const $ = id => document.getElementById(id);
-const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-const originalClaim = 'Price is causing the decline in conversion.';
-const revisedClaim = 'Price came up in three of twelve interviews; its effect on conversion remains untested.';
-const strongerClaim = 'Customer interviews prove that lowering prices will improve conversion.';
-let stage = 'original';
-
-// A scripted, fictional example: no model request, storage, or upload occurs.
-function animateFeedback(element) {
-  element.getAnimations?.().forEach(animation => animation.cancel());
-  if (!reducedMotion.matches && element.animate) {
-    element.animate([
-      { opacity: 0.5, transform: 'translateY(5px)' },
-      { opacity: 1, transform: 'translateY(0)' }
-    ], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' });
-  }
+(() => {
+'use strict';
+const examples=[
+{title:'Context you can bring with you',label:'Selected context',heading:'Bring the useful parts, not everything.',summary:'Choose the context a compatible agent needs. Inspect the proposed scope before handing it over.',before:'Preferences: concise explanations and morning work sessions.',after:'Agent A may read Preferences for this task only.',step:'Inspect this selected context before a handoff.'},
+{title:'A boundary for this task',label:'Task-scoped access',heading:'Your private journal stays outside.',summary:'The sample research task needs a summary. It does not need the entire vault. Inspect what is included and excluded.',before:'Available sample notes: Research summary and Private journal.',after:'Agent A may read Research summary. Private journal is excluded.',step:'Keep the private journal outside this sample task.'},
+{title:'A thread you can pick up again',label:'Inspectable checkpoint',heading:'Continue from the work already done.',summary:'The fictional task has reviewed sources but has not finished its draft. Inspect the checkpoint before another compatible agent continues.',before:'Checkpoint: sources reviewed; draft unfinished; no actions submitted.',after:'Agent B receives approved context and checkpoint. No private journal access.',step:'Review the unfinished draft checkpoint before continuing.'}
+];
+let selected=0,inspected=false;const saved=new Set();
+const get=id=>document.getElementById(id);
+const buttons=[...document.querySelectorAll('[data-goal]')];
+function render(){
+ const example=examples[selected];
+ for(const [id,text]of [['goal-title',example.title],['change-label',example.label],['change-title',example.heading],['change-summary',example.summary],['before-text',example.before],['after-text',example.after]])get(id).textContent=text;
+ buttons.forEach((button,index)=>button.setAttribute('aria-pressed',String(index===selected)));
+ get('inspect-change').setAttribute('aria-expanded',String(inspected));get('inspect-change').textContent=inspected?'Hide the sample scope':'Inspect the proposed handoff ↗';
+ get('source-placeholder').hidden=inspected;get('source-before').hidden=!inspected;get('source-after').hidden=!inspected;
+ get('save-step').setAttribute('aria-pressed',String(saved.has(selected)));get('save-step').textContent=saved.has(selected)?'Remove sample checkpoint':'Keep sample checkpoint';
+ get('saved-count').textContent=`${saved.size} sample checkpoint${saved.size===1?'':'s'} kept`;
 }
-// Keep the words still: a brief outline marks the passage that just changed.
-function animateClaim(element) {
-  element.getAnimations?.().forEach(animation => animation.cancel());
-  if (!reducedMotion.matches && element.animate) {
-    element.animate([
-      { boxShadow: '0 0 0 3px rgba(177, 144, 72, 0.3)' },
-      { boxShadow: '0 0 0 0 rgba(177, 144, 72, 0)' }
-    ], { duration: 420, easing: 'ease-out' });
-  }
-}
-function insight(title, text, actions = []) {
-  const restoreFocus = $('insight-actions').contains(document.activeElement);
-  $('insight').hidden = false;
-  $('insight-title').textContent = title;
-  $('insight-text').textContent = text;
-  $('insight-actions').replaceChildren();
-  for (const [label, fn] of actions) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'button';
-    button.textContent = label;
-    button.onclick = fn;
-    $('insight-actions').append(button);
-  }
-  animateFeedback($('insight'));
-  if (restoreFocus) $('insight-title').focus({ preventScroll: true });
-}
-function setClaim(text, status) {
-  $('claim').textContent = text;
-  $('check-state').textContent = status;
-  animateClaim($('claim'));
-}
-function accept() {
-  stage = 'reviewed';
-  setClaim(revisedClaim, 'Reviewed wording · source unchanged');
-  $('later-edit').disabled = false;
-  insight('A narrower claim, with the uncertainty intact.', 'This example records a check for this exact wording and source. It is not a guarantee that the source itself is correct.', [['Undo revision', reset]]);
-}
-function restoreWording() {
-  stage = 'restored';
-  setClaim(revisedClaim, 'Check still open · wording restored');
-  insight('The wording is restored. The check stays open.', 'Undo does not reinstate an earlier review. Explicitly check this revision against the linked source.', [['Recheck restored wording', examine]]);
-}
-function examine() {
-  if (stage === 'restored') {
-    insight('Review the restored wording against its source.', 'The passage reports three price objections and no causal test. This narrower wording preserves those limits.', [['Confirm source review', accept]]);
-    return;
-  }
-  if (stage === 'reviewed') {
-    insight('This wording matches the scope of the supplied passage.', 'Try the stronger rewrite to see why a check must follow changes to the draft.');
-    return;
-  }
-  insight(stage === 'changed' ? 'The old check no longer applies.' : 'The source does not establish causation.', 'The interviews report price objections, not a tested effect on conversion. Proposed revision: “' + revisedClaim + '”', [['Accept scoped revision', accept], ['Keep wording', () => insight('Wording kept. Check remains open.', 'The source does not establish the causal claim. You can add stronger evidence or reconsider the wording.')]]);
-}
-function reset() {
-  stage = 'original';
-  setClaim(originalClaim, 'Needs review · causal claim');
-  $('later-edit').disabled = true;
-  const restoreFocus = $('insight').contains(document.activeElement);
-  $('insight').hidden = true;
-  if (restoreFocus) $('reset-demo').focus({ preventScroll: true });
-}
-$('examine').onclick = examine;
-$('later-edit').onclick = () => {
-  stage = 'changed';
-  setClaim(strongerClaim, 'Check reopened · wording changed');
-  $('later-edit').disabled = true;
-  insight('A smoother sentence has become a stronger claim.', '“Prove” and “will improve” go beyond the linked interview passage. The earlier review belongs to the previous wording.', [['Review changed claim', examine], ['Undo stronger rewrite', restoreWording]]);
-  // Do not leave keyboard focus on a control that has just become disabled.
-  $('insight-title').focus({ preventScroll: true });
-};
-$('reset-demo').onclick = reset;
-
-// Automatic emphasis never moves keyboard focus or interrupts a source link.
-const methodRows = [...document.querySelectorAll('.hero-methods li')];
-let methodIndex = 0;
-let manuallyPaused = false;
-let methodTimer;
-const motionControl = $('method-motion');
-function selectMethod(index) {
-  methodIndex = index;
-  methodRows.forEach((row, i) => {
-    row.classList.toggle('method-active', i === index);
-    row.querySelector('button')?.setAttribute('aria-pressed', String(i === index));
-  });
-}
-function scheduleMethod() {
-  clearTimeout(methodTimer);
-  if (!methodRows.length || document.hidden || manuallyPaused || reducedMotion.matches) return;
-  methodTimer = setTimeout(() => {
-    selectMethod((methodIndex + 1) % methodRows.length);
-    scheduleMethod();
-  }, 3200);
-}
-methodRows.forEach((row, index) => {
-  const button = row.querySelector('button');
-  if (!button) return;
-  button.addEventListener('click', () => { selectMethod(index); scheduleMethod(); });
-  button.addEventListener('keydown', event => {
-    const next = { ArrowDown: (index + 1) % methodRows.length, ArrowRight: (index + 1) % methodRows.length, ArrowUp: (index + methodRows.length - 1) % methodRows.length, ArrowLeft: (index + methodRows.length - 1) % methodRows.length, Home: 0, End: methodRows.length - 1 }[event.key];
-    if (next === undefined) return;
-    event.preventDefault();
-    selectMethod(next);
-    methodRows[next].querySelector('button')?.focus({ preventScroll: true });
-    scheduleMethod();
-  });
+buttons.forEach((button,index)=>{
+ button.addEventListener('click',()=>{selected=index;inspected=false;render();get('preview-status').textContent=`Sample view: ${examples[selected].title}.`;});
+ button.addEventListener('keydown',event=>{if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(['ArrowDown','ArrowRight'].includes(event.key)?1:-1)+buttons.length)%buttons.length;buttons[next].focus();buttons[next].click();});
 });
-function renderMotionControl() {
-  if (!motionControl) return;
-  // This is an action button; its label describes the next action, not a toggle state.
-  motionControl.removeAttribute('aria-pressed');
-  motionControl.disabled = reducedMotion.matches;
-  motionControl.textContent = reducedMotion.matches ? 'Reduced motion' : manuallyPaused ? 'Play motion' : 'Pause motion';
-  motionControl.title = reducedMotion.matches ? 'Your device’s reduced-motion preference is on. You can still select any step.' : '';
-}
-if (motionControl) motionControl.onclick = () => { manuallyPaused = !manuallyPaused; renderMotionControl(); scheduleMethod(); };
-reducedMotion.addEventListener('change', () => {
-  renderMotionControl();
-  scheduleMethod();
-  if (reducedMotion.matches) {
-    document.querySelectorAll('.reveal').forEach(section => section.classList.add('revealed'));
-    [$('claim'), $('insight')].forEach(element => element.getAnimations?.().forEach(animation => animation.cancel()));
-  }
-});
-document.addEventListener('visibilitychange', scheduleMethod);
-renderMotionControl();
-if (methodRows.length) { selectMethod(0); scheduleMethod(); }
-
-// Content is visible without JavaScript; reveals are decorative and happen once.
-if (!reducedMotion.matches && 'IntersectionObserver' in window) {
-  const observer = new IntersectionObserver(entries => {
-    for (const entry of entries) if (entry.isIntersecting) {
-      entry.target.classList.add('revealed');
-      observer.unobserve(entry.target);
-    }
-  }, { threshold: .08 });
-  document.querySelectorAll('.section,.demo-section').forEach(section => { section.classList.add('reveal'); observer.observe(section); });
-}
-
-// The public desk is a fictional, local-only preview. Focus changes its ambience,
-// never starts audio, creates an account, saves writing, or requests a review.
-const deskPreview = $('practice');
-const deskFocus = $('demo-focus');
-if (deskPreview && deskFocus) {
-  function setDeskFocus(enabled) {
-    deskPreview.classList.toggle('demo-is-focused', enabled);
-    deskFocus.setAttribute('aria-pressed', String(enabled));
-  }
-  deskFocus.addEventListener('click', () => setDeskFocus(deskFocus.getAttribute('aria-pressed') !== 'true'));
-  deskPreview.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && deskFocus.getAttribute('aria-pressed') === 'true') {
-      setDeskFocus(false);
-      deskFocus.focus({ preventScroll: true });
-    }
-  });
-}
+get('inspect-change').addEventListener('click',()=>{inspected=!inspected;render();get('preview-status').textContent=inspected?'Selected sample context and proposed scope are shown beside the handoff.':'Sample scope hidden.';});
+get('save-step').addEventListener('click',()=>{saved.has(selected)?saved.delete(selected):saved.add(selected);render();get('preview-status').textContent=saved.has(selected)?`Sample checkpoint kept: ${examples[selected].step} It lasts only while this page stays open.`:'Sample checkpoint removed.';});
+render();
+})();

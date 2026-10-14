@@ -1,5 +1,21 @@
 # 🪔 diyalamp website
 
+## Current direction — October 14, 2026
+
+The owner replaced the writing-product pitch, and rejected the interim
+opportunity-radar idea before publication. The current page proposes a
+**user-owned personal agent workspace**: chosen context, task-scoped permissions
+and inspectable checkpoints. Headline: **Stop starting over with every AI.**
+The three-view demo is fictional and scripted. The new runtime, provider
+compatibility, privacy enforcement and CockroachDB synchronization are not built.
+
+See [brand specification](docs/DIYA_LAMP_BRAND_SPEC.md) and
+[bounded executive debrief](docs/CONSUMER_EXECUTIVE_DEBRIEF.md).
+After this page is published, all four roles focus on the JRXNA Shopify/Printify
+store accepting real orders. Earlier app/backend work is stopped and preserved.
+The sections below are historical writing-concept records; their Lighthouse
+scores do not establish this release's scores.
+
 An evidence-aware writing workspace for product managers and founders preparing consequential decision memos. The public promise is “Defensive Writing. Stronger decisions.” The concrete benefit to investigate is finding weak claims before someone else does, while keeping the relationship between claim, source, and review visible through revisions.
 
 GitHub Pages publishes `dist`. Hosted AI, subscriptions, and checkout are not advertised as available. The pilot invitation opens an email draft with memo type, deadline, and review bottleneck; it does not send a message or upload a document. Scope, confidentiality, delivery, and pricing must be agreed before a pilot.
@@ -143,3 +159,11 @@ workflow checks that generated inline styles match the source before publishing.
 This changes only delivery: the stylesheet remains available for the sign-in
 placeholder. No credentials, customer data, production app launch, or payment
 configuration are part of this release.
+
+
+Final personal-agent concept checks: source inspection and keep/remove controls
+work in the browser; desktop and 390px phone renders were inspected; phone
+scrollWidth equals viewportWidth. The final local mobile Lighthouse 13.5 run
+scored 100 in performance, accessibility, best practices and SEO.
+See quality/personal-agent-concept-audit.json for exact scope and metrics.
+These lab results do not validate a runtime or market.
