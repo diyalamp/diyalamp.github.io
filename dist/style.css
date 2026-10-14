@@ -92,3 +92,10 @@ html{scroll-padding-top:32px}body{background:linear-gradient(180deg,#fbfaf6 0,#f
 .demo-desk .button,.demo-guide .feedback .button{min-height:44px;min-width:44px;max-width:100%}
 .demo-topbar{min-height:60px;padding-block:8px}
 @media(max-width:650px){.demo-topbar{min-height:60px;padding-block:8px}}
+
+/* Live refinement 7: one readable text size throughout the writing preview. */
+.demo-desk :is(.demo-label,.demo-note-list li,.demo-space-note,.demo-profile,.demo-profile>span>span,.demo-breadcrumb,.demo-formatting,.demo-format-hint,.demo-document-lead,.demo-document-footer,.demo-guide-label,.demo-guide-intro,.demo-source-heading,.demo-source-meta,.demo-guide-footnote,.demo-disclosure),.demo-desk .button,.demo-guide .check-state,.demo-guide .source-card blockquote,.demo-guide .feedback p,.demo-guide .feedback .button{font-size:14px}
+.demo-note-list li{white-space:normal;overflow-wrap:anywhere;align-items:baseline}
+.demo-note-list li>span{flex-shrink:0}.demo-profile strong,.demo-profile>span>span{overflow-wrap:anywhere}
+.demo-document-footer{flex-wrap:wrap}.demo-guide-heading{flex-wrap:wrap}.demo-formatting{flex-wrap:wrap}.demo-format-hint{margin-left:0}
+.demo-desk .button{white-space:normal}.demo-focus-toggle{flex-shrink:0}
