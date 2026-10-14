@@ -1,27 +1,15 @@
 (() => {
 'use strict';
 const examples=[
-{title:'Context you can bring with you',label:'Selected context',heading:'Bring the useful parts, not everything.',summary:'Choose the context a compatible agent needs. Inspect the proposed scope before handing it over.',before:'Preferences: concise explanations and morning work sessions.',after:'Agent A may read Preferences for this task only.',step:'Inspect this selected context before a handoff.'},
-{title:'A boundary for this task',label:'Task-scoped access',heading:'Your private journal stays outside.',summary:'The sample research task needs a summary. It does not need the entire vault. Inspect what is included and excluded.',before:'Available sample notes: Research summary and Private journal.',after:'Agent A may read Research summary. Private journal is excluded.',step:'Keep the private journal outside this sample task.'},
-{title:'A thread you can pick up again',label:'Inspectable checkpoint',heading:'Continue from the work already done.',summary:'The fictional task has reviewed sources but has not finished its draft. Inspect the checkpoint before another compatible agent continues.',before:'Checkpoint: sources reviewed; draft unfinished; no actions submitted.',after:'Agent B receives approved context and checkpoint. No private journal access.',step:'Review the unfinished draft checkpoint before continuing.'}
+{title:'Research makes its findings reusable',label:'Week 1 / Research → Build',heading:'The next agent starts with the work already done.',summary:'Research records constraints and unresolved questions. Build receives the checkpoint and knows what to do next.',before:'Requirements mapped. Retry semantics identified. Open question: transaction timeout behavior.',after:'Build: implement the retry path using these constraints. Verify: evaluate the resulting behavior.'},
+{title:'Build advances the same mission',label:'Week 3 / Build → Verify',heading:'An implementation becomes a checkpoint, not a lost session.',summary:'Build records its changes and remaining dependencies. Verify receives the work and its evaluation criteria.',before:'Retry implementation prepared. Known limitation: ambiguous response after a network timeout.',after:'Verify: test timeout and retry behavior. Return unresolved cases to Build.'},
+{title:'Verify closes the loop',label:'Month 3 / Verify → Build',heading:'Findings drive the next iteration.',summary:'Verify links a failed case to the implementation checkpoint. Build can continue with the finding rather than repeat the investigation.',before:'Ambiguous-response test failed. Completed checks retained. Mission remains open.',after:'Build: resolve the failed case. Verify: rerun the affected checks before the milestone is approved.'}
 ];
-let selected=0,inspected=false;const saved=new Set();
-const get=id=>document.getElementById(id);
-const buttons=[...document.querySelectorAll('[data-goal]')];
-function render(){
- const example=examples[selected];
- for(const [id,text]of [['goal-title',example.title],['change-label',example.label],['change-title',example.heading],['change-summary',example.summary],['before-text',example.before],['after-text',example.after]])get(id).textContent=text;
- buttons.forEach((button,index)=>button.setAttribute('aria-pressed',String(index===selected)));
- get('inspect-change').setAttribute('aria-expanded',String(inspected));get('inspect-change').textContent=inspected?'Hide the sample scope':'Inspect the proposed handoff ↗';
- get('source-placeholder').hidden=inspected;get('source-before').hidden=!inspected;get('source-after').hidden=!inspected;
- get('save-step').setAttribute('aria-pressed',String(saved.has(selected)));get('save-step').textContent=saved.has(selected)?'Remove sample checkpoint':'Keep sample checkpoint';
- get('saved-count').textContent=`${saved.size} sample checkpoint${saved.size===1?'':'s'} kept`;
-}
-buttons.forEach((button,index)=>{
- button.addEventListener('click',()=>{selected=index;inspected=false;render();get('preview-status').textContent=`Sample view: ${examples[selected].title}.`;});
- button.addEventListener('keydown',event=>{if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(index+(['ArrowDown','ArrowRight'].includes(event.key)?1:-1)+buttons.length)%buttons.length;buttons[next].focus();buttons[next].click();});
-});
-get('inspect-change').addEventListener('click',()=>{inspected=!inspected;render();get('preview-status').textContent=inspected?'Selected sample context and proposed scope are shown beside the handoff.':'Sample scope hidden.';});
-get('save-step').addEventListener('click',()=>{saved.has(selected)?saved.delete(selected):saved.add(selected);render();get('preview-status').textContent=saved.has(selected)?`Sample checkpoint kept: ${examples[selected].step} It lasts only while this page stays open.`:'Sample checkpoint removed.';});
-render();
+let selected=0,inspected=false;const restarted=new Set();
+const get=id=>document.getElementById(id);const buttons=[...document.querySelectorAll('[data-goal]')];
+function render(){const e=examples[selected];for(const[id,value]of [['goal-title',e.title],['change-label',e.label],['change-title',e.heading],['change-summary',e.summary],['before-text',e.before],['after-text',e.after]])get(id).textContent=value;
+buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(i===selected)));get('inspect-change').setAttribute('aria-expanded',String(inspected));get('inspect-change').textContent=inspected?'Hide the agent handoff':'Inspect the agent handoff ↗';get('source-placeholder').hidden=inspected;get('source-before').hidden=!inspected;get('source-after').hidden=!inspected;get('save-step').setAttribute('aria-pressed',String(restarted.has(selected)));get('save-step').textContent=restarted.has(selected)?'Reset restart example':'Simulate worker restart';}
+buttons.forEach((b,i)=>{b.addEventListener('click',()=>{selected=i;inspected=false;render();get('preview-status').textContent=`Illustrative agent: ${b.textContent.trim()}.`;});b.addEventListener('keydown',event=>{if(!['ArrowDown','ArrowUp','ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?buttons.length-1:(i+(['ArrowDown','ArrowRight'].includes(event.key)?1:-1)+buttons.length)%buttons.length;buttons[next].focus();buttons[next].click();});});
+get('inspect-change').addEventListener('click',()=>{inspected=!inspected;render();get('preview-status').textContent=inspected?'Illustrative checkpoint and next assignment shown.':'Handoff inspection closed.';});
+get('save-step').addEventListener('click',()=>{const restoring=!restarted.has(selected);restoring?restarted.add(selected):restarted.delete(selected);inspected=restoring;render();get('preview-status').textContent=restoring?'Restart simulation: a replacement worker receives the recorded checkpoint and next assignment. No live worker or database is connected.':'Restart example reset. The illustrative mission is unchanged.';});render();
 })();

@@ -1,3 +1,5 @@
+> Historical concept, superseded by the owner-approved persistent multi-agent orchestration pitch. See DIYA_LAMP_BRAND_SPEC.md for current positioning.
+
 # Bounded executive debrief: a personal home for your AI
 
 October 14, 2026. This is a landing-page concept, not an application build.

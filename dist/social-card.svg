@@ -3,11 +3,11 @@
 <rect x="30" y="30" width="1140" height="570" rx="16" fill="none" stroke="#dfdcd2"/>
 <g font-family="Inter, Arial, sans-serif" fill="#302f2b">
 <text x="80" y="115" font-size="28" font-weight="600">diyalamp</text>
-<text x="80" y="255" font-size="66" font-weight="600" letter-spacing="-2">A personal home</text>
-<text x="80" y="337" font-size="66" font-weight="600" letter-spacing="-2">for your AI.</text>
-<text x="80" y="410" font-size="27" fill="#646158">Stop starting over with every AI.</text>
+<text x="80" y="255" font-size="66" font-weight="600" letter-spacing="-2">One mission.</text>
+<text x="80" y="337" font-size="66" font-weight="600" letter-spacing="-2">Many agents.</text>
+<text x="80" y="410" font-size="27" fill="#646158">Persistent AI agent orchestration.</text>
 <path d="M80 480H1120" stroke="#dfdcd2"/>
-<text x="80" y="543" font-size="22" fill="#766747">Context. Permissions. Checkpoints.</text>
+<text x="80" y="543" font-size="22" fill="#766747">Long-running work. CockroachDB-backed state.</text>
 <text x="970" y="543" font-size="22">diyalamp.com</text>
 </g>
 <g transform="translate(1010 70)">
