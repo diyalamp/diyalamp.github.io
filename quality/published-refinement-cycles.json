@@ -1,0 +1,435 @@
+{
+  "date": "2026-10-14",
+  "method": "Each cycle is a distinct improvement commit, successful Pages deployment, live asset verification and browser test. Lighthouse reports are per release; absent cycle1 reports are not inferred from baseline.",
+  "cycles": [
+    {
+      "cycle": 1,
+      "commit": "2cc40043363d1dd426f8394b4d5afc038d9f9c60",
+      "title": "Clarify the buyer and review deadline",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {},
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518053562"
+    },
+    {
+      "cycle": 2,
+      "commit": "a6f8e5140fcc59790905071d7b15ce393509cd6d",
+      "title": "Improve text and keyboard focus contrast",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518203139"
+    },
+    {
+      "cycle": 3,
+      "commit": "2b01f2bdd66f0c37ef494898631dd94fa691e1dc",
+      "title": "Version assets to refresh cached website releases",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518321094"
+    },
+    {
+      "cycle": 4,
+      "commit": "b16e31724f6e4ef73165289c49a01676e47d9156",
+      "title": "Improve touch targets without expanding the desk shell",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518627539"
+    },
+    {
+      "cycle": 5,
+      "commit": "d7e468ef269701f922d3daeb3879b8031ebe566d",
+      "title": "Specify the concrete design-partner pilot deliverable",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518765371"
+    },
+    {
+      "cycle": 6,
+      "commit": "654b62e8893ae86283fa0792011ffab545047257",
+      "title": "Render method controls before scripts to stabilize layout",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38518881612"
+    },
+    {
+      "cycle": 7,
+      "commit": "ff31cf61ab37dfed0027556f1c428ca96588c1c0",
+      "title": "Unify writing-preview labels at a readable text size",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519037602"
+    },
+    {
+      "cycle": 8,
+      "commit": "d4b6c4c92e04cc93f5bf752b75b521175383eafb",
+      "title": "Explain the value of review continuity after rewriting",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519237814"
+    },
+    {
+      "cycle": 9,
+      "commit": "d5c20e4d54047f2b128c2f42660f28dca802b86c",
+      "title": "Give tablet readers a full-width manuscript and review panel",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519357275"
+    },
+    {
+      "cycle": 10,
+      "commit": "b84521e4654278aacdc6c0a486ce5f716bc7c924",
+      "title": "Make the scripted writing preview controls unambiguous",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519463011"
+    },
+    {
+      "cycle": 11,
+      "commit": "4d69a175cb763b83c85a92de20ac5ec56deecfeb",
+      "title": "Clarify pilot pricing and route visitors to the working preview",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519639236"
+    },
+    {
+      "cycle": 12,
+      "commit": "c73cd93821998595bd360e8ebdb299e2ca72695c",
+      "title": "Refine review motion while keeping revised words stationary",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519782944"
+    },
+    {
+      "cycle": 13,
+      "commit": "70b894b4638d93fddc2793b32e7bb66f006ec3b4",
+      "title": "Lead with concrete memo use cases and a deadline-focused invitation",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38519953812"
+    },
+    {
+      "cycle": 14,
+      "commit": "651090d65942c9dc3910b04af6d941f1228ae862",
+      "title": "Link the selected claim directly to its supporting source",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38520122892"
+    },
+    {
+      "cycle": 15,
+      "commit": "1eb6bc87525fb6d05d9c1078e8c9482e6696bedc",
+      "title": "Apply consistent semibold typography throughout the site",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 98,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38520260126"
+    },
+    {
+      "cycle": 16,
+      "commit": "dcaa54b572f3beeeb5a5e6257dcf84704ec6abc1",
+      "title": "Deliver first-paint styles without a blocking stylesheet request",
+      "deployment": "success",
+      "live_assets": "match",
+      "lighthouse": {
+        "mobile": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        },
+        "desktop": {
+          "performance": 100,
+          "accessibility": 100,
+          "best-practices": 100,
+          "seo": 100
+        }
+      },
+      "deployment_url": "https://github.com/diyalamp/diyalamp.github.io/actions/runs/38520479711"
+    }
+  ],
+  "final_repeat": {
+    "release": 16,
+    "mode": "mobile",
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "FCP_ms": 953,
+    "LCP_ms": 953,
+    "speed_index_ms": 953,
+    "blocking_ms": 0,
+    "layout_shift": 0
+  },
+  "browser_checks": [
+    {
+      "cycle": 1,
+      "result": "Buyer and deadline visible; no desktop overflow"
+    },
+    {
+      "cycle": 2,
+      "result": {
+        "hint": "rgb(144, 146, 127)",
+        "sidebar": "rgb(132, 135, 118)",
+        "step": "rgb(119, 113, 95)"
+      }
+    },
+    {
+      "cycle": 3,
+      "result": "Versioned CSS confirmed; desktop no overflow"
+    },
+    {
+      "cycle": 4,
+      "result": "Method and demo controls measured at least44px; desktop no overflow"
+    },
+    {
+      "cycle": 5,
+      "result": "Concrete pilot deliverable live; no phone overflow; email invitation preserved"
+    },
+    {
+      "cycle": 6,
+      "result": "Five static method buttons; End selects last; tablet no overflow"
+    },
+    {
+      "cycle": 7,
+      "result": "14px demo metadata and actions confirmed; phone no overflow"
+    },
+    {
+      "cycle": 8,
+      "result": "Differentiation FAQ opens; hero link matches rewrite value; phone no overflow"
+    },
+    {
+      "cycle": 9,
+      "result": "700px tablet stacks manuscript and rail at650px each without overflow"
+    },
+    {
+      "cycle": 10,
+      "result": "Read-only strip visible; accept then overstated rewrite reopens review; focus staysonfinding"
+    },
+    {
+      "cycle": 11,
+      "result": "Writing desk navigates topractice; pricingFAQopenswithhonestavailability; nooverflow"
+    },
+    {
+      "cycle": 12,
+      "result": "Accept revision works; claim transformnone; competing CSSfeedbackanimationnone"
+    },
+    {
+      "cycle": 13,
+      "result": "Concrete usecases precedeteamroadmap; closingnamesmemoanddeadline; nooverflow"
+    },
+    {
+      "cycle": 14,
+      "result": "Claim source link navigates tolinked-source; targethighlight2px; phone nooverflow"
+    },
+    {
+      "cycle": 15,
+      "result": "Semibold600 verified across hero/body/brand/desk; phone nooverflow"
+    },
+    {
+      "cycle": 16,
+      "result": "Inline styles16; desktop+phone nooverflow; focus/examine/accept/rewrite/undo/recheck/Escape/reset allpass; undo keepscheckopen"
+    }
+  ],
+  "review_acceptance": {
+    "copy": "No blocking issues; pilot availability and distinction clear. Conversion and willingness to pay remain unproven.",
+    "design": "Final desktop hero, writing desk, dark focus and mobile evidence rail accepted.",
+    "interaction": "Live review/rewrite/undo/recheck/reset/focus/Escape passed. Same Lighthouse settings across releases; final mobile100 twice and desktop100."
+  }
+}

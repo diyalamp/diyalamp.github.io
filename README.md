@@ -106,3 +106,40 @@ request. The source and review remain readable and interactive. Desktop and
 A mobile heading word-joining defect found during QA was corrected. Existing
 interaction-harness and JavaScript syntax checks pass. Production app launch and
 live AI availability are unchanged.
+
+
+### Sixteen published refinement cycles (2026-10-14)
+
+The clarified requirement was separate publish → live-test → improve cycles,
+not local passes bundled into one release. Sixteen distinct releases now meet
+that publication requirement. The machine-readable deployment and audit ledger
+is in `quality/published-refinement-cycles.json`. Earlier iterations are retained
+with their actual scores, including mobile performance results of 98.
+
+The final measured release achieves Lighthouse 100 performance, accessibility,
+best practices, and SEO on both mobile and desktop using Lighthouse 13.5.0 and
+Chrome 155 with the same standard audit settings. Both have zero blocking time
+and layout shift. Inlining the small stylesheet removed a render-blocking request;
+mobile Speed Index improved from approximately 4.1 to 2.0 seconds in these runs.
+An independent cold mobile repeat also achieved all four 100 scores. Scores
+describe measured lab runs, not a guarantee for every device or network.
+
+Changes include a concrete buyer/deadline and pilot deliverable, honest pricing
+and availability FAQs, direct navigation to the fictional desk, readable labels
+and 44px controls, stable pre-rendered method buttons, better tablet layout,
+a direct claim-to-source link, consistent semibold styling, and one restrained
+feedback animation with stationary revised text. The decorative formatting strip
+is now explicitly read-only. The preview remains scripted and fictional.
+
+Live checks cover inspection, accepting a revision, overstating a claim, undo
+without silently restoring review status, explicit recheck, reset, focus mode,
+Escape, keyboard method navigation, and desktop/phone overflow. No browser console
+warnings or errors appeared in the final interaction run. Copy and design were
+independently reviewed; this does not establish conversion or revenue.
+
+`dist/style.css` remains the stylesheet source. After editing it, run
+`python3 scripts/inline-styles.py` and commit the updated homepage. The Pages
+workflow checks that generated inline styles match the source before publishing.
+This changes only delivery: the stylesheet remains available for the sign-in
+placeholder. No credentials, customer data, production app launch, or payment
+configuration are part of this release.
