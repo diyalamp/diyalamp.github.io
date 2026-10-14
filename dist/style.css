@@ -115,3 +115,6 @@ html{scroll-padding-top:32px}body{background:linear-gradient(180deg,#fbfaf6 0,#f
 /* Live refinement 14: direct access to evidence, especially in stacked layouts. */
 .demo-source-link{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin:-8px 0 12px;text-underline-offset:4px;color:inherit}
 #linked-source{scroll-margin-top:24px}#linked-source:target{outline:2px solid var(--accent);outline-offset:4px}.demo-is-focused #linked-source:target{outline-color:#ddc786}
+
+/* Live refinement 15: one semibold weight across the product story and preview. */
+body{font-weight:600}h1,h2,h3,strong,.brand-name,.method-name,.use-case-grid .price-card>p:not(.muted),.demo-breadcrumb strong,.demo-manuscript>h2,.demo-guide-body>h3{font-weight:600}
