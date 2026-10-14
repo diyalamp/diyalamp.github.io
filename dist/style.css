@@ -84,3 +84,11 @@ html{scroll-padding-top:32px}body{background:linear-gradient(180deg,#fbfaf6 0,#f
 .demo-is-focused .demo-format-hint{color:#abb59c}
 .demo-is-focused :focus-visible,.demo-is-focused #insight-title:focus{outline-color:#ddc786}
 @media(forced-colors:active){.demo-is-focused :focus-visible,.demo-is-focused #insight-title:focus{outline-color:Highlight}}
+
+/* Live refinement 4: comfortable targets without oversized surrounding chrome. */
+.hero-methods li{padding-block:8px}
+.hero-methods .method-select{min-height:44px;padding-block:5px}
+.hero-methods .motion-control{min-height:44px;margin-bottom:4px;padding-block:8px}
+.demo-desk .button,.demo-guide .feedback .button{min-height:44px;min-width:44px;max-width:100%}
+.demo-topbar{min-height:60px;padding-block:8px}
+@media(max-width:650px){.demo-topbar{min-height:60px;padding-block:8px}}
