@@ -75,3 +75,12 @@ html{scroll-padding-top:32px}body{background:linear-gradient(180deg,#fbfaf6 0,#f
 @media(max-width:900px){.demo-desk{grid-template-columns:1fr}.demo-sidebar{display:none}.demo-canvas{grid-template-columns:minmax(0,1fr) 285px}.demo-manuscript{padding:32px}.demo-manuscript>h2{font-size:27px}.demo-guide-heading{padding-inline:20px}.demo-guide-body{padding:24px 20px}}
 @media(max-width:650px){.demo-topbar{min-height:54px;padding:10px 16px}.demo-breadcrumb>span{display:none}.demo-canvas{grid-template-columns:1fr}.demo-manuscript{padding:28px 24px 24px}.demo-manuscript>h2{font-size:28px}.demo-manuscript>h2 br{display:none}.demo-guide{border-left:0;border-top:1px solid var(--demo-line)}.demo-guide-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:16px 22px}.demo-guide-label{margin:0}.demo-guide-body{padding:22px}.demo-guide-body>h3 br{display:none}.demo-guide .source-card blockquote,.demo-guide-intro,.demo-guide .feedback p{font-size:13px}.demo-guide .feedback h3{font-size:14px}.demo-guide .button,.demo-rewrite-actions .button{font-size:12px;min-height:40px}.demo-rewrite-actions{gap:8px}.demo-disclosure{padding:12px 18px;text-align:left}.demo-document-footer{flex-wrap:wrap}.demo-focus-toggle.button{min-height:36px}.demo-guide-body>.demo-label{margin-bottom:8px}}
 @media(prefers-reduced-motion:reduce){.demo-desk,.demo-desk *{transition:none!important;animation:none!important}}
+
+/* Live refinement 2: readable secondary labels and visible lamplight focus. */
+.hero-methods .step-number,.hero-methods li a{color:#655e4d}
+.demo-desk{--demo-muted:#666c5c}
+.demo-space-note{color:var(--demo-muted)}
+.demo-format-hint{color:#69705e}
+.demo-is-focused .demo-format-hint{color:#abb59c}
+.demo-is-focused :focus-visible,.demo-is-focused #insight-title:focus{outline-color:#ddc786}
+@media(forced-colors:active){.demo-is-focused :focus-visible,.demo-is-focused #insight-title:focus{outline-color:Highlight}}
