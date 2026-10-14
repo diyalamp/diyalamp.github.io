@@ -99,3 +99,15 @@ html{scroll-padding-top:32px}body{background:linear-gradient(180deg,#fbfaf6 0,#f
 .demo-note-list li>span{flex-shrink:0}.demo-profile strong,.demo-profile>span>span{overflow-wrap:anywhere}
 .demo-document-footer{flex-wrap:wrap}.demo-guide-heading{flex-wrap:wrap}.demo-formatting{flex-wrap:wrap}.demo-format-hint{margin-left:0}
 .demo-desk .button{white-space:normal}.demo-focus-toggle{flex-shrink:0}
+
+/* Live refinement 9: give the manuscript a full measure on small tablets. */
+@media(min-width:651px) and (max-width:760px){
+ .demo-canvas{grid-template-columns:1fr}
+ .demo-manuscript>h2 br,.demo-guide-body>h3 br{display:none}
+ .demo-guide{border-left:0;border-top:1px solid var(--demo-line)}
+ .demo-guide-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:18px 32px}
+ .demo-guide-label{margin:0}
+ .demo-guide-body{padding:24px 32px}
+ .demo-guide-body>.actions .button{width:auto;gap:16px}
+ .demo-breadcrumb>span{display:none}
+}
