@@ -100,14 +100,8 @@ function scheduleMethod() {
   }, 3200);
 }
 methodRows.forEach((row, index) => {
-  const number = row.querySelector('.step-number');
-  const name = row.querySelector('.method-name');
-  if (!number || !name) return;
-  const button = document.createElement('button');
-  button.type = 'button';
-  button.className = 'method-select';
-  button.append(number, name);
-  row.prepend(button);
+  const button = row.querySelector('button');
+  if (!button) return;
   button.addEventListener('click', () => { selectMethod(index); scheduleMethod(); });
   button.addEventListener('keydown', event => {
     const next = { ArrowDown: (index + 1) % methodRows.length, ArrowRight: (index + 1) % methodRows.length, ArrowUp: (index + methodRows.length - 1) % methodRows.length, ArrowLeft: (index + methodRows.length - 1) % methodRows.length, Home: 0, End: methodRows.length - 1 }[event.key];
