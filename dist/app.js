@@ -15,6 +15,16 @@ function animateFeedback(element) {
     ], { duration: 220, easing: 'cubic-bezier(.2,.8,.2,1)' });
   }
 }
+// Keep the words still: a brief outline marks the passage that just changed.
+function animateClaim(element) {
+  element.getAnimations?.().forEach(animation => animation.cancel());
+  if (!reducedMotion.matches && element.animate) {
+    element.animate([
+      { boxShadow: '0 0 0 3px rgba(177, 144, 72, 0.3)' },
+      { boxShadow: '0 0 0 0 rgba(177, 144, 72, 0)' }
+    ], { duration: 420, easing: 'ease-out' });
+  }
+}
 function insight(title, text, actions = []) {
   const restoreFocus = $('insight-actions').contains(document.activeElement);
   $('insight').hidden = false;
@@ -35,7 +45,7 @@ function insight(title, text, actions = []) {
 function setClaim(text, status) {
   $('claim').textContent = text;
   $('check-state').textContent = status;
-  animateFeedback($('claim'));
+  animateClaim($('claim'));
 }
 function accept() {
   stage = 'reviewed';
