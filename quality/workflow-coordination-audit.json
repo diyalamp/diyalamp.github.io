@@ -1,6 +1,6 @@
 {
   "release": "workflow-coordination",
-  "scope": "Standard local mobile and desktop Lighthouse categories. Same content is to be published; live deployment requires separate verification. No audit exclusions or custom throttling.",
+  "scope": "Standard local and published HTTPS mobile/desktop Lighthouse categories. No audit exclusions or custom throttling. Public runtime remains illustrative.",
   "reports": {
     "mobile": {
       "url": "http://127.0.0.1:4191/",
@@ -37,5 +37,41 @@
       }
     }
   },
-  "limitations": "Measured lab runs, not a guarantee for every network or device. No live agent runtime is evaluated."
+  "limitations": "Measured lab runs, not a guarantee for every network or device. No live agent runtime is evaluated.",
+  "live_reports": {
+    "mobile": {
+      "url": "https://diyalamp.com/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T13:10:53.391Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1077.8775,
+        "largest-contentful-paint": 1077.8775,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0.002156898964087765
+      }
+    },
+    "desktop": {
+      "url": "https://diyalamp.com/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T13:11:51.500Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 338.75649999999996,
+        "largest-contentful-paint": 338.75649999999996,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0.001369535377083151
+      }
+    }
+  }
 }

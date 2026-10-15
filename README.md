@@ -36,7 +36,6 @@ Earlier writing-product and personal-workspace audit records remain historical
 artifacts. Their Lighthouse scores do not establish scores for this release.
 See [the current brand specification](docs/DIYA_LAMP_BRAND_SPEC.md).
 
-Current website check: standard local mobile and desktop Lighthouse 13.5.0 runs
+Current website check: standard local and live HTTPS mobile/desktop Lighthouse 13.5.0 runs
 each scored 100 performance, accessibility, best practices and SEO. Exact scope
-and metrics are in `quality/workflow-coordination-audit.json`. Live deployment
-is verified separately; lab scores are not every-device guarantees.
+and metrics are in `quality/workflow-coordination-audit.json`. The live page was also inspected after deployment; lab scores are not every-device guarantees.
