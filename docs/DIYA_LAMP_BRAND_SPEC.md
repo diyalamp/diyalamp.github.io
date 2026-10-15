@@ -1,32 +1,39 @@
-# Diya Lamp: persistent AI agent orchestration
+# Diya Lamp: coordination for long-running AI workflows
 
 ## Owner-approved position
 
-**One mission. Many agents. Built to keep going.**
+**Independent agents. Collective progress.**
 
-Open-source persistent AI agent orchestration for coordinated work that can take
-months or years. Sell continuity of a mission across agents, sessions, handoffs
-and worker interruption. Do not describe a personal drive, generic memory vault,
-AI storage wrapper or another chat interface.
+An open-source coordination layer for long-running AI workflows, implemented
+in Java. Use workflow for the overall process, workstream for parallel efforts,
+and task for individual assignments. Do not use mission language.
 
-## Architecture direction
+Sell shared-state coordination: task ownership, versioned context, explicit
+handoffs, durable checkpoints, current approvals and recovery after interruption.
+The immediate implementation scope is the open-source Java core, not a hosted
+console, authentication, billing or cloud dashboard.
 
-All orchestrator data belongs in CockroachDB: goals, agent state, shared context,
-dependencies, checkpoints, outputs and execution history. Cross-region replication
-and configured survival goals support the resilience direction. Database durability
-alone does not implement worker recovery, safe external retries or coordination.
+## Public copy and design
 
-Sources: [multi-region overview](https://docs.cockroachlabs.com/docs/stable/multiregion-overview)
-and [survival goals](https://docs.cockroachlabs.com/docs/stable/multiregion-survival-goals).
-Region survival requires a suitable topology/configuration; do not promise it by default.
+Keep the Notion-inspired paper surfaces, Inter semibold 600, 14px body/controls,
+compact rectangular controls and restrained accessible motion. Only the hero
+headline scales. Use 🪔 **Diya Lamp** in prose.
 
-## Website experience
+Mention CockroachDB once in the public FAQ. Keep database/vendor references out
+of the hero, diagram, SEO metadata and sharing artwork; remove the architecture
+link. The product should sell the coordination experience, not the database brand.
 
-Calm Notion-inspired surfaces; Inter semibold 600, body/control 14px, hero scales.
-Use 🪔 **Diya Lamp** in prose. Show a mission, specialist agents, explicit handoffs
-and durable checkpoints. The public scripted example is not an executing runtime.
-No invented uptime, exactly-once effects, productivity metrics or tested years-long runs.
+## Architecture and truthfulness
 
-Existing public code is a persisted review-workflow foundation. General multi-agent
-orchestration and regional recovery are in development, not verified delivery.
-Website-only scope: publish this positioning without resuming app/backend work.
+The intended system of record is CockroachDB for workflow data. Appropriate
+multi-region topology and configured survival goals are needed for regional
+resilience. Database transactions alone do not make external calls exactly-once.
+The existing public code has persisted review-workflow primitives; new coordination
+capabilities must be described according to their actual tested scope.
+
+## Acceptance
+
+Publish only after layout, keyboard and example interaction checks. Measure
+performance, accessibility, best practices and SEO with standard mobile and
+desktop Lighthouse audits. Record exact version, URL, scope and category scores;
+do not copy historical results or guarantee scores on all networks/devices.

@@ -1,0 +1,41 @@
+{
+  "release": "workflow-coordination",
+  "scope": "Standard local mobile and desktop Lighthouse categories. Same content is to be published; live deployment requires separate verification. No audit exclusions or custom throttling.",
+  "reports": {
+    "mobile": {
+      "url": "http://127.0.0.1:4191/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T13:08:06.362Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 846.71125,
+        "largest-contentful-paint": 1501.4225,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    },
+    "desktop": {
+      "url": "http://127.0.0.1:4191/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T13:08:53.708Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 213.24085,
+        "largest-contentful-paint": 322.4817,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    }
+  },
+  "limitations": "Measured lab runs, not a guarantee for every network or device. No live agent runtime is evaluated."
+}
