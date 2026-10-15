@@ -2,40 +2,45 @@
 
 ## Current position
 
-**Independent agents. Collective progress.**
+**Give an agent a browser. Keep control.**
 
-An open-source coordination layer for long-running AI workflows. The intended
-Java core manages workstreams, exclusive task ownership, versioned checkpoints,
-explicit handoffs, approval conditions and action records. It complements durable
-execution tools rather than claiming persistence alone is novel.
+An open-source browser-agent project in Java. The intended loop is observe,
+propose, act and verify, with an explicit action policy and an inspectable run
+record. Browser only: no desktop control or shell execution.
 
-The existing public repository contains earlier review-workflow primitives.
-General multi-agent coordination is in development. No hosted console, sign-in,
-paid service, production failover or years-long execution is advertised as delivered.
+Cloud-agnostic and model-agnostic describe the architecture: separate runtime,
+browser and model interfaces. They do not mean every provider is integrated.
+Concrete adapters and an end-to-end browser runtime are in development.
 
-Database architecture appears only once in the public FAQ. No external database
-architecture link is shown. See the current brand specification for the full
-technical direction and constraints.
+The public Java repository already contains experimental transactional task
+coordination primitives. The site distinguishes those from the browser-agent
+prototype and the planned paid managed cloud with a supervision console. No
+hosted service, working provider integration, pricing or sign-up is advertised.
+
+Database architecture appears once in the FAQ. The project is sold on the
+browser experience, not a vendor logo. See the current brand specification.
 
 ## Public illustration
 
-Research, Build and Verify illustrate workstreams and recorded handoffs.
-Visitors inspect checkpoints and simulate worker restarts. All demo state is
-browser-local; no model, worker or database is contacted. Keyboard arrows and
-Home/End select agents. Reduced motion disables animation. The workflow contact
-invitation opens an email draft; nothing is sent automatically.
+Observe, Propose, Act and Verify illustrate one fictional public-page task.
+Visitors inspect each record or play an example action. All state is local to
+the page: no browser tool, remote website, model or database is contacted.
+The example price is fictional. Keyboard arrows and Home/End select stages.
+Reduced motion disables animation. The contact invitation opens an email draft;
+nothing is sent automatically.
 
 ## Build and publish
 
 GitHub Pages deploys `dist` on a push to `main`. Edit `dist/style.css`, then run
-`python3 scripts/inline-styles.py`; the deployment verifies generated inline CSS.
+`python3 scripts/inline-styles.py`; deployment verifies generated inline CSS.
 Check JavaScript syntax and inspect desktop/mobile layout and interactions.
 Keep secrets and private customer data outside this repository.
 
-Earlier writing-product and personal-workspace audit records remain historical
-artifacts. Their Lighthouse scores do not establish scores for this release.
-See [the current brand specification](docs/DIYA_LAMP_BRAND_SPEC.md).
+Historical audit records and old product debriefs describe earlier releases.
+They do not establish scores or product behavior for the current browser-agent
+page. See [the current brand specification](docs/DIYA_LAMP_BRAND_SPEC.md).
 
-Current website check: standard local and live HTTPS mobile/desktop Lighthouse 13.5.0 runs
-each scored 100 performance, accessibility, best practices and SEO. Exact scope
-and metrics are in `quality/workflow-coordination-audit.json`. The live page was also inspected after deployment; lab scores are not every-device guarantees.
+The browser-agent page scores 100 in performance, accessibility, best practices
+and SEO in fresh standard local mobile and desktop Lighthouse 13.5.0 runs.
+See [the current audit](quality/browser-agent-audit.json) for measured scope and
+metrics. These lab results do not guarantee every device or network.

@@ -1,0 +1,49 @@
+{
+  "release": "browser-agent",
+  "scope": "Standard local mobile and desktop Lighthouse categories, without exclusions or custom throttling. Product illustration is scripted, not a live browser-agent runtime.",
+  "reports": {
+    "mobile": {
+      "url": "http://127.0.0.1:4192/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T14:52:57.338Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1016.0032000000001,
+        "largest-contentful-paint": 1351.0032,
+        "total-blocking-time": 21,
+        "cumulative-layout-shift": 0
+      }
+    },
+    "desktop": {
+      "url": "http://127.0.0.1:4192/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T14:53:42.540Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 216.5754,
+        "largest-contentful-paint": 363.1508,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    }
+  },
+  "limitations": "Lab measurements, not a guarantee for every network or device. No live browser/model adapter, cloud runtime or end-to-end agent is evaluated.",
+  "manual_checks": [
+    "Desktop and 390px phone layout inspected; no horizontal overflow.",
+    "Home/End select first/last browser-loop stages.",
+    "Example action and reset update the fictional record correctly.",
+    "Step inspection toggles observation/action details.",
+    "All example state is browser-local; no browser/model adapter is called.",
+    "Sharing image regenerated at 1200\u00d7630 from the matching browser-agent SVG."
+  ]
+}
