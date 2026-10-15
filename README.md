@@ -41,6 +41,6 @@ They do not establish scores or product behavior for the current browser-agent
 page. See [the current brand specification](docs/DIYA_LAMP_BRAND_SPEC.md).
 
 The browser-agent page scores 100 in performance, accessibility, best practices
-and SEO in fresh standard local mobile and desktop Lighthouse 13.5.0 runs.
+and SEO in fresh standard local and published HTTPS mobile/desktop Lighthouse 13.5.0 runs.
 See [the current audit](quality/browser-agent-audit.json) for measured scope and
 metrics. These lab results do not guarantee every device or network.

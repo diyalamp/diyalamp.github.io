@@ -1,6 +1,6 @@
 {
   "release": "browser-agent",
-  "scope": "Standard local mobile and desktop Lighthouse categories, without exclusions or custom throttling. Product illustration is scripted, not a live browser-agent runtime.",
+  "scope": "Standard local and published HTTPS mobile/desktop Lighthouse categories, without exclusions or custom throttling. Product illustration is scripted, not a live browser-agent runtime.",
   "reports": {
     "mobile": {
       "url": "http://127.0.0.1:4192/",
@@ -45,5 +45,42 @@
     "Step inspection toggles observation/action details.",
     "All example state is browser-local; no browser/model adapter is called.",
     "Sharing image regenerated at 1200\u00d7630 from the matching browser-agent SVG."
-  ]
+  ],
+  "live_reports": {
+    "mobile": {
+      "url": "https://diyalamp.com/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T14:57:37.757Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 1107.2665,
+        "largest-contentful-paint": 1107.2665,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    },
+    "desktop": {
+      "url": "https://diyalamp.com/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-15T14:57:57.339Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 212.56,
+        "largest-contentful-paint": 280.56,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    }
+  },
+  "published_release": "64ed7c98920126accc7b0d8dddee4efa30e5614b"
 }
