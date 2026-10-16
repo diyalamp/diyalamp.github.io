@@ -1,45 +1,44 @@
-# Diya Lamp: an open-source browser agent
+# diyalamp website direction
 
-## Current direction
+The brand is always **diyalamp**, lowercase, with the Apple 🪔 emoji as its mark.
 
-**Give an agent a browser. Keep control.**
+## Position
 
-A Java browser-agent runtime with a small, inspectable loop: observe the page,
-propose an action, check policy, execute through a browser adapter, and verify
-the result. Browser only. Desktop apps and shell execution are out of scope.
+One task. Many agents. No crossed wires.
 
-Cloud-agnostic and model-agnostic are architecture goals. Separate interfaces
-must not be marketed as working integrations. Supported adapters will be
-identified only after implementation and testing.
+A user-owned browser workspace where agents coordinate visibly on a shared task.
+The problem is specific: browser contention, agents waiting for tabs, stale
+approvals, unclear ownership, lost context and human effort relaying updates.
+An agent has a responsibility and acquires tabs as needed. It is not a permanent
+expensive autonomous loop assigned to a single tab.
 
-Self-hosting locally or on the user's cloud is the intended first deployment.
-A paid managed cloud and advanced supervision console are planned future
-options. Sell inspectable runs, explicit boundaries and human oversight. Do not
-claim a hosted product, sign-in, pricing or a complete browser integration.
+## Architecture direction, not shipped functionality
 
-## Existing code and truthful claims
+TypeScript for the console, coordinator and browser workers. Browser execution
+can use Playwright / Stagehand as appropriate. Replaceable model and hosting
+adapters are intended; universal compatibility is not claimed.
 
-The public repository has experimental Java task-coordination primitives:
-transactional claims, fenced leases, versioned checkpoints, approvals and
-ordered history. These are reusable foundations, not proof of an end-to-end
-browser agent, model connection, browser recovery or months-long run.
+The open-source scope is local execution, messaging, task state, ownership,
+pause/resume and recovery. Hosted managed browsers, team supervision and scheduled
+operations are a future commercial hypothesis. No hosted service, public sign-in
+or price is available. Earlier Java code in the public repository is explicitly
+identified as earlier work, not the new TypeScript implementation.
 
-The browser runtime prototype is in development. The website's Observe,
-Propose, Act and Verify example is scripted and fictional, and makes no remote
-browser, model or database calls. A simulated click is not a real tool action.
+## Interface and motion
 
-Mention CockroachDB once in the FAQ, in the context of existing task-state
-storage. Browser observation storage and recovery need their own verified
-implementation. Do not imply universal cross-region resilience.
+Simple white Notion-inspired surfaces, Inter in weights 500 and 600, aligned
+content widths, restrained green/neutral accents and clear ownership indicators.
+The hero has one dominant headline. The interactive workspace has a hierarchy of
+shared task, agent responsibilities, owned browser tabs and coordination record.
+Motion highlights state changes, never replaces status text. Background motion
+has a pause control and respects the operating system's reduced-motion preference.
 
-## Design and acceptance
+## Illustration
 
-Preserve paper surfaces, Inter semibold 600, 14px body and controls, compact
-rectangular controls, and purposeful motion. Only the hero headline scales.
-Use 🪔 **Diya Lamp** in prose. Avoid generic AI hype or fake customer proof.
+Three independent moments from a fictional Shopify / Printify / domain workflow:
+shared currency, product handoff and a human sign-in request. Each is interactive
+but changes only local illustration state. No provider integration, actual account,
+credential entry, customer information or live agent is used.
 
-The animated connector expresses the browser loop. Stage changes and example
-actions use short positional transitions; reduced motion disables animation.
-No text relies on low opacity. Test keyboard navigation, example reset,
-responsive layout and the contact link before publication. Record fresh
-Lighthouse results for the current release, rather than reusing old scores.
+Keep the page to three main sections. No fabricated social proof or promises of
+exactly-once browser actions. Vendor architecture belongs in the FAQ, not the pitch.

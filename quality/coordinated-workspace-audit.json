@@ -1,0 +1,56 @@
+{
+  "release": "coordinated-workspace",
+  "scope": "Standard mobile and desktop Lighthouse, four standard categories, no audit exclusions or custom throttling. Static website only; no real agents or third-party integrations evaluated.",
+  "local_reports": {
+    "mobile": {
+      "url": "http://127.0.0.1:4193/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-16T11:25:17.971Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 826.4503,
+        "largest-contentful-paint": 1500.9006,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    },
+    "desktop": {
+      "url": "http://127.0.0.1:4193/",
+      "lighthouse_version": "13.5.0",
+      "fetch_time": "2026-10-16T11:26:00.958Z",
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "metrics": {
+        "first-contentful-paint": 217.54025,
+        "largest-contentful-paint": 361.0805,
+        "total-blocking-time": 0,
+        "cumulative-layout-shift": 0
+      }
+    }
+  },
+  "manual_checks": [
+    "Desktop hierarchy and three-column workspace render",
+    "390px phone interactions and320px no horizontal overflow",
+    "Shared currency invalidates old approval; exact new revision approved explicitly",
+    "Conflicting request leaves owner unchanged",
+    "Product handoff releases tab and clears owner badge",
+    "Human sign-in request and fictional resume",
+    "Keyboard Home/End scenario selection",
+    "Motion pause updates pressed state and pauses ambient CSS; reduced-motion CSS and JS guards inspected",
+    "No browser console errors during tested interactions",
+    "Three main sections, unique IDs and valid internal anchors",
+    "Original Apple emoji favicon byte-for-byte unchanged",
+    "Lowercase diyalamp across visible copy, metadata and site documentation",
+    "Inter sharing image rendered1200x630; temporary rendering page removed"
+  ],
+  "limitations": "Lab metrics are measurements, not a guarantee for all devices. Demo state is fictional and browser-local. New TypeScript workspace, managed cloud and integrations are not implemented by this website release."
+}

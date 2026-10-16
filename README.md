@@ -1,46 +1,44 @@
-# 🪔 Diya Lamp website
+# 🪔 diyalamp website
 
-## Current position
+**One task. Many agents. No crossed wires.**
 
-**Give an agent a browser. Keep control.**
+The public landing page for a user-owned, coordinated browser-agent workspace.
+Agents own responsibilities, acquire the tabs they need, share decisions and
+hand off dependencies under human control. A tab is a resource, not a permanent
+agent or an always-running model loop.
 
-An open-source browser-agent project in Java. The intended loop is observe,
-propose, act and verify, with an explicit action policy and an inspectable run
-record. Browser only: no desktop control or shell execution.
+The new direction is TypeScript throughout the console, coordinator and browser
+workers, with Playwright / Stagehand considered for browser execution. This
+website change does not implement that application. The linked public repository
+still includes earlier Java experiments; the page says so explicitly.
 
-Cloud-agnostic and model-agnostic describe the architecture: separate runtime,
-browser and model interfaces. They do not mean every provider is integrated.
-Concrete adapters and an end-to-end browser runtime are in development.
+## Three sections
 
-The public Java repository already contains experimental transactional task
-coordination primitives. The site distinguishes those from the browser-agent
-prototype and the planned paid managed cloud with a supervision console. No
-hosted service, working provider integration, pricing or sign-up is advertised.
+1. The problem and value: fewer tab conflicts and less manual relay between agents.
+2. An interactive, fictional storefront launch: a shared USD decision invalidates
+   an outdated approval, Merch hands products to Commerce and releases its tab,
+   and Domain waits for a human sign-in handoff. Conflicting requests never take
+   over an owned tab in the illustration.
+3. Open-source direction and a clearly future managed-cloud hypothesis. No fake
+   sign-up, shipped integrations, prices, adoption numbers or reliability claims.
 
-Database architecture appears once in the FAQ. The project is sold on the
-browser experience, not a vendor logo. See the current brand specification.
-
-## Public illustration
-
-Observe, Propose, Act and Verify illustrate one fictional public-page task.
-Visitors inspect each record or play an example action. All state is local to
-the page: no browser tool, remote website, model or database is contacted.
-The example price is fictional. Keyboard arrows and Home/End select stages.
-Reduced motion disables animation. The contact invitation opens an email draft;
-nothing is sent automatically.
+All demo state is local and ephemeral. No Shopify, Printify, domain provider,
+model or remote browser is contacted. Keyboard arrows and Home/End select
+scenarios and tabs. Ambient motion can be paused and honors reduced motion.
 
 ## Build and publish
 
-GitHub Pages deploys `dist` on a push to `main`. Edit `dist/style.css`, then run
-`python3 scripts/inline-styles.py`; deployment verifies generated inline CSS.
-Check JavaScript syntax and inspect desktop/mobile layout and interactions.
-Keep secrets and private customer data outside this repository.
+The existing GitHub Pages workflow publishes `dist` from `main` to
+https://diyalamp.com/. Edit `dist/style.css`, then regenerate the inline stylesheet:
 
-Historical audit records and old product debriefs describe earlier releases.
-They do not establish scores or product behavior for the current browser-agent
-page. See [the current brand specification](docs/DIYA_LAMP_BRAND_SPEC.md).
+```sh
+python3 scripts/inline-styles.py
+node --check dist/app.js
+```
 
-The browser-agent page scores 100 in performance, accessibility, best practices
-and SEO in fresh standard local and published HTTPS mobile/desktop Lighthouse 13.5.0 runs.
-See [the current audit](quality/browser-agent-audit.json) for measured scope and
-metrics. These lab results do not guarantee every device or network.
+Verify desktop and phone layouts, scenario actions, keyboard controls, motion
+preferences, links and sharing assets before publishing. Keep credentials and
+private customer information out of Git. Preserve the Apple 🪔 emoji favicon.
+
+Earlier audit records describe older releases. The current release is
+`coordinated-workspace`; only its own recorded measurements apply to this page.

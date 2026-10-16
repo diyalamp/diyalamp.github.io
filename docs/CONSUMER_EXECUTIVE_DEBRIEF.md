@@ -8,7 +8,7 @@ consumer/computer-science direction; all implementation work remains stopped.
 
 ## Chosen pitch
 
-**Stop starting over with every AI.** Diya Lamp proposes a user-owned personal
+**Stop starting over with every AI.** diyalamp proposes a user-owned personal
 agent workspace: selected context with provenance, scoped access, inspectable
 proposed actions and task checkpoints. A person can see what a compatible agent
 receives and what remains unfinished before handing work onward.
@@ -49,7 +49,7 @@ provide context for recurring personal value. No affiliation or funding claimed.
 existing open-source competition. We cannot claim memory or openness is novel.
 [Readwise pricing](https://readwise.io/pricing/reader) supplies a paid personal
 information-tool benchmark ($12.99 monthly / $9.99 monthly equivalent annual), not
-willingness to pay for Diya Lamp or a selected selling price.
+willingness to pay for diyalamp or a selected selling price.
 
 ## Technical direction and business gates
 
