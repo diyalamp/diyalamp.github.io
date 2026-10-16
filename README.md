@@ -42,3 +42,8 @@ private customer information out of Git. Preserve the Apple 🪔 emoji favicon.
 
 Earlier audit records describe older releases. The current release is
 `coordinated-workspace`; only its own recorded measurements apply to this page.
+
+The published release scores **100 in all four standard Lighthouse categories**
+on mobile and desktop in the recorded lab runs. See the
+[current audit](quality/coordinated-workspace-audit.json) for exact scope and
+metrics; these measurements are not a guarantee for every device or network.
