@@ -1,30 +1,35 @@
 # 🪔 diyalamp website
 
-**One task. Many agents. No crossed wires.**
+**Your agents. Your models. Memory built to last.**
 
-The public landing page for a user-owned, coordinated browser-agent workspace.
-Agents own responsibilities, acquire the tabs they need, share decisions and
-hand off dependencies under human control. A tab is a resource, not a permanent
-agent or an always-running model loop.
+The public landing page for the planned persistent-agent workspace: independent
+agent identities, instructions, memory and tasks, with model choice through
+OpenRouter and a portable, self-hostable orchestration architecture.
 
-The new direction is TypeScript throughout the console, coordinator and browser
-workers, with Playwright / Stagehand considered for browser execution. This
-website change does not implement that application. The linked public repository
-still includes earlier Java experiments; the page says so explicitly.
+This release presents a target architecture, not an available managed service.
+The current public code is an early local TypeScript fixture prototype backed by
+SQLite. The planned Java runtime, hosted sign-in, model integration and cloud
+persistence have not shipped. The website does not change that status.
 
-## Three sections
+## The experience
 
-1. The problem and value: fewer tab conflicts and less manual relay between agents.
-2. An interactive, fictional storefront launch: a shared USD decision invalidates
-   an outdated approval, Merch hands products to Commerce and releases its tab,
-   and Domain waits for a human sign-in handoff. Conflicting requests never take
-   over an owned tab in the illustration.
-3. Open-source direction and a clearly future managed-cloud hypothesis. No fake
-   sign-up, shipped integrations, prices, adoption numbers or reliability claims.
+1. An interactive model-to-memory illustration makes continuity concrete.
+2. An interactive console lets visitors select three fictional agents, change
+   their model, inspect memory/instructions/tasks, and pause or resume each agent.
+   Model changes preserve example records, not identical model behavior.
+3. Architecture, project status, qualified storage plans and a pilot invitation
+   distinguish the open-source core from the future managed cloud.
 
-All demo state is local and ephemeral. No Shopify, Printify, domain provider,
-model or remote browser is contacted. Keyboard arrows and Home/End select
-scenarios and tabs. Ambient motion can be paused and honors reduced motion.
+All body text uses self-hosted Inter at weight 600 and 14px. The original Apple
+lamp favicon is preserved. Flat paper surfaces have no gradients or cursor lighting. Motion confirms model
+changes, is user-pausable and is disabled for
+reduced-motion preferences. Agent monograms and consistent stroke SVG controls
+replace decorative icon collections.
+
+All demo state is ephemeral and browser-local. No account, model, browser agent
+or cloud worker is connected. The page never requests or stores API keys and
+never uses the preview to authorize an external action. Arrow keys and Home/End
+work in the agent, model and record selection groups.
 
 ## Build and publish
 
@@ -32,18 +37,14 @@ The existing GitHub Pages workflow publishes `dist` from `main` to
 https://diyalamp.com/. Edit `dist/style.css`, then regenerate the inline stylesheet:
 
 ```sh
-python3 scripts/inline-styles.py
+node scripts/inline-styles.mjs
 node --check dist/app.js
 ```
 
-Verify desktop and phone layouts, scenario actions, keyboard controls, motion
-preferences, links and sharing assets before publishing. Keep credentials and
-private customer information out of Git. Preserve the Apple 🪔 emoji favicon.
+Verify desktop and phone layouts, independent agent state, preserved records on
+model changes, keyboard controls, pause/resume, motion preferences, links and
+sharing assets before publishing. Keep credentials and private customer data out
+of Git. Preserve the Apple lamp favicon.
 
-Earlier audit records describe older releases. The current release is
-`coordinated-workspace`; only its own recorded measurements apply to this page.
-
-The published release scores **100 in all four standard Lighthouse categories**
-on mobile and desktop in the recorded lab runs. See the
-[current audit](quality/coordinated-workspace-audit.json) for exact scope and
-metrics; these measurements are not a guarantee for every device or network.
+Historical audit files apply to earlier releases, not this redesigned page.
+Do not carry forward their Lighthouse scores without measuring this release.

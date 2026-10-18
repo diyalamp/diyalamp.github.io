@@ -2,130 +2,135 @@
   'use strict';
   const byId = id => document.getElementById(id);
   const demo = byId('demo');
-  const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const scenarios = [...document.querySelectorAll('[data-scenario].scenario')];
-  const tabs = [...document.querySelectorAll('[data-tab]')];
-  const agents = [...document.querySelectorAll('[data-agent]')];
-  const names = {shopify:'Commerce',printify:'Merch',domain:'Domain'};
-  const addresses = {shopify:'shop.example.invalid / settings',printify:'merch.example.invalid / products',domain:'domain.example.invalid / connections'};
-  let scenario = 'currency', tab = 'shopify', phase = 0, conflict = false, paused = media.matches;
-  const set = (id, value) => { byId(id).textContent = value; };
-  function announce(value) { set('demo-status', value); }
-  function animate(element) {
-    if (paused || media.matches) return;
-    element.getAnimations().forEach(animation => animation.cancel());
-    element.animate([{transform:'translateY(5px)'},{transform:'translateY(0)'}], {duration:360,easing:'cubic-bezier(.2,.8,.2,1)'});
-  }
-  function row(parent, label, value) {
-    const line = document.createElement('div'); line.className = 'setting-row';
-    const key = document.createElement('span'); key.textContent = label;
-    const content = document.createElement('strong'); content.textContent = value;
-    line.append(key,content); parent.append(line);
-  }
-  function page() {
-    const box = byId('page-content'); box.replaceChildren();
-    const label = document.createElement('p'); label.className='label';
-    const heading = document.createElement('h3'); const description = document.createElement('p');
-    box.append(label,heading,description);
-    if (tab === 'shopify') {
-      set('page-app','Store settings'); label.textContent='Market preferences'; heading.textContent='Make the same decision once.';
-      description.textContent='Your storefront, product prices and launch checks should agree on the currency.';
-      row(box,'Store currency',scenario==='currency' && phase===0?'Awaiting decision':'USD');
-      row(box,'Decision status',scenario==='currency'?(phase===0?'Needs your input':phase===1?'New revision · Review needed':'USD revision approved'):'Shared with the team');
-      if (scenario==='handoff') row(box,'Product handoff',phase?'2 product drafts ready':'Waiting for Merch');
-    } else if (tab === 'printify') {
-      set('page-app','Product workspace'); label.textContent='Print-on-demand catalog'; heading.textContent='A handoff, not another relay.';
-      description.textContent='Merch prepares the product drafts. Commerce receives their references and can continue the listing work.';
-      row(box,'Product drafts','Notebook · Ceramic mug'); row(box,'Currency',scenario==='currency' && phase===0?'Waiting for a decision':'USD');
-      row(box,'Handoff status',scenario==='handoff' && phase?'Recorded · Tab released':'Merch preparing drafts');
-    } else {
-      set('page-app','Domain connection'); label.textContent='Connection checks'; heading.textContent='Your sign-in stays yours.';
-      description.textContent='The Domain agent surfaces the blocker and waits. It resumes only after the fictional user handoff.';
-      row(box,'Connection','store.example.invalid'); row(box,'Access',scenario==='login'?(phase?'Example sign-in completed':'Human sign-in needed'):'Check queued');
-      row(box,'Next step',scenario==='login' && phase?'Resume connection check':'Wait for the required access');
+  if (!demo) return;
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const agentButtons = [...document.querySelectorAll('[data-select-agent]')];
+  const modelButtons = [...document.querySelectorAll('[data-model]')];
+  const heroModelButtons = [...document.querySelectorAll('[data-hero-model]')];
+  const recordButtons = [...document.querySelectorAll('[data-record-tab]')];
+  const traceButtons = [...document.querySelectorAll('button[data-trace]')];
+  const definitions = {
+    atlas: {
+      name:'Atlas', letter:'A', role:'Research & synthesis', model:'Claude',
+      purpose:'Explore a question, keep the evidence, and return with a useful next step.',
+      checkpoint:['Compare distributed SQL architectures.','Source comparison saved. Assumptions recorded.','Ask you to review the recommendation.'],
+      memory:[['Current focus','Distributed systems and the decisions behind them.'],['Saved comparison','Isolation guarantees, throughput and their tradeoffs.'],['Your last review','Keep benchmark assumptions visible in every comparison.']],
+      work:[['Compare architecture tradeoffs','A comparison with its source material and open questions.','Ready for your review'],['Maintain a reading list','Return to the question without rebuilding the context.','Scheduled']],
+      instructions:[['Work from evidence','Prefer primary sources and preserve their references.'],['Make uncertainty visible','Separate observations, assumptions and conclusions.'],['Keep you in control','Ask before sharing or taking an external action.']]
+    },
+    forge: {
+      name:'Forge', letter:'F', role:'Engineering & systems', model:'GPT',
+      purpose:'Develop an implementation, preserve the reasoning, and keep the next step explicit.',
+      checkpoint:['Make interrupted tasks recoverable.','Failure boundary and proposed change saved.','Ask you to approve the bounded change.'],
+      memory:[['Project context','A small service with explicit ownership and recoverable task state.'],['Saved constraint','Keep provider credentials outside browser code and prompts.'],['Your last review','Show the failure case before proposing the next change.']],
+      work:[['Review a recovery boundary','Inspect the checkpoint and the unresolved failure case.','Awaiting your decision'],['Prepare a focused change','A bounded implementation plan with validation steps.','Queued']],
+      instructions:[['Keep scope clear','Prefer a small, inspectable change over a broad rewrite.'],['Record the reasoning','Preserve decisions and their limitations with the task.'],['Respect approvals','Ask before an external write or deployment.']]
+    },
+    scout: {
+      name:'Scout', letter:'S', role:'Signals & discovery', model:'Gemini',
+      purpose:'Follow a question over time and bring back the changes worth a closer look.',
+      checkpoint:['Track meaningful changes in agent tooling.','Source list and previous findings saved.','Revisit selected sources at the next check.'],
+      memory:[['Current watchlist','Open-source infrastructure and changes in agent tooling.'],['Saved preference','Prioritize substantial changes over launch-day noise.'],['Your last review','Explain what changed and why it affects the open question.']],
+      work:[['Review a new signal','Source material is saved with the proposed interpretation.','Ready for your review'],['Revisit an open question','A future check that starts from the previous findings.','Scheduled']],
+      instructions:[['Keep the source','Every finding should remain linked to its origin.'],['Avoid repeated alerts','Connect new information to what is already recorded.'],['Respect boundaries','Read selected sources; ask before publishing.']]
     }
-    set('tab-address',addresses[tab]);
-    const released = scenario==='handoff' && phase>0 && tab==='printify';
-    set('tab-ownership',released?'Released · Available to acquire':names[tab]+' owns this tab');
-    set('browser-footer-status',conflict?'Conflicting request blocked. Owner unchanged.':released?'Tab released. Available for the next assignment.':'One tab, one current owner.');
+  };
+  const initialState = () => Object.fromEntries(Object.entries(definitions).map(([id, definition]) => [id, {model:definition.model, paused:false, events:[]} ]));
+  let state = initialState(), selected = 'atlas', recordTab = 'work', motionPaused = reducedMotion.matches;
+  const set = (id, value) => { byId(id).textContent = value; };
+  const announce = message => set('demo-status', message);
+  function icon(kind) {
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');svg.classList.add('ui-icon');
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    path.setAttribute('d',({memory:'M5 4h14v16H5z M9 9h6 M9 13h6',pause:'M9 5v14 M15 5v14',play:'m9 5 10 7-10 7z',check:'m5 12 4 4L19 6'})[kind]);
+    svg.append(path);return svg;
   }
-  function activities(items) {
-    const list = byId('activity-list'); list.replaceChildren();
-    items.forEach(([title, text])=>{
-      const item=document.createElement('div'); item.className='activity';
-      const dot=document.createElement('span');dot.className='activity-node';dot.setAttribute('aria-hidden','true');
-      const body=document.createElement('div'); const strong=document.createElement('strong'); strong.textContent=title;
-      const copy=document.createElement('p');copy.textContent=text;body.append(strong,copy);item.append(dot,body);list.append(item);
+  function lift(element) {
+    if (motionPaused || reducedMotion.matches) return;
+    element.animate([{opacity:.55,transform:'translateY(5px)'},{opacity:1,transform:'translateY(0)'}],{duration:320,easing:'cubic-bezier(.2,.8,.2,1)'});
+  }
+  function memoryFlash() {
+    const box=byId('continuity-summary');box.classList.remove('flash');
+    if(motionPaused || reducedMotion.matches)return;
+    void box.offsetWidth;box.classList.add('flash');
+  }
+  function modelChangePulse() {
+    const sketch=document.querySelector('.continuity-sketch');sketch.classList.remove('model-changed');
+    if(motionPaused || reducedMotion.matches)return;
+    void sketch.offsetWidth;sketch.classList.add('model-changed');
+  }
+  function renderRecords() {
+    const definition=definitions[selected], current=state[selected], list=byId('record-list');
+    const content=definition[recordTab];list.replaceChildren();
+    const descriptions={memory:['A record you can inspect.', '3 saved memories'],work:['Work with a next step.', '2 tasks'],instructions:['An explicit brief.', '3 instructions']};
+    set('record-heading',descriptions[recordTab][0]);set('record-label',descriptions[recordTab][1]);
+    for(const [title,description,status] of content){
+      const item=document.createElement('li');
+      const mark=document.createElement('span');mark.className='memory-icon';mark.append(icon(recordTab==='work'?'check':'memory'));
+      const copy=document.createElement('div'), strong=document.createElement('strong'), paragraph=document.createElement('p');
+      strong.textContent=title;paragraph.textContent=description;copy.append(strong,paragraph);
+      if(status){const detail=document.createElement('span');detail.className='work-state';detail.textContent=current.paused?'Paused · checkpoint kept':status;copy.append(detail);}
+      const saved=document.createElement('span');saved.className='memory-saved';saved.setAttribute('aria-hidden','true');saved.append(icon('check'));
+      item.append(mark,copy,saved);list.append(item);
+    }
+    recordButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.recordTab===recordTab)));
+  }
+  function renderEvents() {
+    const definition=definitions[selected], current=state[selected], list=byId('event-list');
+    const items=[['Agent identity created',definition.name+' has its own instructions and record.'],['Memory saved','Three records belong to '+definition.name+'.'],...current.events];
+    if(!current.events.length)items.push(['Ready for a model change','Try another model. The saved records stay in place.']);
+    list.replaceChildren();
+    items.slice(-4).forEach(([title,description],index,array)=>{
+      const item=document.createElement('li'),node=document.createElement('span'),copy=document.createElement('div'),strong=document.createElement('strong'),p=document.createElement('p');
+      node.className='event-node'+(index===array.length-1?' current':'');node.setAttribute('aria-hidden','true');
+      strong.textContent=title;p.textContent=description;copy.append(strong,p);item.append(node,copy);list.append(item);
     });
   }
   function render() {
-    demo.dataset.scenario=scenario;demo.dataset.complete=String(phase>0);
-    scenarios.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.scenario===scenario)));
-    tabs.forEach(button=>{
-      button.setAttribute('aria-pressed',String(button.dataset.tab===tab));
-      const released = scenario==='handoff' && phase>0 && button.dataset.tab==='printify';
-      const owner = button.querySelector('.tab-owner');
-      owner.textContent = released?'–':({shopify:'C',printify:'M',domain:'D'})[button.dataset.tab];
-      owner.setAttribute('title',released?'Available to acquire':names[button.dataset.tab]+' owns this tab');
-    });
-    agents.forEach(agent=>agent.dataset.active=String(agent.dataset.agent===({shopify:'commerce',printify:'merch',domain:'domain'})[tab]));
-    set('shared-decision',scenario==='currency' && phase===0?'Currency · Not decided':'Currency · USD');
-    set('context-version',scenario==='currency'?(phase===0?'Awaiting your choice':phase===1?'Revision 2 · Review needed':'Revision 2 · Approved'):'Revision 2 · Shared');
-    const action=byId('advance-demo');action.disabled=false;
-    if (scenario==='currency') {
-      if (phase===0) {
-        activities([['Commerce → Team','Which currency should the storefront use?'],['Merch · Waiting','Prices depend on the shared currency decision.']]);
-        set('approval-title','Your decision');set('approval-description','Choose USD once. See the decision reach every responsibility.');action.textContent='Set shared currency to USD ↗';
-      } else if (phase===1) {
-        activities([['You → Shared state','Use USD. Decision revision 2 recorded.'],['Merch + Domain','Both received the updated currency decision.'],['Approval reopened','The earlier approval covered a different state. Review the USD revision.']]);
-        set('approval-title','A changed decision needs review');set('approval-description','An old approval must not silently authorize the new currency.');action.textContent='Approve the USD revision ✓';
-      } else {
-        activities([['You → Team','USD revision 2 approved.'],['Commerce + Merch','Store settings and product prices now refer to the same decision.']]);
-        set('approval-title','One decision. No relay.');set('approval-description','The team can continue from the shared, approved revision. Try the product handoff next.');action.textContent='Shared decision approved';action.disabled=true;
-      }
-    } else if(scenario==='handoff') {
-      activities(phase?[['Merch → Commerce','Two product draft references and their USD prices are recorded.'],['Merch · Released','The product tab is available. Commerce has the next assignment.']]:[['Merch · Working','Preparing the notebook and mug drafts in its owned tab.'],['Commerce · Waiting','Listing work depends on the product handoff, not another chat message.']]);
-      set('approval-title',phase?'Handoff recorded':'The dependency is explicit');
-      set('approval-description',phase?'Completed work, the next assignment and tab availability stay visible.':'Record the product references, then release the tab. Commerce gets the next step.');
-      action.textContent=phase?'Handoff complete':'Simulate the product handoff ↗';action.disabled=phase>0;
-    } else {
-      activities(phase?[['You → Domain','Fictional sign-in completed. No credentials were entered.'],['Domain · Resumed','The agent can continue the connection check from its saved step.']]:[['Domain → You','The provider needs your sign-in. Please take over.'],['Domain · Paused','Connection work is waiting. Product work remains separate.']]);
-      set('approval-title',phase?'A deliberate return to the agent':'Human sign-in requested');
-      set('approval-description',phase?'The blocker is resolved in this example. The agent resumes the same task.':'No password guessing, no agent loop. You handle sign-in; the team keeps its context.');
-      action.textContent=phase?'Example handoff complete':'Simulate the user handoff ↗';action.disabled=phase>0;
-    }
-    if(conflict) {
-      const title=names[tab]+' keeps ownership';
-      const current=[...byId('activity-list').children];
-      const first=document.createElement('div');first.className='activity';
-      const body=document.createElement('div');const strong=document.createElement('strong');strong.textContent='Conflicting request blocked';
-      const p=document.createElement('p');p.textContent=title+'. Another agent must wait for a handoff.';body.append(strong,p);
-      const dot=document.createElement('span');dot.className='activity-node';dot.setAttribute('aria-hidden','true');first.append(dot,body);byId('activity-list').replaceChildren(first,...current);
-    }
-    page();
+    const definition=definitions[selected],current=state[selected];demo.dataset.agent=selected;
+    set('breadcrumb-agent',definition.name);set('active-name',definition.name);set('active-role',definition.role);set('active-glyph',definition.letter);set('agent-purpose',definition.purpose);
+    byId('active-glyph').className='agent-glyph large-glyph '+selected+'-glyph';
+    byId('agent-state').dataset.paused=String(current.paused);set('agent-state-text',current.paused?'Paused':'Active');
+    const pause=byId('pause-agent');pause.replaceChildren(document.createTextNode(current.paused?'Resume agent':'Pause agent'),icon(current.paused?'play':'pause'));pause.setAttribute('aria-pressed',String(current.paused));
+    agentButtons.forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.selectAgent===selected));button.dataset.paused=String(state[button.dataset.selectAgent].paused);});
+    modelButtons.forEach(button=>{button.setAttribute('aria-pressed',String(button.dataset.model===current.model));button.setAttribute('aria-label','Use '+button.dataset.model+' for '+definition.name);});
+    set('task-goal',definition.checkpoint[0]);set('task-checkpoint',definition.checkpoint[1]);set('task-next',current.paused?'Waiting for you to resume.':definition.checkpoint[2]);set('run-record-status',current.paused?'Paused · record kept':'Checkpoint saved');set('run-identity','agent / '+selected);
+    heroModelButtons.forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.heroModel===state.atlas.model)));set('hero-model-note',state.atlas.model+' reasons. Atlas keeps the record.');
+    set('continuity-count','3 memories retained');set('continuity-copy',current.paused?'Execution pauses. The saved record stays with '+definition.name+'.':'Memory belongs to '+definition.name+', not the model selection.');
+    renderRecords();renderEvents();
   }
-  function chooseScenario(value) {
-    scenario=value;phase=0;conflict=false;tab=value==='currency'?'shopify':value==='handoff'?'printify':'domain';render();animate(byId('page-view'));
-    announce('Illustration: '+({currency:'a shared currency decision',handoff:'a product handoff',login:'a human sign-in request'})[value]+'. No external accounts are connected.');
-  }
-  scenarios.forEach(button=>button.addEventListener('click',()=>chooseScenario(button.dataset.scenario)));
-  tabs.forEach(button=>button.addEventListener('click',()=>{tab=button.dataset.tab;conflict=false;render();animate(byId('page-view'));announce('Inspecting the fictional '+button.textContent.trim().replace(/\s+/g,' ')+' tab. Ownership has not changed.');}));
-  for(const group of [scenarios,tabs]) group.forEach((button,index)=>button.addEventListener('keydown',event=>{
-    if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
-    event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?group.length-1:(index+(event.key==='ArrowRight'?1:-1)+group.length)%group.length;group[next].focus();group[next].click();
+  agentButtons.forEach(button=>button.addEventListener('click',()=>{
+    selected=button.dataset.selectAgent;recordTab='work';render();lift(byId('agent-workspace')||document.querySelector('.agent-overview'));
+    announce(definitions[selected].name+' selected.');
   }));
-  byId('advance-demo').addEventListener('click',()=>{
-    if(byId('advance-demo').disabled)return;
-    phase++;conflict=false;render();animate(byId('approval-card'));animate(byId('activity-list'));
-    announce(scenario==='currency'?(phase===1?'Example decision changed to USD. All agents received it. The old approval is invalid; the new revision needs review.':'Example USD revision approved. The team shares the current decision.'):scenario==='handoff'?'Example product handoff recorded. Merch released its tab and Commerce received the next assignment.':'Fictional user handoff recorded. Domain resumed its connection check. No sign-in occurred.');
+  modelButtons.forEach(button=>button.addEventListener('click',()=>{
+    const current=state[selected],name=definitions[selected].name,newModel=button.dataset.model;
+    if(current.model===newModel){announce(newModel+' is already selected.');return;}
+    const old=current.model;current.model=newModel;current.events.push(['Model selection changed',old+' → '+newModel+'. Identity, task checkpoint and memory retained.']);current.events=current.events.slice(-3);
+    render();memoryFlash();if(selected==='atlas')modelChangePulse();lift(byId('event-list'));
+    announce('Model updated. Memory and task checkpoint retained.');
+  }));
+  heroModelButtons.forEach(button=>button.addEventListener('click',()=>{selected='atlas';recordTab='work';render();modelButtons.find(model=>model.dataset.model===button.dataset.heroModel).click();lift(document.querySelector('.agent-paper'));}));
+  recordButtons.forEach(button=>button.addEventListener('click',()=>{recordTab=button.dataset.recordTab;renderRecords();lift(byId('record-panel'));announce(definitions[selected].name+'’s '+recordTab+'.');}));
+  byId('pause-agent').addEventListener('click',()=>{
+    const current=state[selected],name=definitions[selected].name;current.paused=!current.paused;
+    current.events.push([current.paused?'Paused by you':'Resumed by you',current.paused?'Task checkpoints and saved memory remain in place.':'Continue from the saved checkpoint with '+current.model+'.']);current.events=current.events.slice(-3);
+    render();lift(byId('event-list'));announce(name+' '+(current.paused?'paused. Progress retained.':'resumed from its checkpoint.'));
   });
-  byId('test-conflict').addEventListener('click',()=>{
-    if(scenario==='handoff'&&phase>0&&tab==='printify') {announce('This example tab has been released. There is no conflicting owner. Inspect Shopify or Domain to test an owned tab.');return;}
-    conflict=true;render();animate(byId('activity-list'));announce('Example conflicting request blocked. '+names[tab]+' still owns the tab; the other agent must wait for a handoff.');
-  });
-  byId('reset-demo').addEventListener('click',()=>chooseScenario('currency'));
-  function renderMotion(){demo.classList.toggle('motion-paused',paused);byId('motion-toggle').setAttribute('aria-pressed',String(paused));byId('motion-toggle').setAttribute('aria-label',paused?'Resume ambient animation':'Pause ambient animation');byId('motion-toggle').textContent=paused?'▷':'Ⅱ';}
-  byId('motion-toggle').addEventListener('click',()=>{paused=!paused;renderMotion();announce(media.matches?'System reduced-motion preference remains enabled.':paused?'Ambient animation paused.':'Ambient animation resumed.');});
-  media.addEventListener('change',()=>{if(media.matches)paused=true;renderMotion();});
+  traceButtons.forEach(button=>button.addEventListener('click',()=>{
+    const flow=byId('architecture-flow'),trace=button.dataset.trace;flow.classList.remove('trace-pulse');flow.dataset.trace=trace;
+    traceButtons.forEach(option=>option.setAttribute('aria-pressed',String(option===button)));
+    set('architecture-note',trace==='model'?'A scoped request reaches the open-source engine, which calls your selected model through OpenRouter.':'The engine checkpoints the task to the agent’s isolated store. The database preserves state; workers execute the task.');
+    if(!motionPaused && !reducedMotion.matches){void flow.offsetWidth;flow.classList.add('trace-pulse');}
+  }));
+  for(const group of [agentButtons,modelButtons,heroModelButtons,recordButtons,traceButtons])group.forEach((button,index)=>button.addEventListener('keydown',event=>{
+    if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End'].includes(event.key))return;
+    event.preventDefault();const next=event.key==='Home'?0:event.key==='End'?group.length-1:(index+(['ArrowRight','ArrowDown'].includes(event.key)?1:-1)+group.length)%group.length;group[next].focus();group[next].click();
+  }));
+  byId('reset-demo').addEventListener('click',()=>{state=initialState();selected='atlas';recordTab='work';render();byId('continuity-summary').classList.remove('flash');announce('Workspace reset.');});
+  function renderMotion(){document.documentElement.classList.toggle('motion-paused',motionPaused);const button=byId('motion-toggle');button.setAttribute('aria-pressed',String(motionPaused));button.setAttribute('aria-label',motionPaused?'Resume decorative animation':'Pause decorative animation');button.replaceChildren(icon(motionPaused?'play':'pause'));}
+  byId('motion-toggle').addEventListener('click',()=>{motionPaused=!motionPaused;renderMotion();announce(reducedMotion.matches?'Reduced motion enabled.':motionPaused?'Animation paused.':'Animation resumed.');});
+  reducedMotion.addEventListener('change',()=>{if(reducedMotion.matches)motionPaused=true;renderMotion();});
   render();renderMotion();
 })();
