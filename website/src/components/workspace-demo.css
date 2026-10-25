@@ -18,3 +18,4 @@
 @media(hover:hover){.dl-workspace [data-slot="button"][data-variant="secondary"]:hover{background-color:#f1b13f24;transform:translateY(-2px)}}
 @media(max-width:700px){.dl-tools{gap:6px}.dl-tools [data-slot="button"]{flex:1 0 auto}.dl-pane-header{padding-inline:14px}.dl-demo-foot [data-slot="button"]{flex-shrink:0}.dl-workspace [data-slot="button"]{padding-inline:10px}}
 @media(prefers-reduced-motion:reduce){.dl-workspace [data-slot="button"]:hover{transform:none}}
+.dl-sidebar-heading>[data-slot="button"]{display:inline-flex;flex-direction:row;width:auto;min-width:74px;white-space:nowrap}

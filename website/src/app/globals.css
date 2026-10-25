@@ -399,3 +399,13 @@ main>section#questions,.closing-section{padding-block:44px}
 @media(max-width:760px){main>section:not(:first-of-type){padding-block:44px}.landing-header,.landing-footer{padding-inline:12px}main>section#questions,.closing-section{padding-block:32px}}
 
 [data-slot="bento-card"]>div[aria-hidden="true"]{background:linear-gradient(to top,#3c4545e0,#3c454560,transparent)}
+
+/* Owner's two-style type system: normal copy and a single heading scale. */
+body,body *{font-weight:400!important}
+main :is(p,li,label,select,textarea,button,a,span,code,pre,blockquote),main [data-slot="button"],.landing-brand,.landing-header nav a{font-size:16px!important}
+main :is(h1,h2,h3,h4,h5,h6),main :is(h1,h2,h3,h4,h5,h6) *{font-size:48px!important;font-weight:600!important;line-height:1.16!important;letter-spacing:-1px!important}
+.hero-title{max-width:1000px!important}
+.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6){font-size:48px!important}
+@media(max-width:760px){main :is(h1,h2,h3,h4,h5,h6),main :is(h1,h2,h3,h4,h5,h6) *,.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6){font-size:32px!important}}
+/* Product UI and card/FAQ labels use the normal size; section titles carry hierarchy. */
+main :is(h3,h4,h5,h6),main :is(h3,h4,h5,h6) *,.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6),.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6) *{font-size:16px!important;letter-spacing:normal!important;line-height:1.65!important}

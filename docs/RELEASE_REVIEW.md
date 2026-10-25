@@ -189,3 +189,6 @@ Publication confirmation is recorded separately after the GitHub Pages deploymen
 - Removed hover lift per latest owner direction; retained shine.
 - Added truthful website/source structured data and indexable alternatives FAQ. Existing sitemap and robots remain canonical.
 - Chrome accessibility snapshot confirms new controls, alternatives FAQ and the three correct footer social destinations. Screenshot requests subsequently timed out; final dynamic motion and new spacing were not visually confirmed in this pass.
+
+## Curved neural / two-style follow-up
+Production build and TypeScript pass. Chrome local screenshot confirms unified16px normal copy/navigation/wordmark,48px major heading, curved paths and brighter curved connections converging on the cursor; no straight particle network. Motion gradients carry Slate50 pulses. Sidebar New control explicitly keeps its trailing icon inline. Reduced-motion static rendering and visibility pause are implemented. Public deployment confirmation follows the new commit.

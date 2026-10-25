@@ -41,3 +41,6 @@ Owner authorized redesign and publication to diyalamp/diyalamp.github.io at http
 
 ## October 25 owner refinements
 Use continuous ambient Aurora and official tsParticles proximity connections, blue link flashes, gold node pulses, and sparse Oracle Red accents. No legacy grid or fixed cursor constellation. Compact header, footer and FAQ; consistent section rails. Translucent glass cards. Shared rectangular primary and translucent secondary controls, text before icon. Shine only on hover; no lift. Footer: GitHub, Bluesky, Reddit. All Inter Semibold.
+
+### Final typography and neural motion revision
+Owner replaced the all-Semibold instruction: use normal400 copy and Semibold600 headings, normal16px text everywhere including wordmark/navigation/buttons. Major hero/section headings share48px desktop/32px mobile. Card/FAQ/product UI labels use normal size. Curved quadratic neural links with traveling Slate50 gradients now reuse Velora AnimatedBeam geometry and Motion rather than straight tsParticles links. Pointer range280px, dynamic adjacency, reduced-motion static mode. Shine only, no hover lift.

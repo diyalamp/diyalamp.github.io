@@ -1,113 +1,64 @@
 "use client";
 
-import { useEffect, useId, useRef } from "react";
-import type { Container, ISourceOptions } from "@tsparticles/engine";
+import { useEffect, useId, useRef, useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { AuroraBackground } from "@/components/velora/aurora-background";
 
-// Official MIT tsParticles slim + twinkle updater, loaded from local npm chunks rather than a CDN.
-// https://particles.js.org/guide/getting-started · https://particles.js.org/guide/bundles-slim
-async function initializeEngine() {
-  const [{ tsParticles }, { loadSlim }, { loadTwinkleUpdater }] = await Promise.all([
-    import("@tsparticles/engine"), import("@tsparticles/slim"), import("@tsparticles/updater-twinkle"),
-  ]);
-  await loadSlim(tsParticles);
-  await loadTwinkleUpdater(tsParticles);
-  return tsParticles;
-}
-let engineReady: ReturnType<typeof initializeEngine> | undefined;
+type Point = { x: number; y: number };
+type Edge = { key: string; d: string; strength: number; cursor: boolean };
 
-/** Aurora with tsParticles proximity links, neural twinkles, and pointer grab/bubble interactions. */
+// Curved paths follow Velora AnimatedBeam's quadratic geometry; Motion animates
+// the same traveling-gradient treatment used in the connected-thinking illustration.
 export default function AmbientBackdrop() {
-  const host = useRef<HTMLDivElement>(null);
-  const id = `diya-particles-${useId().replace(/:/g, "")}`;
-
+  const reduced = useReducedMotion();
+  const id = useId().replace(/:/g, "");
+  const pointer = useRef<Point | null>(null);
+  const [scene, setScene] = useState<{ nodes: Point[]; edges: Edge[] }>({ nodes: [], edges: [] });
   useEffect(() => {
-    const element = host.current;
-    if (!element) return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const phone = window.matchMedia("(max-width: 700px)");
-    let container: Container | undefined;
-    let disposed = false;
-    let revision = 0;
-    let pending = Promise.resolve();
-
-    function render() {
-      const requested = ++revision;
-      pending = pending.then(async () => {
-        if (disposed || requested !== revision) return;
-        const engine = await (engineReady ??= initializeEngine());
-        if (disposed || requested !== revision) return;
-        container?.destroy();
-        container = undefined;
-        const still = reduced.matches;
-        const options: ISourceOptions = {
-          autoPlay: !still,
-          fullScreen: { enable: false },
-          background: { color: { value: "transparent" } },
-          fpsLimit: 45,
-          detectRetina: true,
-          pauseOnBlur: true,
-          pauseOnOutsideViewport: !still,
-          resize: { enable: true, delay: 0.2 },
-          interactivity: {
-            detectsOn: "window",
-            events: {
-              onHover: { enable: !still && finePointer.matches, mode: ["grab", "bubble"] },
-              onClick: { enable: false, mode: [] },
-            },
-            modes: {
-              grab: { distance: 180, links: { color: "#C2D4D4", opacity: 0.4 } },
-              bubble: { distance: 170, duration: 0.7, color: "#F1B13F", opacity: 0.85, size: 2.8, mix: true },
-            },
-          },
-          particles: {
-            number: { value: phone.matches ? 24 : 65, density: { enable: false } },
-            color: { value: ["#F1B13F", "#C2D4D4", "#697778", "#C74634"] },
-            shape: { type: "circle" },
-            twinkle: {
-              links: { enable: !still, color: "#C2D4D4", frequency: 0.006, opacity: { min: 0.3, max: 0.52 } },
-              particles: { enable: !still, fillColor: "#F1B13F", frequency: 0.008, opacity: { min: 0.65, max: 0.9 } },
-            },
-            opacity: { value: { min: 0.22, max: 0.62 }, animation: { enable: !still, speed: 1.2, sync: false, startValue: "random" } },
-            size: { value: { min: 1, max: 2.2 } },
-            links: { enable: true, distance: phone.matches ? 115 : 150, color: "#C2D4D4", opacity: 0.17, width: 0.75 },
-            move: { enable: !still, speed: { min: 0.6, max: 1 }, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
-          },
-        };
-        const loaded = await engine.load({ id, element: element!, options });
-        if (disposed || requested !== revision) { loaded?.destroy(); return; }
-        container = loaded;
-        // Paused engine draws one frame; no custom rendering or background RAF loop.
-        if (still) { container?.pause(); container?.draw(true); }
-      }).catch(error => {
-        // The original Aurora remains available if the optional decoration cannot initialize.
-        console.warn("The decorative particle background could not initialize.", error);
-      });
-    }
-    function visibility() {
-      if (!reduced.matches || !container || document.hidden) return;
-      // tsParticles manages visibility itself; retain a single static frame for reduced motion.
-      queueMicrotask(() => { if (!disposed && reduced.matches) { container?.pause(); container?.draw(true); } });
-    }
-    render();
-    reduced.addEventListener("change", render);
-    finePointer.addEventListener("change", render);
-    phone.addEventListener("change", render);
-    document.addEventListener("visibilitychange", visibility);
-    return () => {
-      disposed = true;
-      revision++;
-      reduced.removeEventListener("change", render);
-      finePointer.removeEventListener("change", render);
-      phone.removeEventListener("change", render);
-      document.removeEventListener("visibilitychange", visibility);
-      container?.destroy();
+    let frame = 0, previous = 0;
+    const start = performance.now();
+    const seeds = Array.from({ length: window.innerWidth < 700 ? 22 : 46 }, (_, i) => ({
+      x: ((i * 0.61803398875 + .07) % 1), y: ((i * .41421356237 + .11) % 1), phase: i * 2.39996,
+    }));
+    const curve = (a: Point, b: Point, bend: number) => {
+      const dx = b.x - a.x, dy = b.y - a.y;
+      return `M ${a.x} ${a.y} Q ${(a.x+b.x)/2-dy*bend} ${(a.y+b.y)/2+dx*bend} ${b.x} ${b.y}`;
     };
-  }, [id]);
-
-  return <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-background" style={{ isolation: "isolate" }}>
+    function draw(now: number) {
+      if (now - previous > 45 || reduced) {
+        previous = now;
+        const t = reduced ? 0 : (now - start) / 1000;
+        const w = window.innerWidth, h = window.innerHeight;
+        const nodes = seeds.map(s => ({ x: s.x*w + Math.sin(t*.13+s.phase)*38, y: s.y*h + Math.cos(t*.11+s.phase)*34 }));
+        const edges: Edge[] = [];
+        for (let i=0;i<nodes.length;i++) {
+          let connections=0;
+          for (let j=i+1;j<nodes.length && connections<3;j++) {
+            const distance=Math.hypot(nodes[i].x-nodes[j].x,nodes[i].y-nodes[j].y);
+            if(distance<220){connections++;edges.push({key:`${i}-${j}`,d:curve(nodes[i],nodes[j],(i%2?1:-1)*.24),strength:(1-distance/220)*.55,cursor:false});}
+          }
+          const p=pointer.current;
+          if(p && !reduced){const distance=Math.hypot(nodes[i].x-p.x,nodes[i].y-p.y);if(distance<280)edges.push({key:`p-${i}`,d:curve(nodes[i],p,(i%2?1:-1)*.32),strength:(1-distance/280)*.85,cursor:true});}
+        }
+        setScene({nodes,edges});
+      }
+      if(!reduced)frame=requestAnimationFrame(draw);
+    }
+    const move=(e:PointerEvent)=>{if(e.pointerType!=="touch")pointer.current={x:e.clientX,y:e.clientY};};
+    const leave=()=>{pointer.current=null;};
+    const visibility=()=>{cancelAnimationFrame(frame);if(!document.hidden)frame=requestAnimationFrame(draw);};
+    window.addEventListener("pointermove",move,{passive:true});
+    document.documentElement.addEventListener("pointerleave",leave);
+    document.addEventListener("visibilitychange",visibility);
+    frame=requestAnimationFrame(draw);
+    return()=>{cancelAnimationFrame(frame);window.removeEventListener("pointermove",move);document.documentElement.removeEventListener("pointerleave",leave);document.removeEventListener("visibilitychange",visibility);};
+  },[reduced]);
+  return <div aria-hidden="true" className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-background">
     <AuroraBackground intensity="subtle" />
-    <div ref={host} id={id} aria-hidden="true" className="absolute inset-0" />
+    <svg className="absolute inset-0 h-full w-full" fill="none">
+      <defs>{[0,1,2].map(i=><motion.linearGradient key={i} id={`${id}-${i}`} gradientUnits="objectBoundingBox" initial={{x1:"-100%",x2:"0%"}} animate={reduced?{x1:"0%",x2:"100%"}:{x1:["-100%","100%"],x2:["0%","200%"]}} transition={{duration:3+i*.7,repeat:Infinity,ease:"linear"}}><stop stopColor="#C2D4D4" stopOpacity="0"/><stop offset=".5" stopColor="#C2D4D4"/><stop offset="1" stopColor="#C2D4D4" stopOpacity="0"/></motion.linearGradient>)}</defs>
+      {scene.edges.map((e,i)=><g key={e.key} opacity={e.strength}><path d={e.d} stroke="#697778" strokeWidth={e.cursor?1.4:1}/><path d={e.d} stroke={`url(#${id}-${i%3})`} strokeWidth={e.cursor?2.4:1.8}/></g>)}
+      {scene.nodes.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r={i%7===0?2.6:1.9} fill={i%13===0?"#C74634":i%4===0?"#F1B13F":"#C2D4D4"} opacity={.65}/>)}
+    </svg>
   </div>;
 }
