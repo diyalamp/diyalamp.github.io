@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect, useMemo, useState, useSyncExternalStore } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import React, { useEffect, useMemo, useState, useSyncExternalStore, useRef } from "react";
+import { AnimatePresence, motion, useReducedMotion, useInView } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,8 @@ export function AnimatedList({
   className,
   delay = 2000,
 }: AnimatedListProps) {
+  const host = useRef<HTMLDivElement>(null);
+  const inView = useInView(host);
   const [index, setIndex] = useState(0);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -33,7 +35,7 @@ export function AnimatedList({
   const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false);
   const reducedMotion = useReducedMotion() === true && hydrated;
   const items = useMemo(() => React.Children.toArray(children), [children]);
-  const paused = hovered || focused;
+  const paused = hovered || focused || !inView;
 
   useEffect(() => {
     if (reducedMotion || paused) return;
@@ -51,6 +53,7 @@ export function AnimatedList({
 
   return (
     <div
+      ref={host}
       data-slot="animated-list"
       className={cn("flex flex-col gap-3", className)}
       onMouseEnter={() => setHovered(true)}

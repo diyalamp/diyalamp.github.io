@@ -1,0 +1,24 @@
+# diyalamp
+
+> An open-source Markdown writing project for macOS, with a free working browser notebook.
+
+## Available today
+
+The browser notebook provides rendered Markdown editing, slash block commands, multiple note tabs, local browser saving, and Markdown export. No account is required. Browser storage can be cleared by the user or browser; exporting preserves a separate copy.
+
+## In development
+
+The new Java desktop Markdown app for macOS is in development. There is no released desktop download for that app yet.
+
+## Planned
+
+Publishing to Substack, optional storage in the user's own CockroachDB Cloud account, and an open-source embeddings/retrieval engine across notes are roadmap items, not currently connected services.
+
+## Links
+
+- [Home and browser workspace](https://diyalamp.com/)
+- [Markdown and note-taking alternatives](https://diyalamp.com/alternatives/): Positioning relative to Obsidian, Notion, Coda, Typora, and Bear.
+- [Java project](https://github.com/diyalamp/diyalamp)
+- [Website source](https://github.com/diyalamp/diyalamp.github.io)
+
+The Java repository is Apache-2.0 licensed. Website dependencies and template notices are retained in its repository. diyalamp is an independent project.

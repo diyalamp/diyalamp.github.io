@@ -201,3 +201,12 @@ Final Chrome view confirms the fixed640px notebook window, consistent tabs/actio
 
 ## Compact tabs and note deletion
 Build/TypeScript pass. Tabs and sidebar rows now36px with12px horizontal spacing. Delete removes the current note from open tabs and persisted notes, supports an empty notebook, and exposes Undo for the most recent deletion. Chrome's current editor state shows the Delete and Undo controls. Further scripted interaction was interrupted by concurrent user input; existing user notes were not altered for testing.
+
+## Sidebar, drag and search release
+- Sidebar toggle uses panel-left open/close icons beside the window controls. Chrome confirmed Hide changes to Show and restores the sidebar; collapse styles respect reduced motion.
+- Native drag supports persisted sidebar ordering and writing/reference pane drop targets, with Radix note-menu keyboard alternatives. Native drag testing was interrupted by concurrent user tab changes; the handlers and production build were reviewed, but drag completion was not independently observed.
+- Fixed the Lighthouse ARIA finding: open-note controls now use a labelled group and pressed buttons rather than mixing ordinary close buttons into an ARIA tablist.
+- Added canonical alternatives guide, official comparison sources, updated sitemap, descriptive metadata, project/browser-app/source structured data, and factual llms.txt. No fabricated ratings or desktop availability claims.
+- Split rich-editor loading from the initial page bundle; load at usable visibility or explicit request. Hero heading renders immediately. Offscreen activity animation pauses and particles cap at30fps.
+- Chrome Lighthouse mobile baseline before the last accessibility/performance corrections: Performance96, Accessibility95, Best Practices100, SEO100, Agentic Browsing2/3. These are baseline measurements, not claimed final scores. Remote PageSpeed endpoint returned429. Live CDN gzip compression verified.
+- Final production build/TypeScript/static export passed, with canonical pages, sitemap XML and structured JSON validation. Owner asked to publish and finish rather than continue refinement; no claim of100 in every category.

@@ -14,9 +14,8 @@ import { AnimatedList } from "@/components/velora/animated-list";
 import { AnimatedBeam } from "@/components/velora/animated-beam";
 import { ScrollProgress } from "@/components/velora/scroll-progress";
 import { SpotlightCard } from "@/components/velora/spotlight-card";
-import { TextReveal } from "@/components/velora/text-reveal";
 import { AnimatedGradientText } from "@/components/velora/animated-gradient-text";
-import WorkspaceDemo from "@/components/workspace-demo";
+import DeferredWorkspace from "@/components/deferred-workspace";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 
@@ -59,18 +58,18 @@ export default function Home() {
   return <main className="relative isolate">
     <AmbientBackdrop />
     <ScrollProgress />
-    <header className="landing-header"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workspace">Workspace</a><a href="#roadmap">What&apos;s next</a></nav><Button variant="secondary" size="lg" asChild><a href={github} target="_blank" rel="noreferrer">GitHub <ArrowUpRightIcon size={16} /></a></Button></header>
+    <header className="landing-header"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workspace">Workspace</a><a href="#roadmap">What&apos;s next</a></nav><Button variant="secondary" size="lg" asChild><a href={github} aria-label="View diyalamp Java source on GitHub" target="_blank" rel="noreferrer">GitHub <ArrowUpRightIcon size={16} /></a></Button></header>
 
     {/* The complete template's animated hero and product stage. */}
     <section className="relative overflow-hidden pt-28 pb-12 lg:pt-32 lg:pb-12">
       <div className="relative mx-auto max-w-6xl px-6 text-center lg:px-6">
         <BlurFade delay={0} direction="down"><span className="label-tag">A tool for the mind <SparklesIcon className="size-4" /></span></BlurFade>
-        <h1 className="hero-title mx-auto mt-6 max-w-5xl text-balance"><TextReveal text="An open-source writing app" /> <AnimatedGradientText>for macOS.</AnimatedGradientText></h1>
+        <h1 className="hero-title mx-auto mt-6 max-w-5xl text-balance">An open-source writing app <AnimatedGradientText>for macOS.</AnimatedGradientText></h1>
         <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground text-pretty">A little light for your next thought. A focused Markdown workspace, with a clean page, familiar files, and room to think side by side.</p>
         <BlurFade delay={.35}><div className="mt-9 flex flex-wrap items-center justify-center gap-3"><Button size="lg" onClick={openWorkspace}>Try the workspace <PenLineIcon className="size-4" /></Button><Button variant="secondary" size="lg" asChild><a href={github} target="_blank" rel="noreferrer">Explore the source <ArrowUpRightIcon className="size-4" /></a></Button></div></BlurFade>
         <p className="mt-6 text-xs text-muted-foreground">Java desktop app in development. Working browser preview below.</p>
         <BlurFade delay={.45}><ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground">{["Markdown only", "No sign-up", "Open source"].map(fact => <li key={fact} className="flex items-center gap-3">{fact}<CheckIcon className="size-4 text-primary" /></li>)}</ul></BlurFade>
-        <div id="workspace" className="workspace-section mt-9 scroll-mt-24 text-left lg:mt-9"><BlurFade delay={.5} offset={32}><WorkspaceDemo /></BlurFade><div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><span>A real workspace. Open a note, edit a line, try a split view.</span><span className="inline-flex items-center gap-3">No account needed<LockKeyholeIcon className="size-3.5" /></span></div></div>
+        <div id="workspace" className="workspace-section mt-9 scroll-mt-24 text-left lg:mt-9"><BlurFade delay={.5} offset={32}><DeferredWorkspace /></BlurFade><div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><span>A real workspace. Open a note, edit a line, try a split view.</span><span className="inline-flex items-center gap-3">No account needed<LockKeyholeIcon className="size-3.5" /></span></div></div>
       </div>
     </section>
 
@@ -100,6 +99,6 @@ export default function Home() {
 
     {/* Upstream closing CTA composition, without a signup or fabricated offer. */}
     <section className="closing-section relative py-9 lg:py-9"><div className="relative mx-auto max-w-3xl px-6 text-center"><BlurFade><LampMark className="closing-lamp" /><h2 className="mt-3 text-4xl lg:text-5xl">The next thought starts<br />with a little light.</h2><p className="mx-auto mt-3 max-w-lg text-muted-foreground">Open a note. Follow a question. See where it leads.</p><div className="mt-6 flex justify-center"><Button size="lg" onClick={openWorkspace}>Start writing <ArrowUpRightIcon className="size-4" /></Button></div></BlurFade></div></section>
-    <footer className="landing-footer"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><p>A tool for the mind.</p><nav className="footer-socials" aria-label="diyalamp social accounts"><a href="https://github.com/diyalamp" target="_blank" rel="noopener noreferrer">GitHub <SocialIcon name="github" /></a><a href="https://bsky.app/profile/diyalamp.com" target="_blank" rel="noopener noreferrer">Bluesky <SocialIcon name="bluesky" /></a><a href="https://www.reddit.com/r/DiyaLamp/" target="_blank" rel="noopener noreferrer">Reddit <SocialIcon name="reddit" /></a></nav><span>Keep on keeping on.</span></footer>
+    <div className="comparison-link"><a href="/alternatives/">Compare Markdown and note-taking tools <ArrowUpRightIcon aria-hidden className="size-4" /></a></div><footer className="landing-footer"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><p>A tool for the mind.</p><nav className="footer-socials" aria-label="diyalamp social accounts"><a href="https://github.com/diyalamp" aria-label="diyalamp GitHub organization" target="_blank" rel="noopener noreferrer">GitHub <SocialIcon name="github" /></a><a href="https://bsky.app/profile/diyalamp.com" target="_blank" rel="noopener noreferrer">Bluesky <SocialIcon name="bluesky" /></a><a href="https://www.reddit.com/r/DiyaLamp/" target="_blank" rel="noopener noreferrer">Reddit <SocialIcon name="reddit" /></a></nav><span>Keep on keeping on.</span></footer>
   </main>;
 }

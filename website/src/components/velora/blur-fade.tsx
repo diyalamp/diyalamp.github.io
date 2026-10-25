@@ -44,10 +44,9 @@ export function BlurFade({
 
   const hidden =
     direction === "none"
-      ? { opacity: 0, filter: "blur(6px)" }
+      ? { opacity: 0 }
       : {
           opacity: 0,
-          filter: "blur(6px)",
           [axis[direction]]: sign[direction] * offset,
         };
 
@@ -59,7 +58,7 @@ export function BlurFade({
       data-slot="blur-fade"
       className={cn(className)}
       initial={hidden}
-      whileInView={{ opacity: 1, filter: "blur(0px)", x: 0, y: 0 }}
+      whileInView={{ opacity: 1, x: 0, y: 0 }}
       viewport={{ once, margin: "0px 0px -10% 0px" }}
       transition={
         reducedMotion

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type DragEvent } from "react";
 import { EditorContent, useEditor, type Editor } from "@tiptap/react";
 import { Extension } from "@tiptap/core";
 import { Plugin } from "@tiptap/pm/state";
@@ -9,12 +9,14 @@ import { Markdown } from "@tiptap/markdown";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Placeholder from "@tiptap/extension-placeholder";
-import { FileText, Plus, Columns2, Maximize2, Minimize2, Download, FolderOpen, Circle, X, Type, Heading1, Heading2, List, ListOrdered, Quote, CheckSquare, Code2, Minus, Bold, Italic, ChevronDown, Trash2, RotateCcw } from "lucide-react";
+import { FileText, Plus, Columns2, PanelLeftOpen, PanelLeftClose, Ellipsis, ArrowUp, ArrowDown, Download, FolderOpen, Circle, X, Type, Heading1, Heading2, List, ListOrdered, Quote, CheckSquare, Code2, Minus, Bold, Italic, ChevronDown, Trash2, RotateCcw } from "lucide-react";
+import { DropdownMenu } from "radix-ui";
 import LampMark from "@/components/lamp-mark";
 import { Button } from "@/components/ui/button";
 import "./workspace-demo.css";
 
 type Note = { id: string; name: string; body: string };
+const noteDragType = "application/x-diyalamp-note";
 const storageKey = "diyalamp-writing-preview-v1";
 const noteLimit = 30;
 const characterLimit = 60000;
@@ -152,7 +154,10 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
   const [openIds, setOpenIds] = useState(["welcome", "thinking"]);
   const [secondaryId, setSecondaryId] = useState("thinking");
   const [split, setSplit] = useState(false);
-  const [focused, setFocused] = useState(false);
+  const [sidebarClosed, setSidebarClosed] = useState(false);
+  const [draggedId, setDraggedId] = useState<string | null>(null);
+  const [reorderHint, setReorderHint] = useState<{ id: string; edge: "before" | "after" } | null>(null);
+  const [paneDrop, setPaneDrop] = useState<"primary" | "secondary" | null>(null);
   const [ready, setReady] = useState(false);
   const [restoreFailed, setRestoreFailed] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
@@ -182,6 +187,57 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
   }, [notes, ready, restoreFailed]);
 
   function openNote(id: string) { setPrimaryId(id); setOpenIds(current => current.includes(id) ? current : [...current, id]); }
+  function openReference(id: string) {
+    if (!primary || primary.id === id) {
+      const other = notes.find(note => note.id !== id);
+      if (other) openNote(other.id);
+      else openNote(id);
+    }
+    setSecondaryId(id); setSplit(true);
+    setOpenIds(current => current.includes(id) ? current : [...current, id]);
+    setStatus(`${notes.find(note => note.id === id)?.name || "Note"} opened in the reference pane.`);
+  }
+  function moveNote(id: string, offset: number) {
+    const index = notes.findIndex(note => note.id === id);
+    const destination = index + offset;
+    if (index < 0 || destination < 0 || destination >= notes.length) return;
+    setNotes(current => { const result = [...current]; const from = result.findIndex(note => note.id === id); const [note] = result.splice(from, 1); result.splice(from + offset, 0, note); return result; });
+    setStatus(`${notes[index].name} moved ${offset < 0 ? "up" : "down"}.`);
+  }
+  function rowDropEdge(event: DragEvent<HTMLElement>): "before" | "after" {
+    const bounds = event.currentTarget.getBoundingClientRect();
+    return (window.innerWidth <= 700 ? event.clientX < bounds.left + bounds.width / 2 : event.clientY < bounds.top + bounds.height / 2) ? "before" : "after";
+  }
+  function isNoteDrag(event: DragEvent) { return !!draggedId || Array.from(event.dataTransfer.types).includes(noteDragType); }
+  function clearDrag() { setDraggedId(null); setReorderHint(null); setPaneDrop(null); }
+  function dropNote(event: DragEvent, targetId: string, edge: "before" | "after") {
+    if (!isNoteDrag(event)) return;
+    event.preventDefault(); event.stopPropagation();
+    const id = event.dataTransfer.getData(noteDragType) || draggedId;
+    if (id && id !== targetId && notes.some(note => note.id === id)) {
+      setNotes(current => { const result = current.filter(note => note.id !== id); const note = current.find(note => note.id === id); const target = result.findIndex(note => note.id === targetId); if (!note || target < 0) return current; result.splice(target + (edge === "after" ? 1 : 0), 0, note); return result; });
+      setStatus("Page order saved.");
+    }
+    clearDrag();
+  }
+  function trackPaneDrop(event: DragEvent<HTMLDivElement>) {
+    if (!isNoteDrag(event)) return;
+    event.preventDefault(); event.stopPropagation(); event.dataTransfer.dropEffect = "move";
+    const bounds = event.currentTarget.getBoundingClientRect();
+    setPaneDrop(event.clientX > bounds.left + bounds.width * 0.64 ? "secondary" : "primary");
+    setReorderHint(null);
+  }
+  function dropInPane(event: DragEvent<HTMLDivElement>) {
+    if (!isNoteDrag(event)) return;
+    event.preventDefault(); event.stopPropagation();
+    const id = event.dataTransfer.getData(noteDragType) || draggedId;
+    if (id && notes.some(note => note.id === id)) {
+      const bounds = event.currentTarget.getBoundingClientRect();
+      if (event.clientX > bounds.left + bounds.width * 0.64) openReference(id);
+      else { openNote(id); setStatus("Note opened in the writing pane."); }
+    }
+    clearDrag();
+  }
   function closeTab(id: string) {
     const remaining = openIds.filter(open => open !== id); setOpenIds(remaining);
     if (primaryId === id) setPrimaryId(remaining[Math.max(0, openIds.indexOf(id) - 1)] || "");
@@ -219,12 +275,13 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
     const anchor = document.createElement("a"); anchor.href = url; anchor.download = primary.name; document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
   const saveLabel = !ready ? "Opening notebook" : restoreFailed ? "Previous save kept" : storageAvailable ? "Saved locally" : "Export to keep";
-  return <section className={`dl-workspace ${split ? "dl-split" : ""} ${focused ? "dl-focused" : ""} ${className}`} aria-label="Markdown notebook" onKeyDown={event => { if ((event.metaKey || event.ctrlKey) && event.key === "\\") { event.preventDefault(); toggleSplit(); } if (event.key === "Escape" && focused) setFocused(false); }}>
-    <div className="dl-windowbar"><span className="dl-windowdots" aria-hidden="true"><i /><i /><i /></span><span className="dl-window-title"><LampMark className="dl-lamp-mark" /> My notebook</span><span className="dl-save-indicator"><span>{saveLabel}</span><Circle aria-hidden="true" /></span></div>
-    <div className="dl-body"><aside className="dl-sidebar" aria-label="Markdown files"><div className="dl-workspace-name">My notebook <FolderOpen aria-hidden="true" /></div><Button variant="secondary" size="lg" className="dl-new-note" onClick={addNote}>New note <Plus /></Button><div className="dl-sidebar-heading">Your pages</div><nav className="dl-files" aria-label="Choose a note">{notes.map(note => <button key={note.id} type="button" aria-current={primaryId === note.id ? "page" : undefined} onClick={() => openNote(note.id)}><span>{note.name}</span><FileText aria-hidden="true" /></button>)}</nav><div className="dl-local-note">A little space to think.<br />Your files stay yours.</div></aside>
-      <div className="dl-main"><div className="dl-tabrow"><div className="dl-tabs" role="tablist" aria-label="Open notes">{openIds.map(id => { const note = notes.find(item => item.id === id); return note && <div key={id} className={`dl-tab ${primaryId === id ? "is-active" : ""}`}><button type="button" role="tab" aria-selected={primaryId === id} onClick={() => setPrimaryId(id)}><span>{note.name}</span><FileText /></button><button type="button" className="dl-close-tab" aria-label={`Close ${note.name}`} onClick={() => closeTab(id)}><X /></button></div>; })}</div><div className="dl-pane-tools"><button type="button" aria-pressed={split} aria-label={split ? "Close second pane" : "Open second pane"} title="Second pane · ⌘\\" onClick={toggleSplit}><Columns2 /></button><button type="button" aria-pressed={focused} aria-label={focused ? "Exit focus" : "Focus on writing"} title={focused ? "Exit focus" : "Focus on writing"} onClick={() => setFocused(value => !value)}>{focused ? <Minimize2 /> : <Maximize2 />}</button></div></div>
+  return <section className={`dl-workspace ${split ? "dl-split" : ""} ${sidebarClosed ? "dl-sidebar-collapsed" : ""} ${className}`} aria-label="Markdown notebook" onKeyDown={event => { if ((event.metaKey || event.ctrlKey) && event.key === "\\") { event.preventDefault(); toggleSplit(); } if (event.key === "Escape") { clearDrag(); } }}>
+    <div className="dl-windowbar"><span className="dl-window-controls"><span className="dl-windowdots" aria-hidden="true"><i /><i /><i /></span><button type="button" className="dl-sidebar-toggle" aria-label={sidebarClosed ? "Show sidebar" : "Hide sidebar"} aria-expanded={!sidebarClosed} aria-controls="dl-notebook-sidebar" title={sidebarClosed ? "Show sidebar" : "Hide sidebar"} onClick={() => setSidebarClosed(value => !value)}>{sidebarClosed ? <PanelLeftOpen /> : <PanelLeftClose />}</button></span><span className="dl-window-title"><LampMark className="dl-lamp-mark" /> My notebook</span><span className="dl-save-indicator"><span>{saveLabel}</span><Circle aria-hidden="true" /></span></div>
+    <div className="dl-body"><aside id="dl-notebook-sidebar" className="dl-sidebar" aria-label="Markdown files" inert={sidebarClosed} aria-hidden={sidebarClosed}><div className="dl-workspace-name">My notebook <FolderOpen aria-hidden="true" /></div><Button variant="secondary" size="lg" className="dl-new-note" onClick={addNote}>New note <Plus /></Button><div className="dl-sidebar-heading">Your pages</div><nav className="dl-files" aria-label="Choose and arrange notes">{notes.map((note, index) => <div key={note.id} draggable className={`dl-file-row ${primaryId === note.id ? "is-active" : ""} ${draggedId === note.id ? "is-dragging" : ""} ${reorderHint?.id === note.id ? `drop-${reorderHint.edge}` : ""}`} onDragStart={event => { event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData(noteDragType, note.id); setDraggedId(note.id); }} onDragEnd={clearDrag} onDragOver={event => { if (!isNoteDrag(event)) return; event.preventDefault(); event.stopPropagation(); event.dataTransfer.dropEffect = "move"; setReorderHint({ id: note.id, edge: rowDropEdge(event) }); setPaneDrop(null); }} onDrop={event => { dropNote(event, note.id, rowDropEdge(event)); }}><button className="dl-file-open" type="button" aria-current={primaryId === note.id ? "page" : undefined} onClick={() => openNote(note.id)} title="Open note · drag to arrange or open in a pane"><span>{note.name}</span><FileText aria-hidden="true" /></button><DropdownMenu.Root><DropdownMenu.Trigger asChild><button type="button" className="dl-note-menu-button" aria-label={`Actions for ${note.name}`}><Ellipsis /></button></DropdownMenu.Trigger><DropdownMenu.Portal><DropdownMenu.Content className="dl-note-options" side="right" align="start" sideOffset={12}><DropdownMenu.Item disabled={index === 0} onSelect={() => moveNote(note.id, -1)}>Move up <ArrowUp /></DropdownMenu.Item><DropdownMenu.Item disabled={index === notes.length - 1} onSelect={() => moveNote(note.id, 1)}>Move down <ArrowDown /></DropdownMenu.Item><DropdownMenu.Separator /><DropdownMenu.Item onSelect={() => openNote(note.id)}>Open in writing pane <FileText /></DropdownMenu.Item><DropdownMenu.Item onSelect={() => openReference(note.id)}>Open beside writing <Columns2 /></DropdownMenu.Item></DropdownMenu.Content></DropdownMenu.Portal></DropdownMenu.Root></div>)}</nav><div className="dl-local-note">Drag pages to arrange.<br />Drop beside your writing.</div></aside>
+      <div className="dl-main" onDragOverCapture={trackPaneDrop} onDropCapture={dropInPane} onDragLeave={event => { if (!(event.relatedTarget instanceof Node) || !event.currentTarget.contains(event.relatedTarget)) setPaneDrop(null); }}><div className="dl-tabrow"><div className="dl-tabs" role="group" aria-label="Open notes">{openIds.map(id => { const note = notes.find(item => item.id === id); return note && <div key={id} className={`dl-tab ${primaryId === id ? "is-active" : ""}`}><button type="button" aria-pressed={primaryId === id} onClick={() => setPrimaryId(id)}><span>{note.name}</span><FileText /></button><button type="button" className="dl-close-tab" aria-label={`Close ${note.name}`} onClick={() => closeTab(id)}><X /></button></div>; })}</div><div className="dl-pane-tools"><button type="button" aria-pressed={split} aria-label={split ? "Close second pane" : "Open second pane"} title="Second pane · ⌘\\" onClick={toggleSplit}><Columns2 /></button></div></div>
         {status && <div className="dl-notice" role="status"><span>{status}</span>{deleted && <Button variant="secondary" size="lg" onClick={undoDelete}>Undo <RotateCcw /></Button>}</div>}
         {primary ? <div className="dl-panels"><section className="dl-pane" aria-label="Writing pane"><div className="dl-pane-header"><NoteName key={primary.id} note={primary} onRename={name => setNotes(current => current.map(note => note.id === primary.id ? { ...note, name } : note))} /><div className="dl-document-actions"><Button variant="secondary" size="lg" onClick={deleteNote}>Delete <Trash2 /></Button><Button size="lg" onClick={exportNote}>Export <Download /></Button></div></div>{ready && <RichNote key={primary.id} note={primary} autoFocus={primary.id.startsWith("new-")} onChange={body => setNotes(current => current.map(note => note.id === primary.id ? { ...note, body } : note))} />}</section>{split && <section className="dl-pane dl-secondary" aria-label="Reference pane"><div className="dl-pane-header"><label className="dl-secondary-picker"><span className="dl-sr-only">Choose reference note</span><select aria-label="Choose reference note" value={secondary.id} onChange={event => setSecondaryId(event.target.value)}>{notes.map(note => <option key={note.id} value={note.id}>{note.name}</option>)}</select><ChevronDown /></label></div><RichNote key={secondary.id} note={secondary} readOnly /></section>}</div> : <div className="dl-empty-state"><FileText /><h3>A clear page. A fresh thought.</h3><p>Open a note from the sidebar, or begin something new.</p><Button size="lg" onClick={addNote}>New note <Plus /></Button></div>}
+        {draggedId && <div className={`dl-pane-drop-feedback ${paneDrop ? `is-over-${paneDrop}` : ""}`} aria-hidden="true"><div className="dl-drop-writing"><span>Open for writing <FileText /></span></div><div className="dl-drop-reference"><span>Open beside writing <Columns2 /></span></div></div>}
       </div></div>
   </section>;
 }
