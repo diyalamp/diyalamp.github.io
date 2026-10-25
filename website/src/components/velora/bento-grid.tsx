@@ -51,7 +51,7 @@ export function BentoCard({
       {...props}
     >
       {background && (
-        <div className="absolute inset-0 overflow-hidden transition-transform duration-500 ease-out group-hover/bento:scale-[1.04] motion-reduce:transition-none motion-reduce:group-hover/bento:scale-100">
+        <div className="absolute inset-0 overflow-hidden transition-opacity duration-300 ease-out group-hover/bento:opacity-95 motion-reduce:transition-none">
           {background}
         </div>
       )}

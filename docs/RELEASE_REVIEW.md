@@ -192,3 +192,9 @@ Publication confirmation is recorded separately after the GitHub Pages deploymen
 
 ## Curved neural / two-style follow-up
 Production build and TypeScript pass. Chrome local screenshot confirms unified16px normal copy/navigation/wordmark,48px major heading, curved paths and brighter curved connections converging on the cursor; no straight particle network. Motion gradients carry Slate50 pulses. Sidebar New control explicitly keeps its trailing icon inline. Reduced-motion static rendering and visibility pause are implemented. Public deployment confirmation follows the new commit.
+
+
+## Rendered notebook and consolidated spacing release
+Production build and TypeScript pass. Chrome confirmed New note creation, slash menu display, keyboard selection of Heading1, rendered heading entry, and tab closing without removing sidebar notes. Saved notes survived reload. No raw/read toggle or reset bar remains. Scoped styles now use8/16/24px spacing and8px radii. Shared brand CSS consolidated, darker surfaces unified, footer baseline fixed. Official tsParticles attraction replaces the custom angular background; the connected-note illustration remains angular with edge endpoints and restrained box ripples. Cursor dot and moving gradient are pointer-driven.
+
+Final Chrome view confirms the fixed640px notebook window, consistent tabs/actions, rendered saved notes, larger window dots, dark shared surfaces and straight particle connections. Final scale adjusted to12/24/36px after owner requested slightly more room. Gold/slate gradient restored. Final source build passes before publication.

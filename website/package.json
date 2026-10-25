@@ -9,6 +9,14 @@
     "check": "tsc6 --noEmit"
   },
   "dependencies": {
+    "@tiptap/core": "^3.32.0",
+    "@tiptap/extension-placeholder": "^3.32.0",
+    "@tiptap/extension-task-item": "^3.32.0",
+    "@tiptap/extension-task-list": "^3.32.0",
+    "@tiptap/markdown": "^3.32.0",
+    "@tiptap/pm": "^3.32.0",
+    "@tiptap/react": "^3.32.0",
+    "@tiptap/starter-kit": "^3.32.0",
     "@tsparticles/engine": "4.4.0",
     "@tsparticles/slim": "4.4.0",
     "@tsparticles/updater-twinkle": "4.4.0",

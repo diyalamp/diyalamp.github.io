@@ -1,7 +1,15 @@
 "use client";
 
-import { createElement, useEffect, useRef, useState, type ReactNode } from "react";
-import { FileText, Plus, Columns2, Maximize2, Minimize2, PenLine, BookOpen, Download, RotateCcw, ChevronDown, FolderOpen, CheckSquare, Square, Circle } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { EditorContent, useEditor, type Editor } from "@tiptap/react";
+import { Extension } from "@tiptap/core";
+import { Plugin } from "@tiptap/pm/state";
+import StarterKit from "@tiptap/starter-kit";
+import { Markdown } from "@tiptap/markdown";
+import TaskList from "@tiptap/extension-task-list";
+import TaskItem from "@tiptap/extension-task-item";
+import Placeholder from "@tiptap/extension-placeholder";
+import { FileText, Plus, Columns2, Maximize2, Minimize2, Download, FolderOpen, Circle, X, Type, Heading1, Heading2, List, ListOrdered, Quote, CheckSquare, Code2, Minus, Bold, Italic, ChevronDown } from "lucide-react";
 import LampMark from "@/components/lamp-mark";
 import { Button } from "@/components/ui/button";
 import "./workspace-demo.css";
@@ -12,7 +20,7 @@ const noteLimit = 30;
 const characterLimit = 60000;
 const serializedLimit = 12000000;
 const examples: Note[] = [
-  { id: "welcome", name: "welcome.md", body: "# A little room to think\n\nSome ideas need a quieter place to begin. A page, a question, and enough room to follow it.\n\n> Write to understand. Keep what you discover.\n\n## Make yourself at home\n\n- Open a note from the sidebar.\n- Try **Split view** to keep two ideas in sight.\n- Choose **Edit Markdown** and make this page yours.\n\n## The small things matter\n\n- [x] Plain Markdown files\n- [x] A space without an account\n- [ ] One thought worth returning to\n\nYour edits in this website preview stay in this browser. Export a note to keep a `.md` copy.\n\n---\n\nA tool for the mind. A little light for the path ahead." },
+  { id: "welcome", name: "welcome.md", body: "# A little room to think\n\nSome ideas need a quieter place to begin. A page, a question, and enough room to follow it.\n\n> Write to understand. Keep what you discover.\n\n## Make yourself at home\n\n- Open a note from the sidebar.\n- Use the pane icon to keep two ideas in sight.\n- Click anywhere to write. Type **/** on a new line for blocks.\n\n## The small things matter\n\n- [x] Plain Markdown files\n- [x] A space without an account\n- [ ] One thought worth returning to\n\nYour edits in this website preview stay in this browser. Export a note to keep a `.md` copy.\n\n---\n\nA tool for the mind. A little light for the path ahead." },
   { id: "thinking", name: "thinking.md", body: "# Notes beside thoughts\n\nReading and writing rarely happen in a straight line. Keep a source on one side and your own reasoning on the other.\n\n## A useful question\n\nWhat can I explain after I close the book?\n\n1. Start with one clear claim.\n2. Find the assumptions behind it.\n3. Try a case where it might fail.\n\n> Understanding becomes useful when you can work with it.\n\n## Next time\n\n- [ ] Return to the difficult paragraph\n- [ ] Write a smaller example\n- [ ] Connect it to another note" },
   { id: "reading", name: "reading-list.md", body: "# The reading shelf\n\nNot everything needs to be finished today. Some questions are better kept open.\n\n## In progress\n\n- Distributed systems and the cost of coordination\n- The history of tools for thinking\n- How a good explanation changes what we notice\n\n## A note to myself\n\n**Collect questions, not just quotations.**\n\nA reading list is useful when it helps you return to an idea, not when it becomes another inbox.\n\n---\n\nThis is a sample note. Edit it, replace it, or add a page of your own." },
   { id: "ideas", name: "small-ideas.md", body: "# Small ideas\n\nA place for the sentence that has not found its essay yet.\n\n## Things to make\n\n- A tiny experiment that explains one difficult idea\n- An essay about the tools we choose\n- A better question than the one I started with\n\n## A working rule\n\nKeep the format simple enough that the idea remains the interesting part.\n\n`Markdown` is a useful common language: readable as text, portable as a file.\n\n> Leave a little space for what you have not noticed yet." },
@@ -27,82 +35,129 @@ function validNotes(value: unknown): value is Note[] {
     new Set(value.map(note => note.id)).size === value.length;
 }
 
-// React text nodes escape source markup. Links are restricted to ordinary web/mail protocols.
-function inline(source: string): ReactNode[] {
-  const pattern = /(`[^`\n]+`|\*\*[^*\n]+\*\*|\*[^*\n]+\*|\[[^\]\n]+\]\([^\s)]+\))/g;
-  const output: ReactNode[] = [];
-  let offset = 0;
-  for (const match of source.matchAll(pattern)) {
-    output.push(source.slice(offset, match.index));
-    const token = match[0];
-    const key = `${match.index}-${output.length}`;
-    if (token.startsWith("`")) output.push(<code key={key}>{token.slice(1, -1)}</code>);
-    else if (token.startsWith("**")) output.push(<strong key={key}>{token.slice(2, -2)}</strong>);
-    else if (token.startsWith("*")) output.push(<em key={key}>{token.slice(1, -1)}</em>);
-    else {
-      const link = /^\[([^\]]+)\]\(([^)]+)\)$/.exec(token);
-      let url: URL | undefined;
-      try { if (link) url = new URL(link[2], "https://diyalamp.com/"); } catch { /* Render literally. */ }
-      output.push(url && ["https:", "http:", "mailto:"].includes(url.protocol)
-        ? <a key={key} href={url.href} target="_blank" rel="noopener noreferrer">{link?.[1]}</a> : token);
-    }
-    offset = match.index + token.length;
+type SlashState = { from: number; to: number; query: string; left: number; top: number };
+const blocks = [
+  { id: "text", label: "Text", detail: "Just start writing", icon: Type },
+  { id: "h1", label: "Heading 1", detail: "A new chapter", icon: Heading1 },
+  { id: "h2", label: "Heading 2", detail: "A little structure", icon: Heading2 },
+  { id: "bullet", label: "Bullet list", detail: "Ideas, one by one", icon: List },
+  { id: "ordered", label: "Numbered list", detail: "Keep things in order", icon: ListOrdered },
+  { id: "task", label: "To-do list", detail: "Something to come back to", icon: CheckSquare },
+  { id: "quote", label: "Quote", detail: "A thought worth keeping", icon: Quote },
+  { id: "code", label: "Code block", detail: "A small example", icon: Code2 },
+  { id: "divider", label: "Divider", detail: "Room between ideas", icon: Minus },
+];
+
+// Transactions are rejected before an oversized document enters editor state or persistence.
+const BoundedDocument = Extension.create({
+  name: "boundedDocument",
+  addProseMirrorPlugins() {
+    return [new Plugin({ filterTransaction: transaction => !transaction.docChanged ||
+      (transaction.doc.content.size <= characterLimit && (this.editor.markdown?.serialize(transaction.doc.toJSON()).length ?? transaction.doc.textContent.length) <= characterLimit) })];
+  },
+});
+
+function RichNote({ note, readOnly = false, autoFocus = false, onChange }: { note: Note; readOnly?: boolean; autoFocus?: boolean; onChange?: (body: string) => void }) {
+  const wrapper = useRef<HTMLDivElement>(null);
+  const onChangeRef = useRef(onChange); onChangeRef.current = onChange;
+  const [slash, setSlash] = useState<SlashState | null>(null);
+  const [selected, setSelected] = useState(0);
+  const slashRef = useRef<SlashState | null>(null);
+  const selectedRef = useRef(0);
+  const dismissedAt = useRef<number | null>(null);
+  const menuId = `dl-block-menu-${note.id}-${readOnly ? "secondary" : "primary"}`;
+
+  function inspect(editor: Editor) {
+    if (readOnly || !editor.isFocused || !editor.state.selection.empty) { slashRef.current = null; setSlash(null); return; }
+    const { $from, from } = editor.state.selection;
+    const prefix = $from.parent.textBetween(0, $from.parentOffset, "\0", "\0");
+    const match = /^\/([a-z0-9 -]*)$/i.exec(prefix);
+    if (!match || dismissedAt.current === from || !$from.parent.isTextblock || $from.parent.type.name === "codeBlock") { slashRef.current = null; setSlash(null); return; }
+    const rect = wrapper.current?.getBoundingClientRect();
+    const position = editor.view.coordsAtPos(from);
+    const next = { from: from - prefix.length, to: from, query: match[1].toLowerCase(), left: Math.max(8, Math.min(position.left - (rect?.left || 0), (rect?.width || 600) - 285)), top: Math.max(15, Math.min(position.bottom - (rect?.top || 0) + 8, (rect?.height || 500) - 300)) };
+    slashRef.current = next; setSlash(next); selectedRef.current = 0; setSelected(0);
   }
-  output.push(source.slice(offset));
-  return output;
+  function run(editor: Editor, id: string, range: SlashState) {
+    const chain = editor.chain().focus().deleteRange({ from: range.from, to: range.to });
+    if (id === "h1") chain.setHeading({ level: 1 }).run();
+    else if (id === "h2") chain.setHeading({ level: 2 }).run();
+    else if (id === "bullet") chain.toggleBulletList().run();
+    else if (id === "ordered") chain.toggleOrderedList().run();
+    else if (id === "task") chain.toggleTaskList().run();
+    else if (id === "quote") chain.setBlockquote().run();
+    else if (id === "code") chain.setCodeBlock().run();
+    else if (id === "divider") chain.setHorizontalRule().run();
+    else chain.setParagraph().run();
+    slashRef.current = null; setSlash(null);
+  }
+  const editor = useEditor({
+    immediatelyRender: false,
+    editable: !readOnly,
+    extensions: [
+      StarterKit.configure({ heading: { levels: [1, 2, 3] }, link: { openOnClick: false, autolink: false, isAllowedUri: url => /^(https?:|mailto:)/i.test(url) || /^(\/|#)/.test(url) } }),
+      TaskList, TaskItem.configure({ nested: true }),
+      Markdown.configure({ markedOptions: { gfm: true } }),
+      Placeholder.configure({ placeholder: "Write something, or type / for blocks…" }),
+      BoundedDocument,
+    ],
+    content: note.body,
+    contentType: "markdown",
+    editorProps: {
+      attributes: { class: "dl-rich-document", role: "textbox", "aria-label": readOnly ? `Reading ${note.name}` : `Write in ${note.name}`, "aria-multiline": "true", spellcheck: "true" },
+      handleKeyDown(view, event) {
+        const current = slashRef.current;
+        if (!current) return false;
+        const options = blocks.filter(block => `${block.label} ${block.detail}`.toLowerCase().includes(current.query));
+        if (event.key === "Escape") { dismissedAt.current = view.state.selection.from; slashRef.current = null; setSlash(null); return true; }
+        if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+          const next = options.length ? (selectedRef.current + (event.key === "ArrowDown" ? 1 : -1) + options.length) % options.length : 0;
+          selectedRef.current = next; setSelected(next); return true;
+        }
+        if (event.key === "Enter" && options.length) { if (editor) run(editor, options[selectedRef.current].id, current); return true; }
+        return false;
+      },
+      // Paste is parsed by the editor's explicit schema; no scripts, frames, images or event attributes are supported.
+    },
+    onUpdate({ editor }) { dismissedAt.current = null; onChangeRef.current?.(editor.getMarkdown()); inspect(editor); },
+    onSelectionUpdate({ editor }) { inspect(editor); },
+    onBlur() { slashRef.current = null; setSlash(null); },
+  });
+
+  useEffect(() => {
+    if (!editor || !readOnly || editor.getMarkdown() === note.body) return;
+    editor.commands.setContent(note.body, { contentType: "markdown", emitUpdate: false });
+  }, [editor, note.body, readOnly]);
+  useEffect(() => { if (editor && autoFocus) editor.commands.focus("end"); }, [editor, autoFocus]);
+  const matches = slash ? blocks.filter(block => `${block.label} ${block.detail}`.toLowerCase().includes(slash.query)) : [];
+  return <div ref={wrapper} className={`dl-rich-wrap ${readOnly ? "dl-readonly" : ""}`}>
+    {!readOnly && <div className="dl-formatbar" aria-label="Text formatting"><span>Make room for a thought.</span><div><button type="button" title="Bold · ⌘B" aria-label="Bold" onMouseDown={event => event.preventDefault()} onClick={() => editor?.chain().focus().toggleBold().run()}><Bold /></button><button type="button" title="Italic · ⌘I" aria-label="Italic" onMouseDown={event => event.preventDefault()} onClick={() => editor?.chain().focus().toggleItalic().run()}><Italic /></button><button type="button" title="Turn into heading" aria-label="Turn into heading" onMouseDown={event => event.preventDefault()} onClick={() => editor?.chain().focus().toggleHeading({ level: 2 }).run()}><Heading2 /></button><button type="button" title="Bullet list" aria-label="Bullet list" onMouseDown={event => event.preventDefault()} onClick={() => editor?.chain().focus().toggleBulletList().run()}><List /></button></div></div>}
+    <div className="dl-rich-scroll" onScroll={() => { slashRef.current = null; setSlash(null); }}><EditorContent editor={editor} />{!editor && <div className="dl-editor-loading">Opening your page…</div>}</div>
+    {slash && <div id={menuId} className="dl-slash-menu" role="listbox" aria-label="Choose a block" style={{ left: slash.left, top: slash.top }}><div className="dl-menu-heading">Add a block</div>{matches.length ? matches.map((block, index) => <button key={block.id} id={`${menuId}-${index}`} type="button" role="option" aria-selected={index === selected} className={index === selected ? "is-selected" : ""} onMouseDown={event => event.preventDefault()} onMouseEnter={() => { selectedRef.current = index; setSelected(index); }} onClick={() => editor && run(editor, block.id, slash)}><span><strong>{block.label}</strong><span>{block.detail}</span></span><block.icon /></button>) : <p>No matching blocks.</p>}</div>}
+  </div>;
 }
 
-function Markdown({ source }: { source: string }) {
-  const lines = source.replace(/\r\n?/g, "\n").split("\n");
-  const blocks: ReactNode[] = [];
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i];
-    const key = i;
-    if (!line.trim()) { i++; continue; }
-    if (/^\s*```/.test(line)) {
-      const content: string[] = []; i++;
-      while (i < lines.length && !/^\s*```/.test(lines[i])) content.push(lines[i++]);
-      if (i < lines.length) i++;
-      blocks.push(<pre key={key}><code>{content.join("\n")}</code></pre>); continue;
-    }
-    const heading = /^(#{1,6})\s+(.+)$/.exec(line);
-    if (heading) { blocks.push(createElement(`h${heading[1].length}`, { key }, inline(heading[2]))); i++; continue; }
-    if (/^\s*(---+|\*\*\*+)\s*$/.test(line)) { blocks.push(<hr key={key} />); i++; continue; }
-    const quote = /^>\s?(.*)$/.exec(line);
-    if (quote) { blocks.push(<blockquote key={key}>{inline(quote[1])}</blockquote>); i++; continue; }
-    const listMatch = /^\s*(?:[-*+]\s+|\d+\.\s+)(.*)$/.exec(line);
-    if (listMatch) {
-      const ordered = /^\s*\d+\./.test(line);
-      const items: ReactNode[] = [];
-      while (i < lines.length) {
-        const match = /^\s*(?:[-*+]\s+|\d+\.\s+)(.*)$/.exec(lines[i]);
-        if (!match || /^\s*\d+\./.test(lines[i]) !== ordered) break;
-        const task = /^\[([ xX])\]\s+(.*)$/.exec(match[1]);
-        items.push(task ? <li className="dl-task" key={i}><span role="img" aria-label={task[1].toLowerCase() === "x" ? "Complete" : "Incomplete"}>{task[1].toLowerCase() === "x" ? <CheckSquare /> : <Square />}</span>{inline(task[2])}</li> : <li key={i}>{inline(match[1])}</li>); i++;
-      }
-      blocks.push(ordered ? <ol key={key}>{items}</ol> : <ul key={key}>{items}</ul>); continue;
-    }
-    const paragraph = [line]; i++;
-    while (i < lines.length && lines[i].trim() && !/^(#{1,6}\s|>|\s*```|\s*[-*+]\s|\s*\d+\.\s|\s*---)/.test(lines[i])) paragraph.push(lines[i++]);
-    blocks.push(<p key={key}>{inline(paragraph.join(" "))}</p>);
-  }
-  return blocks.length ? blocks : <p className="dl-empty">A little space for your next thought.</p>;
+function NoteName({ note, onRename }: { note: Note; onRename: (name: string) => void }) {
+  const [name, setName] = useState(note.name);
+  useEffect(() => setName(note.name), [note.name]);
+  return <input className="dl-note-name" value={name} maxLength={96} aria-label="Note filename" onChange={event => setName(event.target.value)} onBlur={() => {
+    const clean = name.trim().replace(/[\\/:*?"<>|]/g, "-").replace(/\.md$/i, "").slice(0, 90) || "Untitled";
+    onRename(`${clean}.md`);
+  }} onKeyDown={event => { if (event.key === "Enter") event.currentTarget.blur(); }} />;
 }
 
 export default function WorkspaceDemo({ className = "" }: { className?: string }) {
   const [notes, setNotes] = useState<Note[]>(freshExamples);
   const [primaryId, setPrimaryId] = useState("welcome");
+  const [openIds, setOpenIds] = useState(["welcome", "thinking"]);
   const [secondaryId, setSecondaryId] = useState("thinking");
   const [split, setSplit] = useState(false);
   const [focused, setFocused] = useState(false);
-  const [editing, setEditing] = useState(false);
   const [ready, setReady] = useState(false);
   const [restoreFailed, setRestoreFailed] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
-  const [status, setStatus] = useState("A working notebook preview. No account, no upload.");
-  const input = useRef<HTMLTextAreaElement>(null);
-  const primary = notes.find(note => note.id === primaryId) || notes[0];
+  const [status, setStatus] = useState("");
+  const primary = notes.find(note => note.id === primaryId);
   const secondary = notes.find(note => note.id === secondaryId) || notes[0];
 
   useEffect(() => {
@@ -113,65 +168,46 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
         const value: unknown = JSON.parse(stored);
         if (!validNotes(value)) throw new Error("Invalid notebook");
         setNotes(value.map(({ id, name, body }) => ({ id, name, body })));
-        setPrimaryId(value[0].id);
+        setPrimaryId(value[0].id); setOpenIds(value.slice(0, 2).map(note => note.id));
         setSecondaryId((value.find(note => note.id !== value[0].id) || value[0]).id);
       }
-    } catch {
-      setRestoreFailed(true); setStorageAvailable(false);
-      setStatus("The previous saved notebook could not be loaded and was left untouched. Export new changes before resetting.");
-    }
+    } catch { setRestoreFailed(true); setStorageAvailable(false); setStatus("Your previous saved notebook was left untouched. New edits can still be exported."); }
     setReady(true);
   }, []);
-
   useEffect(() => {
     if (!ready || restoreFailed) return;
     try { localStorage.setItem(storageKey, JSON.stringify(notes)); setStorageAvailable(true); }
-    catch { setStorageAvailable(false); setStatus("These changes are not saved to browser storage. Export the note to keep them."); }
+    catch { setStorageAvailable(false); setStatus("Browser storage is full. Export your note to keep these changes."); }
   }, [notes, ready, restoreFailed]);
 
-  useEffect(() => { if (editing) input.current?.focus(); }, [editing, primaryId]);
-  const words = primary.body.trim() ? primary.body.replace(/[#>*`\[\]-]/g, " ").trim().split(/\s+/).filter(Boolean).length : 0;
-  const saveLabel = !ready ? "Browser preview" : restoreFailed ? "Previous save kept · export changes" : storageAvailable ? "Saved in this browser" : "Unsaved · export to keep";
-
-  function toggleSplit() {
-    if (!split && secondary.id === primary.id) {
-      const other = notes.find(note => note.id !== primary.id);
-      if (other) setSecondaryId(other.id);
-    }
-    setSplit(value => !value);
-    setStatus(split ? "Back to one page." : "Two notes, side by side. Choose the second note from its menu.");
+  function openNote(id: string) { setPrimaryId(id); setOpenIds(current => current.includes(id) ? current : [...current, id]); }
+  function closeTab(id: string) {
+    const remaining = openIds.filter(open => open !== id); setOpenIds(remaining);
+    if (primaryId === id) setPrimaryId(remaining[Math.max(0, openIds.indexOf(id) - 1)] || "");
   }
-
+  function toggleSplit() {
+    if (!split && secondary.id === primaryId) setSecondaryId((notes.find(note => note.id !== primaryId) || secondary).id);
+    setSplit(value => !value);
+  }
   function addNote() {
-    if (notes.length >= noteLimit) { setStatus("This preview holds up to 30 notes. Export a note to keep it."); return; }
-    const id = `new-${Date.now().toString(36)}`;
+    if (notes.length >= noteLimit) { setStatus("This notebook holds up to 30 notes. Export the pages you want to keep."); return; }
+    const id = `new-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
     const count = notes.filter(note => note.id.startsWith("new-")).length + 1;
-    setNotes(current => [...current, { id, name: `untitled-${count}.md`, body: "# A new thought\n\n" }]);
-    setPrimaryId(id); setEditing(true); setStatus("New Markdown note created in this browser.");
+    setNotes(current => [...current, { id, name: `Untitled ${count}.md`, body: "# Untitled\n\n" }]);
+    openNote(id); setStatus("");
   }
   function exportNote() {
+    if (!primary) return;
     const url = URL.createObjectURL(new Blob([primary.body], { type: "text/markdown;charset=utf-8" }));
-    const anchor = document.createElement("a"); anchor.href = url; anchor.download = primary.name;
-    document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
-    setStatus(`${primary.name} exported as a Markdown file.`);
+    const anchor = document.createElement("a"); anchor.href = url; anchor.download = primary.name; document.body.append(anchor); anchor.click(); anchor.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
   }
-  function reset() {
-    if (!window.confirm("Reset this website preview? Browser-only edits will be replaced with sample notes. Export anything you want to keep first.")) return;
-    setNotes(freshExamples()); setPrimaryId("welcome"); setSecondaryId("thinking"); setSplit(false); setFocused(false); setEditing(false); setRestoreFailed(false); setStatus("Sample notebook restored.");
-  }
-
-  return <section className={`dl-workspace ${split ? "dl-split" : ""} ${focused ? "dl-focused" : ""} ${className}`} aria-label="Interactive Markdown notebook" onKeyDown={event => {
-    if ((event.metaKey || event.ctrlKey) && event.key === "\\") { event.preventDefault(); toggleSplit(); }
-    if (event.key === "Escape" && focused) setFocused(false);
-  }}>
-    <div className="dl-windowbar"><span className="dl-windowdots" aria-hidden="true"><i /><i /><i /></span><span className="dl-window-title"><LampMark className="dl-lamp-mark" /> My notebook</span><span className="dl-preview-label">Interactive preview</span></div>
-    <div className="dl-body">
-      <aside className="dl-sidebar" aria-label="Markdown files"><div className="dl-workspace-name">My notebook <FolderOpen aria-hidden="true" /><ChevronDown aria-hidden="true" /></div><div className="dl-sidebar-heading"><span>Your notes</span><Button variant="secondary" size="lg" type="button" onClick={addNote} aria-label="Create a new Markdown note" title="New note">New <Plus /></Button></div><nav className="dl-files" aria-label="Choose a note">{notes.map(note => <Button variant="secondary" size="lg" className="dl-note-tab" key={note.id} type="button" aria-pressed={note.id === primary.id} onClick={() => { setPrimaryId(note.id); setStatus(`${note.name} opened.`); }}><span>{note.name}</span><FileText aria-hidden="true" /></Button>)}</nav><div className="dl-local-note"><Circle aria-hidden="true" /><span>Plain files.<br />A little space to think.</span></div></aside>
-      <div className="dl-main"><div className="dl-toolbar"><span className="dl-breadcrumb">My notebook <span>/</span> <strong>{primary.name}</strong></span><div className="dl-tools"><Button variant="secondary" size="lg" type="button" aria-pressed={editing} onClick={() => { setEditing(value => !value); setStatus(editing ? "Read view. Your Markdown is rendered." : "Edit Markdown. This preview allows 60,000 characters per note."); }}><span>{editing ? "Read view" : "Edit Markdown"}</span>{editing ? <BookOpen /> : <PenLine />}</Button><Button variant="secondary" size="lg" type="button" aria-pressed={split} onClick={toggleSplit}><span>{split ? "Single view" : "Split view"}</span><Columns2 /></Button><Button variant="secondary" size="lg" type="button" aria-pressed={focused} onClick={() => { setFocused(value => !value); setStatus(focused ? "Your notebook is back in view." : "Focus mode. The sidebar is tucked away."); }}><span>{focused ? "Exit focus" : "Focus"}</span>{focused ? <Minimize2 /> : <Maximize2 />}</Button></div></div>
-        <div className="dl-panels"><section className="dl-pane" aria-label="Primary note"><div className="dl-pane-header"><span>{primary.name}<FileText aria-hidden="true" /></span><Button size="lg" type="button" onClick={exportNote}>Export<span className="dl-sr-only"> {primary.name} as Markdown</span><Download /></Button></div>{editing ? <textarea ref={input} className="dl-source" aria-label="Edit note Markdown" maxLength={characterLimit} value={primary.body} spellCheck onChange={event => { const body = event.target.value.slice(0, characterLimit); setNotes(current => current.map(note => note.id === primary.id ? { ...note, body } : note)); if (body.length === characterLimit) setStatus("This note reached the 60,000-character preview limit. Start another note or export this one."); }} /> : <article key={primary.id} className="dl-document"><Markdown source={primary.body} /></article>}</section>
-          {split && <section className="dl-pane dl-secondary" aria-label="Second note"><div className="dl-pane-header"><span><span className="dl-second-name">{secondary.name}</span><FileText aria-hidden="true" /></span><label className="dl-secondary-picker"><span className="dl-sr-only">Choose second note</span><select aria-label="Choose second note" value={secondary.id} onChange={event => { setSecondaryId(event.target.value); setStatus("Second note changed."); }}>{notes.map(note => <option key={note.id} value={note.id}>{note.name}</option>)}</select><ChevronDown aria-hidden="true" /></label></div><article key={secondary.id} className="dl-document"><Markdown source={secondary.body} /></article></section>}
-        </div><div className="dl-statusbar"><span>{saveLabel}<Circle aria-hidden="true" /></span><span>{words} {words === 1 ? "word" : "words"}</span><span>Markdown</span></div>
-      </div>
-    </div><div className="dl-demo-foot"><p role="status" aria-live="polite" aria-atomic="true">{status}</p><Button variant="secondary" size="lg" type="button" onClick={reset}>Reset preview <RotateCcw /></Button></div>
+  const saveLabel = !ready ? "Opening notebook" : restoreFailed ? "Previous save kept" : storageAvailable ? "Saved locally" : "Export to keep";
+  return <section className={`dl-workspace ${split ? "dl-split" : ""} ${focused ? "dl-focused" : ""} ${className}`} aria-label="Markdown notebook" onKeyDown={event => { if ((event.metaKey || event.ctrlKey) && event.key === "\\") { event.preventDefault(); toggleSplit(); } if (event.key === "Escape" && focused) setFocused(false); }}>
+    <div className="dl-windowbar"><span className="dl-windowdots" aria-hidden="true"><i /><i /><i /></span><span className="dl-window-title"><LampMark className="dl-lamp-mark" /> My notebook</span><span className="dl-save-indicator"><span>{saveLabel}</span><Circle aria-hidden="true" /></span></div>
+    <div className="dl-body"><aside className="dl-sidebar" aria-label="Markdown files"><div className="dl-workspace-name">My notebook <FolderOpen aria-hidden="true" /></div><Button variant="secondary" size="lg" className="dl-new-note" onClick={addNote}>New note <Plus /></Button><div className="dl-sidebar-heading">Your pages</div><nav className="dl-files" aria-label="Choose a note">{notes.map(note => <button key={note.id} type="button" aria-current={primaryId === note.id ? "page" : undefined} onClick={() => openNote(note.id)}><span>{note.name}</span><FileText aria-hidden="true" /></button>)}</nav><div className="dl-local-note">A little space to think.<br />Your files stay yours.</div></aside>
+      <div className="dl-main"><div className="dl-tabrow"><div className="dl-tabs" role="tablist" aria-label="Open notes">{openIds.map(id => { const note = notes.find(item => item.id === id); return note && <div key={id} className={`dl-tab ${primaryId === id ? "is-active" : ""}`}><button type="button" role="tab" aria-selected={primaryId === id} onClick={() => setPrimaryId(id)}><span>{note.name}</span><FileText /></button><button type="button" className="dl-close-tab" aria-label={`Close ${note.name}`} onClick={() => closeTab(id)}><X /></button></div>; })}</div><div className="dl-pane-tools"><button type="button" aria-pressed={split} aria-label={split ? "Close second pane" : "Open second pane"} title="Second pane · ⌘\\" onClick={toggleSplit}><Columns2 /></button><button type="button" aria-pressed={focused} aria-label={focused ? "Exit focus" : "Focus on writing"} title={focused ? "Exit focus" : "Focus on writing"} onClick={() => setFocused(value => !value)}>{focused ? <Minimize2 /> : <Maximize2 />}</button></div></div>
+        {status && <p className="dl-notice" role="status">{status}</p>}
+        {primary ? <div className="dl-panels"><section className="dl-pane" aria-label="Writing pane"><div className="dl-pane-header"><NoteName key={primary.id} note={primary} onRename={name => setNotes(current => current.map(note => note.id === primary.id ? { ...note, name } : note))} /><Button size="lg" onClick={exportNote}>Export <Download /></Button></div>{ready && <RichNote key={primary.id} note={primary} autoFocus={primary.id.startsWith("new-")} onChange={body => setNotes(current => current.map(note => note.id === primary.id ? { ...note, body } : note))} />}</section>{split && <section className="dl-pane dl-secondary" aria-label="Reference pane"><div className="dl-pane-header"><label className="dl-secondary-picker"><span className="dl-sr-only">Choose reference note</span><select aria-label="Choose reference note" value={secondary.id} onChange={event => setSecondaryId(event.target.value)}>{notes.map(note => <option key={note.id} value={note.id}>{note.name}</option>)}</select><ChevronDown /></label></div><RichNote key={secondary.id} note={secondary} readOnly /></section>}</div> : <div className="dl-empty-state"><FileText /><h3>A clear page. A fresh thought.</h3><p>Open a note from the sidebar, or begin something new.</p><Button size="lg" onClick={addNote}>New note <Plus /></Button></div>}
+      </div></div>
   </section>;
 }

@@ -59,17 +59,16 @@ export function AnimatedBeam({
       const rectA = from.getBoundingClientRect();
       const rectB = to.getBoundingClientRect();
 
-      const startX = rectA.left - containerRect.left + rectA.width / 2;
+      const rightward = rectB.left > rectA.left;
+      const startX = (rightward ? rectA.right : rectA.left) - containerRect.left;
       const startY = rectA.top - containerRect.top + rectA.height / 2;
-      const endX = rectB.left - containerRect.left + rectB.width / 2;
+      const endX = (rightward ? rectB.left : rectB.right) - containerRect.left;
       const endY = rectB.top - containerRect.top + rectB.height / 2;
 
       setSize({ width: containerRect.width, height: containerRect.height });
-      setPathD(
-        `M ${startX},${startY} Q ${(startX + endX) / 2},${
-          (startY + endY) / 2 - curvature
-        } ${endX},${endY}`
-      );
+      const diagonalX = Math.abs(endY-startY)/Math.sqrt(3)*(endX>=startX?1:-1);
+      const lead = (endX-startX-diagonalX)/2;
+      setPathD(`M ${startX} ${startY} L ${startX+lead} ${startY} L ${startX+lead+diagonalX} ${endY} L ${endX} ${endY}`);
     };
 
     // ResizeObserver fires once on observe, which also draws the initial path

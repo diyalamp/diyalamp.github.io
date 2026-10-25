@@ -60,3 +60,7 @@ site's third-party notices. Inter's full SIL Open Font License is also bundled.
 tsParticles engine, slim bundle and twinkle updater: MIT, https://github.com/tsparticles/tsparticles. Full license notices in website/public/TSPARTICLES-*-LICENSE.txt.
 
 Simple Icons social marks: CC0, https://github.com/simple-icons/simple-icons. License in website/public/SIMPLE-ICONS-LICENSE.txt.
+
+Tiptap open-source editor components (React, core, StarterKit, Markdown, task lists and placeholder)
+Source: https://github.com/ueberdosis/tiptap
+License: MIT. Full license retained in website/public/TIPTAP-LICENSE.txt.
