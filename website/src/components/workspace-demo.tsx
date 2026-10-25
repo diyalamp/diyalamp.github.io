@@ -9,7 +9,7 @@ import { Markdown } from "@tiptap/markdown";
 import TaskList from "@tiptap/extension-task-list";
 import TaskItem from "@tiptap/extension-task-item";
 import Placeholder from "@tiptap/extension-placeholder";
-import { FileText, Plus, Columns2, Maximize2, Minimize2, Download, FolderOpen, Circle, X, Type, Heading1, Heading2, List, ListOrdered, Quote, CheckSquare, Code2, Minus, Bold, Italic, ChevronDown } from "lucide-react";
+import { FileText, Plus, Columns2, Maximize2, Minimize2, Download, FolderOpen, Circle, X, Type, Heading1, Heading2, List, ListOrdered, Quote, CheckSquare, Code2, Minus, Bold, Italic, ChevronDown, Trash2, RotateCcw } from "lucide-react";
 import LampMark from "@/components/lamp-mark";
 import { Button } from "@/components/ui/button";
 import "./workspace-demo.css";
@@ -28,7 +28,7 @@ const examples: Note[] = [
 const freshExamples = () => examples.map(note => ({ ...note }));
 
 function validNotes(value: unknown): value is Note[] {
-  return Array.isArray(value) && value.length > 0 && value.length <= noteLimit &&
+  return Array.isArray(value) && value.length <= noteLimit &&
     value.every(note => note && typeof note.id === "string" && /^[\w-]{1,80}$/.test(note.id) &&
       typeof note.name === "string" && note.name.length <= 100 && note.name.endsWith(".md") &&
       typeof note.body === "string" && note.body.length <= characterLimit) &&
@@ -157,8 +157,9 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
   const [restoreFailed, setRestoreFailed] = useState(false);
   const [storageAvailable, setStorageAvailable] = useState(true);
   const [status, setStatus] = useState("");
+  const [deleted, setDeleted] = useState<{ note: Note; index: number } | null>(null);
   const primary = notes.find(note => note.id === primaryId);
-  const secondary = notes.find(note => note.id === secondaryId) || notes[0];
+  const secondary = notes.find(note => note.id === secondaryId) || notes[0] || { id: "", name: "", body: "" };
 
   useEffect(() => {
     try {
@@ -168,8 +169,8 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
         const value: unknown = JSON.parse(stored);
         if (!validNotes(value)) throw new Error("Invalid notebook");
         setNotes(value.map(({ id, name, body }) => ({ id, name, body })));
-        setPrimaryId(value[0].id); setOpenIds(value.slice(0, 2).map(note => note.id));
-        setSecondaryId((value.find(note => note.id !== value[0].id) || value[0]).id);
+        setPrimaryId(value[0]?.id || ""); setOpenIds(value.slice(0, 2).map(note => note.id));
+        setSecondaryId((value.find(note => note.id !== value[0]?.id) || value[0])?.id || "");
       }
     } catch { setRestoreFailed(true); setStorageAvailable(false); setStatus("Your previous saved notebook was left untouched. New edits can still be exported."); }
     setReady(true);
@@ -196,6 +197,22 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
     setNotes(current => [...current, { id, name: `Untitled ${count}.md`, body: "# Untitled\n\n" }]);
     openNote(id); setStatus("");
   }
+  function deleteNote() {
+    if (!primary) return;
+    setDeleted({ note: { ...primary }, index: notes.findIndex(note => note.id === primary.id) });
+    const remaining = notes.filter(note => note.id !== primary.id);
+    const tabs = openIds.filter(id => id !== primary.id);
+    const next = tabs[0] || remaining[0]?.id || "";
+    setNotes(remaining); setPrimaryId(next); setOpenIds(tabs.length ? tabs : next ? [next] : []);
+    if (secondaryId === primary.id) setSecondaryId(remaining[0]?.id || "");
+    setStatus(`${primary.name} deleted. You can undo this.`);
+  }
+  function undoDelete() {
+    if (!deleted) return;
+    if (notes.length >= noteLimit) { setStatus("Delete another page before restoring this one; the notebook holds 30 notes."); return; }
+    const restored = [...notes]; restored.splice(Math.min(deleted.index, restored.length), 0, deleted.note);
+    setNotes(restored); openNote(deleted.note.id); setDeleted(null); setStatus("Note restored.");
+  }
   function exportNote() {
     if (!primary) return;
     const url = URL.createObjectURL(new Blob([primary.body], { type: "text/markdown;charset=utf-8" }));
@@ -206,8 +223,8 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
     <div className="dl-windowbar"><span className="dl-windowdots" aria-hidden="true"><i /><i /><i /></span><span className="dl-window-title"><LampMark className="dl-lamp-mark" /> My notebook</span><span className="dl-save-indicator"><span>{saveLabel}</span><Circle aria-hidden="true" /></span></div>
     <div className="dl-body"><aside className="dl-sidebar" aria-label="Markdown files"><div className="dl-workspace-name">My notebook <FolderOpen aria-hidden="true" /></div><Button variant="secondary" size="lg" className="dl-new-note" onClick={addNote}>New note <Plus /></Button><div className="dl-sidebar-heading">Your pages</div><nav className="dl-files" aria-label="Choose a note">{notes.map(note => <button key={note.id} type="button" aria-current={primaryId === note.id ? "page" : undefined} onClick={() => openNote(note.id)}><span>{note.name}</span><FileText aria-hidden="true" /></button>)}</nav><div className="dl-local-note">A little space to think.<br />Your files stay yours.</div></aside>
       <div className="dl-main"><div className="dl-tabrow"><div className="dl-tabs" role="tablist" aria-label="Open notes">{openIds.map(id => { const note = notes.find(item => item.id === id); return note && <div key={id} className={`dl-tab ${primaryId === id ? "is-active" : ""}`}><button type="button" role="tab" aria-selected={primaryId === id} onClick={() => setPrimaryId(id)}><span>{note.name}</span><FileText /></button><button type="button" className="dl-close-tab" aria-label={`Close ${note.name}`} onClick={() => closeTab(id)}><X /></button></div>; })}</div><div className="dl-pane-tools"><button type="button" aria-pressed={split} aria-label={split ? "Close second pane" : "Open second pane"} title="Second pane · ⌘\\" onClick={toggleSplit}><Columns2 /></button><button type="button" aria-pressed={focused} aria-label={focused ? "Exit focus" : "Focus on writing"} title={focused ? "Exit focus" : "Focus on writing"} onClick={() => setFocused(value => !value)}>{focused ? <Minimize2 /> : <Maximize2 />}</button></div></div>
-        {status && <p className="dl-notice" role="status">{status}</p>}
-        {primary ? <div className="dl-panels"><section className="dl-pane" aria-label="Writing pane"><div className="dl-pane-header"><NoteName key={primary.id} note={primary} onRename={name => setNotes(current => current.map(note => note.id === primary.id ? { ...note, name } : note))} /><Button size="lg" onClick={exportNote}>Export <Download /></Button></div>{ready && <RichNote key={primary.id} note={primary} autoFocus={primary.id.startsWith("new-")} onChange={body => setNotes(current => current.map(note => note.id === primary.id ? { ...note, body } : note))} />}</section>{split && <section className="dl-pane dl-secondary" aria-label="Reference pane"><div className="dl-pane-header"><label className="dl-secondary-picker"><span className="dl-sr-only">Choose reference note</span><select aria-label="Choose reference note" value={secondary.id} onChange={event => setSecondaryId(event.target.value)}>{notes.map(note => <option key={note.id} value={note.id}>{note.name}</option>)}</select><ChevronDown /></label></div><RichNote key={secondary.id} note={secondary} readOnly /></section>}</div> : <div className="dl-empty-state"><FileText /><h3>A clear page. A fresh thought.</h3><p>Open a note from the sidebar, or begin something new.</p><Button size="lg" onClick={addNote}>New note <Plus /></Button></div>}
+        {status && <div className="dl-notice" role="status"><span>{status}</span>{deleted && <Button variant="secondary" size="lg" onClick={undoDelete}>Undo <RotateCcw /></Button>}</div>}
+        {primary ? <div className="dl-panels"><section className="dl-pane" aria-label="Writing pane"><div className="dl-pane-header"><NoteName key={primary.id} note={primary} onRename={name => setNotes(current => current.map(note => note.id === primary.id ? { ...note, name } : note))} /><div className="dl-document-actions"><Button variant="secondary" size="lg" onClick={deleteNote}>Delete <Trash2 /></Button><Button size="lg" onClick={exportNote}>Export <Download /></Button></div></div>{ready && <RichNote key={primary.id} note={primary} autoFocus={primary.id.startsWith("new-")} onChange={body => setNotes(current => current.map(note => note.id === primary.id ? { ...note, body } : note))} />}</section>{split && <section className="dl-pane dl-secondary" aria-label="Reference pane"><div className="dl-pane-header"><label className="dl-secondary-picker"><span className="dl-sr-only">Choose reference note</span><select aria-label="Choose reference note" value={secondary.id} onChange={event => setSecondaryId(event.target.value)}>{notes.map(note => <option key={note.id} value={note.id}>{note.name}</option>)}</select><ChevronDown /></label></div><RichNote key={secondary.id} note={secondary} readOnly /></section>}</div> : <div className="dl-empty-state"><FileText /><h3>A clear page. A fresh thought.</h3><p>Open a note from the sidebar, or begin something new.</p><Button size="lg" onClick={addNote}>New note <Plus /></Button></div>}
       </div></div>
   </section>;
 }
