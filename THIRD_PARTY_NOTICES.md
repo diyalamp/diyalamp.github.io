@@ -44,3 +44,14 @@ SOFTWARE.
 
 
 Inter font: SIL Open Font License 1.1. Full notice bundled in dist/fonts/INTER-LICENSE.txt.
+
+---
+
+Velora UI complete SaaS website template and animation components
+
+Source: https://github.com/ColorlibHQ/velora-ui
+Adapted in website/. Full MIT license: website/VELORA-LICENSE.
+Copyright (c) 2026 Aigars Silkalns.
+
+The MIT notice is retained with the website source and distributed in the public
+site's third-party notices. Inter's full SIL Open Font License is also bundled.

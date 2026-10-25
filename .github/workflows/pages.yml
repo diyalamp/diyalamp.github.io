@@ -18,14 +18,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Verify generated homepage styles
-        run: |
-          node scripts/inline-styles.mjs
-          git diff --exit-code -- dist/index.html
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.5.1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+          cache-dependency-path: website/pnpm-lock.yaml
+      - name: Install website dependencies
+        run: pnpm --dir website install --frozen-lockfile
+      - name: Build static website
+        run: pnpm --dir website build
+        env:
+          NEXT_TELEMETRY_DISABLED: 1
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: website/out
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

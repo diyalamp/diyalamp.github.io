@@ -1,50 +1,27 @@
-# 🪔 diyalamp website
+# 🪔 diyalamp
 
-**Your agents. Your models. Memory built to last.**
+A tool for the mind. An open-source writing app for macOS, in development.
 
-The public landing page for the planned persistent-agent workspace: independent
-agent identities, instructions, memory and tasks, with model choice through
-OpenRouter and a portable, self-hostable orchestration architecture.
+This repository hosts [diyalamp.com](https://diyalamp.com/). The current website adapts the complete [Velora SaaS template](https://github.com/ColorlibHQ/velora-ui), retaining its MIT notice in `website/VELORA-LICENSE`. The product source lives in [diyalamp/diyalamp](https://github.com/diyalamp/diyalamp).
 
-This release presents a target architecture, not an available managed service.
-The current public code is an early local TypeScript fixture prototype backed by
-SQLite. The planned Java runtime, hosted sign-in, model integration and cloud
-persistence have not shipped. The website does not change that status.
+## Website
 
-## The experience
+The production source is `website/`: Next.js, React, Tailwind CSS and Motion. It preserves diyalamp's lamp mark, Inter Semibold, slate, paper and gold palette. The embedded browser workspace supports Markdown notes, read/edit views, split notes, focus mode, local browser persistence and Markdown export. It does not upload notes or require an account. Export important work: browser storage can be cleared.
 
-1. An interactive model-to-memory illustration makes continuity concrete.
-2. An interactive console lets visitors select three fictional agents, change
-   their model, inspect memory/instructions/tasks, and pause or resume each agent.
-   Model changes preserve example records, not identical model behavior.
-3. Architecture, project status, qualified storage plans and a pilot invitation
-   distinguish the open-source core from the future managed cloud.
+The Java desktop Markdown app is not yet released. Substack publication, storage in a user's own CockroachDB Cloud account and semantic retrieval remain planned directions. The site labels these separately from the working browser preview.
 
-All body text uses self-hosted Inter at weight 600 and 14px. The original Apple
-lamp favicon is preserved. Flat paper surfaces have no gradients or cursor lighting. Motion confirms model
-changes, is user-pausable and is disabled for
-reduced-motion preferences. Agent monograms and consistent stroke SVG controls
-replace decorative icon collections.
+## Development
 
-All demo state is ephemeral and browser-local. No account, model, browser agent
-or cloud worker is connected. The page never requests or stores API keys and
-never uses the preview to authorize an external action. Arrow keys and Home/End
-work in the agent, model and record selection groups.
-
-## Build and publish
-
-The existing GitHub Pages workflow publishes `dist` from `main` to
-https://diyalamp.com/. Edit `dist/style.css`, then regenerate the inline stylesheet:
+Use Node.js 24 and pnpm 12.5.1:
 
 ```sh
-node scripts/inline-styles.mjs
-node --check dist/app.js
+cd website
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
-Verify desktop and phone layouts, independent agent state, preserved records on
-model changes, keyboard controls, pause/resume, motion preferences, links and
-sharing assets before publishing. Keep credentials and private customer data out
-of Git. Preserve the Apple lamp favicon.
+Build the static site with `pnpm build`; output is `website/out/`. GitHub Pages deploys that output from `main` using `.github/workflows/pages.yml`. The custom domain remains diyalamp.com. The older `dist/` site is retained as legacy source and is not the publication target.
 
-Historical audit files apply to earlier releases, not this redesigned page.
-Do not carry forward their Lighthouse scores without measuring this release.
+## Brand and release notes
+
+See `docs/DIYA_LAMP_BRAND_SPEC.md` for owner direction and `docs/RELEASE_REVIEW.md` for actual validation evidence. Do not claim a deployment is live merely because a build or push succeeded. Keep planned integrations and desktop availability accurate. Never include credentials in public sources or browser builds.
