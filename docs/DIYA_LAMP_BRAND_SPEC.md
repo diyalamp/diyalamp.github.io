@@ -44,3 +44,5 @@ Use continuous ambient Aurora and official tsParticles proximity connections, bl
 
 ### Final typography and neural motion revision
 Owner replaced the all-Semibold instruction: use normal400 copy and Semibold600 headings, normal16px text everywhere including wordmark/navigation/buttons. Major hero/section headings share48px desktop/32px mobile. Card/FAQ/product UI labels use normal size. Curved quadratic neural links with traveling Slate50 gradients now reuse Velora AnimatedBeam geometry and Motion rather than straight tsParticles links. Pointer range280px, dynamic adjacency, reduced-motion static mode. Shine only, no hover lift.
+
+Owner latest correction: retain the two text sizes but restore Inter600/Semibold across all text. All beam gradients must use Gold #F1B13F and Slate50 #C2D4D4; remove upstream purple/cyan defaults. Nodes should drift clearly and independently, with visible traveling Slate50 impulses.

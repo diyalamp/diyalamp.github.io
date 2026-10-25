@@ -35,8 +35,8 @@ export function AnimatedBeam({
   delay = 0,
   pathWidth = 2,
   pathOpacity = 0.15,
-  gradientStartColor = "#8b5cf6",
-  gradientStopColor = "#22d3ee",
+  gradientStartColor = "#F1B13F",
+  gradientStopColor = "#C2D4D4",
   className,
 }: AnimatedBeamProps) {
   const id = useId();

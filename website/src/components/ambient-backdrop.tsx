@@ -4,7 +4,7 @@ import { useEffect, useId, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { AuroraBackground } from "@/components/velora/aurora-background";
 
-type Point = { x: number; y: number };
+type Point = { x: number; y: number; glow?: number };
 type Edge = { key: string; d: string; strength: number; cursor: boolean };
 
 // Curved paths follow Velora AnimatedBeam's quadratic geometry; Motion animates
@@ -29,7 +29,7 @@ export default function AmbientBackdrop() {
         previous = now;
         const t = reduced ? 0 : (now - start) / 1000;
         const w = window.innerWidth, h = window.innerHeight;
-        const nodes = seeds.map(s => ({ x: s.x*w + Math.sin(t*.13+s.phase)*38, y: s.y*h + Math.cos(t*.11+s.phase)*34 }));
+        const nodes = seeds.map(s => ({ x: ((s.x*w + t*(9+((s.phase*7)%12))*(Math.floor(s.phase)%2?1:-1)+w+60)%(w+120))-60, glow: reduced ? 0 : (Math.sin(t*2.4+s.phase)+1)*.45, y: ((s.y*h + t*(5+((s.phase*3)%7))*(Math.floor(s.phase)%3?1:-1)+h+60)%(h+120))-60 + Math.sin(t*.6+s.phase)*16 }));
         const edges: Edge[] = [];
         for (let i=0;i<nodes.length;i++) {
           let connections=0;
@@ -57,8 +57,8 @@ export default function AmbientBackdrop() {
     <AuroraBackground intensity="subtle" />
     <svg className="absolute inset-0 h-full w-full" fill="none">
       <defs>{[0,1,2].map(i=><motion.linearGradient key={i} id={`${id}-${i}`} gradientUnits="objectBoundingBox" initial={{x1:"-100%",x2:"0%"}} animate={reduced?{x1:"0%",x2:"100%"}:{x1:["-100%","100%"],x2:["0%","200%"]}} transition={{duration:3+i*.7,repeat:Infinity,ease:"linear"}}><stop stopColor="#C2D4D4" stopOpacity="0"/><stop offset=".5" stopColor="#C2D4D4"/><stop offset="1" stopColor="#C2D4D4" stopOpacity="0"/></motion.linearGradient>)}</defs>
-      {scene.edges.map((e,i)=><g key={e.key} opacity={e.strength}><path d={e.d} stroke="#697778" strokeWidth={e.cursor?1.4:1}/><path d={e.d} stroke={`url(#${id}-${i%3})`} strokeWidth={e.cursor?2.4:1.8}/></g>)}
-      {scene.nodes.map((p,i)=><circle key={i} cx={p.x} cy={p.y} r={i%7===0?2.6:1.9} fill={i%13===0?"#C74634":i%4===0?"#F1B13F":"#C2D4D4"} opacity={.65}/>)}
+      {scene.edges.map((e,i)=><g key={e.key} opacity={e.strength}><path d={e.d} stroke="#697778" strokeWidth={e.cursor?1.4:1}/><path d={e.d} stroke={`url(#${id}-${i%3})`} strokeWidth={e.cursor?2.4:1.8}/>{!reduced && (e.cursor || i%3===0) && <motion.circle r={e.cursor?2.5:1.8} fill="#C2D4D4" style={{offsetPath:`path("${e.d}")`}} animate={{offsetDistance:["0%","100%"],opacity:[0,1,1,0]}} transition={{duration:e.cursor?1.4:2.4,repeat:Infinity,ease:"linear",delay:(i%5)*.15}}/>}</g>)}
+      {scene.nodes.map((p,i)=><g key={i}>{(p.glow??0)>.65 && <circle cx={p.x} cy={p.y} r={7+(p.glow??0)*5} fill={i%4===0?"#F1B13F":"#C2D4D4"} opacity={((p.glow??0)-.65)*.48}/>}<circle cx={p.x} cy={p.y} r={(i%7===0?2.6:1.9)+(p.glow??0)} fill={i%13===0?"#C74634":i%4===0?"#F1B13F":"#C2D4D4"} opacity={.45+(p.glow??0)*.5}/></g>)}
     </svg>
   </div>;
 }

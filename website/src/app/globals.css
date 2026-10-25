@@ -409,3 +409,6 @@ main :is(h1,h2,h3,h4,h5,h6),main :is(h1,h2,h3,h4,h5,h6) *{font-size:48px!importa
 @media(max-width:760px){main :is(h1,h2,h3,h4,h5,h6),main :is(h1,h2,h3,h4,h5,h6) *,.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6){font-size:32px!important}}
 /* Product UI and card/FAQ labels use the normal size; section titles carry hierarchy. */
 main :is(h3,h4,h5,h6),main :is(h3,h4,h5,h6) *,.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6),.dl-workspace .dl-document :is(h1,h2,h3,h4,h5,h6) *{font-size:16px!important;letter-spacing:normal!important;line-height:1.65!important}
+
+/* Latest owner preference: retain two sizes, Semibold throughout. */
+body,body *,main :is(h1,h2,h3,h4,h5,h6) *{font-weight:600!important}
