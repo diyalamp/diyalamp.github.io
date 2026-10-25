@@ -55,3 +55,8 @@ Copyright (c) 2026 Aigars Silkalns.
 
 The MIT notice is retained with the website source and distributed in the public
 site's third-party notices. Inter's full SIL Open Font License is also bundled.
+
+
+tsParticles engine, slim bundle and twinkle updater: MIT, https://github.com/tsparticles/tsparticles. Full license notices in website/public/TSPARTICLES-*-LICENSE.txt.
+
+Simple Icons social marks: CC0, https://github.com/simple-icons/simple-icons. License in website/public/SIMPLE-ICONS-LICENSE.txt.

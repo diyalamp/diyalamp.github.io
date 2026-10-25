@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website', siteName: 'diyalamp', url: '/',
     title: 'diyalamp — A tool for the mind',
-    description: 'An open-source writing app for macOS. Markdown. Space to think.',
+    description: 'Try the free Markdown browser workspace. An open-source Java writing app for macOS is in development.',
     images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'diyalamp — A tool for the mind' }],
   },
   twitter: { card: 'summary_large_image', title: 'diyalamp — A tool for the mind', images: ['/social-card.png'] },
@@ -26,5 +26,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: '#3C4545' };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" className={inter.variable}><body>{children}</body></html>;
+  const data = {"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://diyalamp.com/#website","name":"diyalamp","url":"https://diyalamp.com/","description":"A focused open-source Markdown writing project for macOS, with a working browser workspace."},{"@type":"SoftwareSourceCode","name":"diyalamp","codeRepository":"https://github.com/diyalamp/diyalamp","programmingLanguage":"Java","runtimePlatform":"macOS (in development)","license":"https://www.apache.org/licenses/LICENSE-2.0","description":"Open-source writing app in development. The website offers a browser Markdown workspace today."}]};
+  return <html lang="en" className={inter.variable}><body><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(data).replace(/</g,"\\u003c")}} />{children}</body></html>;
 }

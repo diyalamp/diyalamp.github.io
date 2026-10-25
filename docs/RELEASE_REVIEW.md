@@ -181,3 +181,11 @@ The earlier custom HTML design was superseded by the owner's explicit request fo
 - Reduced-motion behavior was checked in source; an OS-level reduced-motion browser session was not separately exercised. No Lighthouse score is claimed.
 
 Publication confirmation is recorded separately after the GitHub Pages deployment succeeds.
+
+## October 25 refinement release
+- Production Next.js/TypeScript/static export passes; git diff whitespace check passes.
+- Official locally bundled tsParticles slim + twinkle replaces the old fixed background; window proximity interactions, reduced-motion and cleanup paths checked in source.
+- Shared rectangle controls, translucent cards, compact section rhythm and rails, social SVGs, fixed lamp branding and Inter Semibold retained.
+- Removed hover lift per latest owner direction; retained shine.
+- Added truthful website/source structured data and indexable alternatives FAQ. Existing sitemap and robots remain canonical.
+- Chrome accessibility snapshot confirms new controls, alternatives FAQ and the three correct footer social destinations. Screenshot requests subsequently timed out; final dynamic motion and new spacing were not visually confirmed in this pass.
