@@ -157,6 +157,7 @@ export default function WorkspaceDemo({ className = "" }: { className?: string }
   const [secondaryId, setSecondaryId] = useState("thinking");
   const [split, setSplit] = useState(false);
   const [sidebarClosed, setSidebarClosed] = useState(false);
+  useEffect(() => { if (window.matchMedia("(max-width: 800px)").matches) setSidebarClosed(true); }, []);
   const [draggedId, setDraggedId] = useState<string | null>(null);
   const [reorderHint, setReorderHint] = useState<{ id: string; edge: "before" | "after" } | null>(null);
   const [paneDrop, setPaneDrop] = useState<"primary" | "secondary" | null>(null);
