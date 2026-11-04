@@ -55,3 +55,11 @@ Latest final direction: background returns to a darker gold/slate pointer-reacti
 Final spacing adjustment: base12px with24px/36px multiples; owner requested slightly more air than the8px pass. Shared8px corner radius. Notebook fixed640px height with internal scrolling; tabs and actions use36px height and12px horizontal padding. Gradient restored to darker gold/slate per latest instruction, with cursor-reactive movement. Native window dots14px with standard red/yellow/green.
 
 Notebook navigation: panel-left sidebar toggle beside native window controls, animated collapse with reduced-motion fallback; drag rows to reorder, drag into writing/right reference areas to open panes. Keep keyboard menu alternatives. Search content separates the available browser notebook from the macOS Java roadmap. Use genuine audit results; never claim unmeasured perfect scores.
+
+## November 4 owner direction — authoritative current palette and release scope
+
+Use dark mode only in the website, browser prototype, and desktop app. The identity now uses JRXNA black #000000, white #FFFFFF, and red #EE0000. Writing areas and app demonstrations may use soothing dark gray surfaces. No light theme or appearance toggle. Preserve the fixed lamp artwork and current Inter typography. Use the approved JRXNA logotype in the footer credit, “A JRXNA production.”
+
+Lead with technical product facts: Markdown editor for macOS, live formatting, local .md files, no sign-up, tabs, and split view. Java is a contributor attribute, not the main pitch. Never claim a sub-10 MB installed footprint without measurement. Current bundled package measurements are materially larger.
+
+The desktop product is local writing. Cloud databases, account services, AI agents, and direct publication are outside this release. Website presentation and the existing Radix/shadcn-style components establish the app's visual direction. Keep installer availability truthful until assets are published.

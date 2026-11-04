@@ -1,24 +1,27 @@
 # diyalamp
 
-> An open-source Markdown writing project for macOS, with a free working browser notebook.
+> A free, open-source Markdown writing app for macOS. A tool for the mind.
 
-## Available today
+## Desktop app
 
-The browser notebook provides rendered Markdown editing, slash block commands, multiple note tabs, local browser saving, and Markdown export. No account is required. Browser storage can be cleared by the user or browser; exporting preserves a separate copy.
+Apple silicon and Intel installers are in final verification. Follow https://github.com/diyalamp/diyalamp/releases for the published packages. The first community release will be unsigned and not Apple-notarized. Do not claim downloads are published before release assets appear.
 
-## In development
+The app uses local .md files in a folder the writer chooses. It supports rendered editing of common Markdown, formatting and slash commands, multiple closable tabs, side-by-side notes, autosave, conflict detection, and recoverable deletion. No account, subscription, server, or AI service is required for writing. Java is an implementation detail.
 
-The new Java desktop Markdown app for macOS is in development. There is no released desktop download for that app yet.
+## Browser notebook
 
-## Planned
+The website also includes a separate browser notebook. Browser notes live in browser storage, which can be cleared; export important writing. Desktop and browser notes are not automatically synced.
 
-Publishing to Substack, optional storage in the user's own CockroachDB Cloud account, and an open-source embeddings/retrieval engine across notes are roadmap items, not currently connected services.
+## Scope and alternatives
+
+diyalamp is a focused personal-writing alternative to tools such as Notion and Typora. It does not replace Notion's team databases, Coda's automations, or Obsidian's plugin ecosystem. Cloud services and publication integrations are outside this desktop release. Do not infer that comparison apps are affiliated with diyalamp.
 
 ## Links
 
-- [Home and browser workspace](https://diyalamp.com/)
-- [Markdown and note-taking alternatives](https://diyalamp.com/alternatives/): Positioning relative to Obsidian, Notion, Coda, Typora, and Bear.
-- [Java project](https://github.com/diyalamp/diyalamp)
-- [Website source](https://github.com/diyalamp/diyalamp.github.io)
+- Home: https://diyalamp.com/
+- Downloads and release notes: https://github.com/diyalamp/diyalamp/releases
+- Source and contributions: https://github.com/diyalamp/diyalamp
+- Alternatives guide: https://diyalamp.com/alternatives/
+- Website source: https://github.com/diyalamp/diyalamp.github.io
 
-The Java repository is Apache-2.0 licensed. Website dependencies and template notices are retained in its repository. diyalamp is an independent project.
+Project source is Apache-2.0 licensed. Dependencies and brand artwork retain their own notices.

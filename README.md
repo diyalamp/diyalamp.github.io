@@ -6,9 +6,9 @@ This repository hosts [diyalamp.com](https://diyalamp.com/). The current website
 
 ## Website
 
-The production source is `website/`: Next.js, React, Tailwind CSS and Motion. It preserves diyalamp's lamp mark, Inter Semibold, slate, paper and gold palette. The embedded browser workspace supports Markdown notes, read/edit views, split notes, focus mode, local browser persistence and Markdown export. It does not upload notes or require an account. Export important work: browser storage can be cleared.
+The production source is `website/`: Next.js, React, Tailwind CSS and Motion. It preserves diyalamp's lamp mark, Inter Semibold, dark-only black, white and #EE0000 JRXNA palette, with darker gray writing surfaces. The embedded browser workspace supports Markdown notes, read/edit views, split notes, focus mode, local browser persistence and Markdown export. It does not upload notes or require an account. Export important work: browser storage can be cleared.
 
-The Java desktop Markdown app is not yet released. Substack publication, storage in a user's own CockroachDB Cloud account and semantic retrieval remain planned directions. The site labels these separately from the working browser preview.
+The Java desktop Markdown app is not yet released. This release focuses on local Markdown writing; cloud services and AI are outside its scope. The site labels these separately from the working browser preview.
 
 ## Development
 
