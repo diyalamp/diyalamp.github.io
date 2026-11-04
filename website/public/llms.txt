@@ -25,3 +25,7 @@ diyalamp is a focused personal-writing alternative to tools such as Notion and T
 - Website source: https://github.com/diyalamp/diyalamp.github.io
 
 Project source is Apache-2.0 licensed. Dependencies and brand artwork retain their own notices.
+
+## Size budget
+
+Under 5 MB installed is an aspirational target, not an achieved size. The current local bundled Apple silicon build measures approximately 32 MB downloaded and 46 MB installed. The included runtime accounts for most of the footprint. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Release assets provide exact download sizes and checksums.
