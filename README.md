@@ -25,3 +25,5 @@ Build the static site with `pnpm build`; output is `website/out/`. GitHub Pages 
 ## Brand and release notes
 
 See `docs/DIYA_LAMP_BRAND_SPEC.md` for owner direction and `docs/RELEASE_REVIEW.md` for actual validation evidence. Do not claim a deployment is live merely because a build or push succeeded. Keep planned integrations and desktop availability accurate. Never include credentials in public sources or browser builds.
+
+The notebook shell uses adapted shadcn/ui sidebar-07 components, with Tiptap and Lucide. Inter is bundled locally and used throughout the website and writing surface. The Java desktop app uses the matching FlatLaf/Lucide composition.

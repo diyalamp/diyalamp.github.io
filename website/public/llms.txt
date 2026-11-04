@@ -4,7 +4,7 @@
 
 ## Desktop app
 
-Version 1.0.0 is published for Apple silicon and Intel Macs at https://github.com/diyalamp/diyalamp/releases/tag/v1.0.0. Both DMGs include a runtime. This release is unsigned and not Apple-notarized; macOS may block launch.
+Version 1.0.1 is published for Apple silicon and Intel Macs at https://github.com/diyalamp/diyalamp/releases/tag/v1.0.1. Both DMGs include a runtime. This release is unsigned and not Apple-notarized; macOS may block launch.
 
 The app uses local .md files in a folder the writer chooses. It supports rendered editing of common Markdown, formatting and slash commands, multiple closable tabs, side-by-side notes, autosave, conflict detection, and recoverable deletion. No account, subscription, server, or AI service is required for writing. Java is an implementation detail.
 
@@ -28,4 +28,4 @@ Project source is Apache-2.0 licensed. Dependencies and brand artwork retain the
 
 ## Size budget
 
-Under 5 MB installed is an aspirational target, not an achieved size. Release downloads are 35,661,621 bytes for Apple silicon and 37,309,904 bytes for Intel. The local bundled Apple silicon app occupies approximately 46 MiB installed. The included runtime accounts for most of the footprint. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Release assets provide exact download sizes and checksums.
+Under 5 MB installed is an aspirational target, not an achieved size. Release downloads are 36,701,138 bytes for Apple silicon and 38,338,286 bytes for Intel. The local bundled Apple silicon app occupies approximately 47 MiB installed. The included runtime accounts for most of the footprint. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Release assets provide exact download sizes and checksums.
