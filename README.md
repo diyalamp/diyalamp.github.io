@@ -2,11 +2,11 @@
 
 A tool for the mind. An open-source writing app for macOS, in development.
 
-This repository hosts [diyalamp.com](https://diyalamp.com/). The current website adapts the complete [Velora SaaS template](https://github.com/ColorlibHQ/velora-ui), retaining its MIT notice in `website/VELORA-LICENSE`. The product source lives in [diyalamp/diyalamp](https://github.com/diyalamp/diyalamp).
+This repository hosts [diyalamp.com](https://diyalamp.com/). The website retains licensed components from the [Velora SaaS template](https://github.com/ColorlibHQ/velora-ui), retaining its MIT notice in `website/VELORA-LICENSE`. The product source lives in [diyalamp/diyalamp](https://github.com/diyalamp/diyalamp).
 
 ## Website
 
-The production source is `website/`: Next.js, React, Tailwind CSS and Motion. It preserves diyalamp's lamp mark, Inter Semibold, dark-only black, white and #EE0000 JRXNA palette, with darker gray writing surfaces. The embedded browser workspace supports Markdown notes, read/edit views, split notes, focus mode, local browser persistence and Markdown export. It does not upload notes or require an account. Export important work: browser storage can be cleared.
+The production source is `website/`: Next.js, React, Tailwind CSS, Radix/shadcn-style controls, and Tiptap. The current presentation is intentionally static and component-led; decorative particles, animated illustrations, and scroll reveals have been removed. It preserves diyalamp's lamp mark, Inter Semibold, dark-only black, white and #EE0000 JRXNA palette, with darker gray writing surfaces. The embedded browser workspace supports Markdown notes, read/edit views, split notes, focus mode, local browser persistence and Markdown export. It does not upload notes or require an account. Export important work: browser storage can be cleared.
 
 The Java desktop Markdown app is not yet released. This release focuses on local Markdown writing; cloud services and AI are outside its scope. The site labels these separately from the working browser preview.
 

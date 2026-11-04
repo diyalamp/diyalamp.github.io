@@ -1,106 +1,31 @@
 "use client";
 
-// Adapted from Velora UI's complete SaaS template, MIT licensed.
-import { useRef } from "react";
-import { ArrowUpRightIcon, BookOpenIcon, CheckIcon, CodeIcon, DatabaseIcon, DownloadIcon, FileTextIcon, GitBranchIcon, LockKeyholeIcon, PanelLeftIcon, PenLineIcon, SearchIcon, SparklesIcon, SplitIcon } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import AmbientBackdrop from "@/components/ambient-backdrop";
-import { DotPattern } from "@/components/velora/grid-pattern";
-import { BlurFade } from "@/components/velora/blur-fade";
-import { BentoCard, BentoGrid } from "@/components/velora/bento-grid";
-import { BorderBeam } from "@/components/velora/border-beam";
-import { AnimatedList } from "@/components/velora/animated-list";
-import { AnimatedBeam } from "@/components/velora/animated-beam";
-import { ScrollProgress } from "@/components/velora/scroll-progress";
-import { SpotlightCard } from "@/components/velora/spotlight-card";
-import { AnimatedGradientText } from "@/components/velora/animated-gradient-text";
+import {ArrowUpRightIcon,CheckIcon,DownloadIcon,FileTextIcon,FolderOpenIcon,PanelLeftIcon,SplitIcon} from "lucide-react";
+import {Button} from "@/components/ui/button";
+import {Accordion,AccordionContent,AccordionItem,AccordionTrigger} from "@/components/ui/accordion";
 import DeferredWorkspace from "@/components/deferred-workspace";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 
-const github = "https://github.com/diyalamp/diyalamp";
-const download = `${github}/releases`;
-const intelDownload = `${github}/releases`;
-function openWorkspace() {
-  const behavior = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth";
-  document.getElementById("workspace")?.scrollIntoView({ behavior, block: "start" });
-}
-const faqs = [
-  {q:"Is diyalamp an alternative to Notion or Typora?",a:"diyalamp is a focused alternative for personal Markdown writing on macOS: a clean page, ordinary local files, note tabs, and side-by-side writing. It does not replace Notion’s team databases or Obsidian’s plugin ecosystem."},
-  {q:"When can I download the app?",a:"Apple silicon and Intel installers are in final verification. Release links will appear here once the packages are published. The browser prototype is available now. The first community release will be unsigned and not Apple-notarized."},
-  {q:"Do I need an account or subscription?",a:"No. The desktop app reads and writes Markdown files in a folder you choose. There is no account, subscription, diyalamp backend, or required internet connection for writing."},
-  {q:"Where does my writing live?",a:"The desktop app uses ordinary .md files on your Mac, with autosave and recoverable deletion. It detects files changed by another app before replacing them. The separate browser notebook stores notes in this browser; export important browser notes because browser storage can be cleared."},
-  {q:"Is diyalamp open source?",a:"Yes, under Apache 2.0. Explore the source, report a reproducible issue, or contribute. Contributions, reproducible bug reports, and accessibility feedback are welcome."},
-  {q:"Does it need cloud services or AI?",a:"No. This release is a local Markdown writing app. Cloud storage, databases, AI agents, and publication services are not required or connected."},
+const github="https://github.com/diyalamp/diyalamp";
+const faqs=[
+ {q:"What is diyalamp?",a:"An open-source Markdown editor for macOS with live formatting, local .md files, multiple note tabs, and split view. It is an alternative to Typora and a no-sign-up option for personal writing in a Notion-like interface."},
+ {q:"Where are the macOS downloads?",a:"Apple silicon and Intel installers are in final verification. Published packages will appear on GitHub Releases. The first community release will be unsigned and not Apple-notarized. The interactive browser prototype is available below."},
+ {q:"Does it require an account, subscription, or server?",a:"No. The desktop app uses Markdown files in a folder on your Mac. Local writing requires no account, subscription, backend, or AI service."},
+ {q:"Does the browser prototype sync with the desktop app?",a:"No. The prototype keeps notes in this browser. Export a Markdown copy to keep it or open it in another editor. Desktop files and browser notes are separate."},
+ {q:"Which Markdown features are supported?",a:"The desktop editor supports headings, bold, italic, links, lists, checklists, quotes, inline code, and fenced code blocks. The first release does not include the full CommonMark specification, rich tables, remote-image previews, plugins, or sync."},
+ {q:"Can I contribute?",a:"Yes. The project is Apache-2.0 licensed. The repository includes build instructions, tests, issue templates, and a contributor guide. Bug reports with fictional sample notes, accessibility feedback, and Markdown compatibility tests are useful contributions."}
 ];
-
-function FileCard({ name, children, className = "" }: { name: string; children: React.ReactNode; className?: string }) {
-  return <div className={`note-visual ${className}`}><div className="note-visual-bar"><FileTextIcon size={15} /><span>{name}</span><span className="ml-auto size-1.5 rounded-full bg-primary" /></div><div className="note-visual-body">{children}</div></div>;
-}
-
-function ThoughtConnections() {
-  const container = useRef<HTMLDivElement>(null);
-  const center = useRef<HTMLDivElement>(null);
-  const first = useRef<HTMLDivElement>(null);
-  const second = useRef<HTMLDivElement>(null);
-  const third = useRef<HTMLDivElement>(null);
-  const fourth = useRef<HTMLDivElement>(null);
-  return <div ref={container} className="connection-visual relative flex h-96 items-center justify-between gap-6 px-3 sm:px-9" aria-label="An illustration of different notes connected through a writing workspace">
-    <div className="flex h-full flex-col justify-around"><div ref={first} className="connection-node"><span>Reading</span><BookOpenIcon /></div><div ref={second} className="connection-node"><span>Questions</span><PenLineIcon /></div></div>
-    <div ref={center} className="connection-center"><LampMark className="connection-lamp" /><span>diyalamp</span></div>
-    <div className="flex h-full flex-col justify-around"><div ref={third} className="connection-node"><span>Writing</span><FileTextIcon /></div><div ref={fourth} className="connection-node"><span>Ideas</span><GitBranchIcon /></div></div>
-    <AnimatedBeam containerRef={container} fromRef={first} toRef={center} curvature={-55} />
-    <AnimatedBeam containerRef={container} fromRef={second} toRef={center} curvature={55} delay={1} />
-    <AnimatedBeam containerRef={container} fromRef={center} toRef={third} curvature={-55} delay={.5} />
-    <AnimatedBeam containerRef={container} fromRef={center} toRef={fourth} curvature={55} delay={1.5} />
-  </div>;
-}
-
-export default function Home() {
-  return <main className="relative isolate">
-    <AmbientBackdrop />
-    <ScrollProgress />
-    <header className="landing-header"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workspace">Workspace</a><a href="#download">Download</a></nav><Button variant="secondary" size="lg" asChild><a href={github} aria-label="View diyalamp source on GitHub" target="_blank" rel="noreferrer">GitHub <ArrowUpRightIcon size={16} /></a></Button></header>
-
-    {/* The complete template's animated hero and product stage. */}
-    <section className="relative overflow-hidden pt-28 pb-12 lg:pt-32 lg:pb-12">
-      <div className="relative mx-auto max-w-6xl px-6 text-center lg:px-6">
-        <BlurFade delay={0} direction="down"><span className="label-tag">A tool for the mind <SparklesIcon className="size-4" /></span></BlurFade>
-        <h1 className="hero-title mx-auto mt-6 max-w-5xl text-balance">An open-source writing app <AnimatedGradientText>for macOS.</AnimatedGradientText></h1>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground text-pretty">Live Markdown formatting, local .md files, multiple tabs, and side-by-side editing. A lightweight alternative to Typora for macOS, without sign-up or a subscription.</p>
-        <BlurFade delay={.35}><div className="mt-9 flex flex-wrap items-center justify-center gap-3"><Button size="lg" asChild><a href={download}>macOS releases <DownloadIcon className="size-4" /></a></Button><Button variant="secondary" size="lg" asChild><a href={github} target="_blank" rel="noreferrer">Explore the source <ArrowUpRightIcon className="size-4" /></a></Button></div></BlurFade>
-        <p className="mt-6 text-xs text-muted-foreground">No sign-up. Local Markdown files. Desktop installers are in final verification; try the browser prototype below.</p>
-        <BlurFade delay={.45}><ul className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-sm text-muted-foreground">{["Markdown only", "No sign-up", "Open source"].map(fact => <li key={fact} className="flex items-center gap-3">{fact}<CheckIcon className="size-4 text-primary" /></li>)}</ul></BlurFade>
-        <div id="workspace" className="workspace-section mt-9 scroll-mt-24 text-left lg:mt-9"><BlurFade delay={.5} offset={32}><DeferredWorkspace /></BlurFade><div className="mt-6 flex flex-wrap items-center justify-between gap-3 text-xs text-muted-foreground"><span>A real workspace. Open a note, edit a line, try a split view.</span><span className="inline-flex items-center gap-3">No account needed<LockKeyholeIcon className="size-3.5" /></span></div></div>
-      </div>
-    </section>
-
-    {/* A truthful product-principles strip replaces the template's company logos. */}
-    <section className="border-y border-border/60 py-9"><div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-6 text-sm text-muted-foreground md:grid-cols-4 lg:px-6">{[[FileTextIcon,"Plain Markdown"],[SplitIcon,"Side-by-side thinking"],[PanelLeftIcon,"A little less clutter"],[CodeIcon,"Built in the open"]].map(([Icon,label]) => { const I = Icon as typeof FileTextIcon; return <div key={String(label)} className="flex items-center justify-center gap-3">{String(label)}<I className="size-5 text-primary" /></div>; })}</div></section>
-
-    {/* Velora's bento composition, now filled with writing-specific product scenes. */}
-    <section id="features" className="relative scroll-mt-16 py-9 lg:py-9"><div className="mx-auto max-w-6xl px-6 lg:px-6"><BlurFade><h2 className="mx-auto max-w-2xl text-center text-3xl text-balance lg:text-5xl">Everything a thought needs.<br /><span className="text-primary">Nothing to get in its way.</span></h2><p className="mx-auto mt-6 max-w-xl text-center text-muted-foreground">Catch a question. Stay with a sentence. Keep what you&apos;re reading beside what you&apos;re writing.</p></BlurFade><BlurFade delay={.15}><BentoGrid className="mt-9">
-      <BentoCard name="A clean page" description="Markdown gives your words structure. Focus gives them somewhere to go." className="md:col-span-2" background={<div className="absolute inset-x-8 top-6"><FileCard name="a-little-clarity.md"><p className="text-2xl">Begin with one good question.</p><p className="mt-3 text-sm text-muted-foreground">What if making space is where the work begins?</p><div className="mt-6 h-2 w-3/4 rounded bg-muted" /><div className="mt-3 h-2 w-1/2 rounded bg-muted" /></FileCard><BorderBeam size={72} duration={7} /></div>} />
-      <BentoCard name="Familiar files" description="Clear names. Visible .md extensions. A place for each train of thought." background={<div className="absolute inset-x-6 top-8 space-y-3">{["reading.md","questions.md","thinking.md"].map((file,i)=><div key={file} className={`familiar-note flex items-center gap-3 rounded-lg border p-3 text-sm ${i===1?'border-primary/30 bg-primary/10':'bg-card'}`}><FileTextIcon className="size-4 text-primary" />{file}</div>)}</div>} />
-      <BentoCard name="Two notes. One train of thought." description="Keep a source close while you work through your own understanding." className="md:col-span-2" background={<div className="absolute inset-x-6 top-6 grid grid-cols-2 gap-3"><FileCard name="reading.md"><p className="text-xl">A useful idea.</p><p className="mt-3 text-xs text-muted-foreground">A small observation can open a much larger question.</p></FileCard><FileCard name="thinking.md"><p className="text-xl">My own words.</p><p className="mt-3 text-xs text-muted-foreground">Explain it simply. Find the part worth following.</p></FileCard></div>} />
-      <BentoCard name="Writing that stays yours" description="Export your Markdown. Keep a copy. Take your ideas with you." background={<div className="absolute inset-0 flex items-center justify-center pb-20"><DotPattern className="[mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" /><div className="relative rounded-2xl border border-primary/30 bg-primary/10 p-6"><DownloadIcon className="size-14 text-primary" /></div></div>} />
-    </BentoGrid></BlurFade></div></section>
-
-    {/* The upstream integration-beam section becomes a visual model of connected thinking. */}
-    <section className="relative py-9 lg:py-9"><div className="mx-auto grid max-w-6xl items-center gap-6 px-6 lg:grid-cols-2 lg:gap-9 lg:px-6"><BlurFade direction="right"><div><span className="text-sm text-primary">From reading to understanding</span><h2 className="mt-3 text-3xl text-balance lg:text-5xl">Your best ideas<br />rarely arrive alone.</h2><p className="mt-6 text-muted-foreground">A passage becomes a question. A question becomes a note. Put them beside each other, and something starts to click.</p><ul className="mt-6 space-y-3 text-sm">{["Keep the source in sight","Make room for your own words","Follow one thought into the next"].map(item=><li key={item} className="flex items-center gap-3">{item}<CheckIcon className="size-4 text-primary" /></li>)}</ul></div></BlurFade><BlurFade direction="left" delay={.15}><ThoughtConnections /></BlurFade></div></section>
-
-    {/* The template's alternating activity scene, adapted to the writing process. */}
-    <section className="relative overflow-hidden py-9 lg:py-9"><div className="relative mx-auto grid max-w-6xl items-center gap-6 px-6 lg:grid-cols-2 lg:gap-9 lg:px-6"><BlurFade direction="right" className="order-2 lg:order-1"><div className="activity-stage h-80 overflow-hidden rounded-2xl border bg-card/80 p-6 backdrop-blur"><AnimatedList delay={2200}>{[{name:"A question worth keeping",file:"questions.md",icon:PenLineIcon},{name:"A paragraph in your own words",file:"understanding.md",icon:FileTextIcon},{name:"An idea you want to revisit",file:"ideas.md",icon:BookOpenIcon},{name:"A thought, a little clearer",file:"a-little-clarity.md",icon:SparklesIcon}].map(item=><div key={item.file} className="activity-note flex items-center gap-3 rounded-xl border bg-card p-6"><span className="rounded-xl bg-primary/10 p-3"><item.icon className="size-5 text-primary" /></span><div><p className="text-sm">{item.name}</p><p className="mt-3 text-xs text-muted-foreground">{item.file}</p></div></div>)}</AnimatedList></div></BlurFade><BlurFade direction="left" delay={.15} className="order-1 lg:order-2"><div><span className="text-sm text-primary">A small daily practice</span><h2 className="mt-3 text-3xl lg:text-5xl">Less to manage.<br /><span className="text-primary">More to discover.</span></h2><p className="mt-6 text-muted-foreground">You don&apos;t need a dashboard for every part of your life. Sometimes you need a calm page and enough time to find the sentence.</p><p className="mt-6 text-muted-foreground">diyalamp is a tool for the mind. It lights the path forward.</p><a href="#workspace" className="mt-6 inline-flex items-center gap-3 text-sm text-primary">Make a little space <ArrowUpRightIcon className="size-4" /></a></div></BlurFade></div></section>
-
-    <section id="download" className="relative scroll-mt-20 py-9 lg:py-9"><div className="mx-auto max-w-6xl px-6 lg:px-6"><BlurFade><div className="mb-9 max-w-2xl"><span className="text-sm text-primary">A little space on your Mac</span><h2 className="mt-3 text-3xl lg:text-5xl">Your notes.<br />Right at home.</h2><p className="mt-6 text-muted-foreground">The desktop app uses local Markdown files, note tabs, and split view. Its installers are in final verification. You can try the interactive prototype above while the release is prepared.</p></div></BlurFade><div className="grid gap-6 md:grid-cols-3">{[{icon:DownloadIcon,status:"macOS · Apple silicon",title:"For M-series Macs",body:"A self-contained app for Macs with Apple silicon. No separate runtime to install.",href:download,label:"Apple silicon release status"},{icon:DownloadIcon,status:"macOS · Intel",title:"For Intel Macs",body:"The same focused writing experience, packaged for Intel processors.",href:intelDownload,label:"Intel release status"},{icon:CodeIcon,status:"Apache 2.0",title:"Built together",body:"Read the code, check release notes and checksums, or help make writing a little calmer.",href:github+"/releases",label:"Release notes and checksums"}].map((card,i)=><BlurFade key={card.title} delay={i*.12}><SpotlightCard className="h-full p-6"><div className="mb-6 flex items-center justify-between gap-3"><card.icon className="size-6 text-primary"/><span className="text-xs text-muted-foreground">{card.status}</span></div><h3 className="text-xl">{card.title}</h3><p className="mt-3 text-sm text-muted-foreground">{card.body}</p><Button variant="secondary" className="mt-6" asChild><a href={card.href}>{card.label}<ArrowUpRightIcon className="size-4"/></a></Button></SpotlightCard></BlurFade>)}</div><p className="mt-6 text-muted-foreground">Desktop release in verification · The first packages will be unsigned and not Apple-notarized. Check release notes before installing.</p></div></section>
-
-    <section className="border-y border-border/50 py-9 lg:py-9"><div className="mx-auto grid max-w-6xl gap-6 px-6 lg:grid-cols-2 lg:px-6"><BlurFade><span className="text-sm text-primary">Open source. Open possibilities.</span><h2 className="mt-3 text-3xl lg:text-5xl">A tool you can<br />make your own.</h2></BlurFade><BlurFade delay={.1}><p className="text-muted-foreground">diyalamp is built in the open. Read the decisions, explore the code, or help shape a quieter way to write.</p><div className="my-6 flex flex-wrap gap-3">{["macOS","Local files","Apache 2.0","Markdown"].map(tag=><span key={tag} className="label-tag">{tag}</span>)}</div><Button asChild size="lg"><a href={github} target="_blank" rel="noreferrer">Explore on GitHub <ArrowUpRightIcon className="size-4" /></a></Button></BlurFade></div></section>
-
-    <section id="questions" className="py-9 lg:py-9"><div className="mx-auto max-w-3xl px-6 lg:px-6"><BlurFade><h2 className="text-center text-3xl lg:text-5xl">A few useful details.</h2></BlurFade><Accordion type="single" collapsible className="mt-6">{faqs.map((faq,i)=><AccordionItem key={faq.q} value={`question-${i}`}><AccordionTrigger className="py-3 text-left text-base">{faq.q}</AccordionTrigger><AccordionContent className="text-sm leading-7 text-muted-foreground">{faq.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
-
-    {/* Upstream closing CTA composition, without a signup or fabricated offer. */}
-    <section className="closing-section relative py-9 lg:py-9"><div className="relative mx-auto max-w-3xl px-6 text-center"><BlurFade><LampMark className="closing-lamp" /><h2 className="mt-3 text-4xl lg:text-5xl">The next thought starts<br />with a little light.</h2><p className="mx-auto mt-3 max-w-lg text-muted-foreground">Open a note. Follow a question. See where it leads.</p><div className="mt-6 flex justify-center"><Button size="lg" asChild><a href={download}>View macOS releases <DownloadIcon className="size-4" /></a></Button></div></BlurFade></div></section>
-    <div className="comparison-link"><a href="/alternatives/">Compare Markdown and note-taking tools <ArrowUpRightIcon aria-hidden className="size-4" /></a></div><footer className="landing-footer"><a href="#" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a><p>A tool for the mind.</p><nav className="footer-socials" aria-label="diyalamp social accounts"><a href="https://github.com/diyalamp" aria-label="diyalamp GitHub organization" target="_blank" rel="noopener noreferrer">GitHub <SocialIcon name="github" /></a><a href="https://bsky.app/profile/diyalamp.com" target="_blank" rel="noopener noreferrer">Bluesky <SocialIcon name="bluesky" /></a><a href="https://www.reddit.com/r/DiyaLamp/" target="_blank" rel="noopener noreferrer">Reddit <SocialIcon name="reddit" /></a></nav><span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.png" alt="JRXNA" width="74" height="18" /></a> production.</span></footer>
-  </main>;
-}
+export default function Home(){return <main className="simple-site">
+ <header className="landing-header"><a href="#" className="landing-brand"><LampMark className="brand-lamp"/>diyalamp</a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workspace">Prototype</a><a href="#download">macOS app</a></nav><Button variant="secondary" asChild><a href={github}>GitHub<ArrowUpRightIcon className="size-4"/></a></Button></header>
+ <section className="simple-hero"><div className="max-w-6xl mx-auto px-6"><div className="simple-kicker"><span className="status-dot"/>Open source · Dark mode · macOS</div><h1>Markdown editing.<br/>Without an account.</h1><p className="simple-intro">A Markdown editor for macOS with live formatting, local files, note tabs, and split view. An open-source alternative to Typora for personal writing.</p><div className="simple-actions"><Button onClick={()=>document.getElementById("workspace")?.scrollIntoView({behavior:"auto",block:"start"})}>Try the prototype<PanelLeftIcon className="size-4"/></Button><Button variant="secondary" asChild><a href={github}>View the source<ArrowUpRightIcon className="size-4"/></a></Button></div><p className="simple-status">The native app is in release verification. Try the writing interface below.</p></div></section>
+ <section id="workspace" className="simple-workspace"><div className="mx-auto max-w-6xl px-6"><div className="simple-section-label"><span>Interactive prototype</span><span>Browser-local notes · Markdown export</span></div><DeferredWorkspace/><p className="simple-caption">Write, format, organize, and open notes side by side. This prototype stores notes in your browser; export a copy to keep your work.</p></div></section>
+ <section id="features"><div className="max-w-6xl mx-auto px-6"><div className="simple-feature-grid">{[
+ {icon:FileTextIcon,title:"Rendered Markdown",text:"Write directly in formatted notes. Use headings, emphasis, lists, checklists, quotes, and code blocks."},
+ {icon:FolderOpenIcon,title:"Local files",text:"Keep ordinary .md files in a folder on your Mac. Create, rename, save, and recover deleted notes."},
+ {icon:SplitIcon,title:"Tabs and split view",text:"Open several notes and keep a reference beside your writing. Use familiar keyboard shortcuts."}
+ ].map(({icon:Icon,title,text})=><article className="simple-feature-card" key={title}><Icon className="size-5"/><h2>{title}</h2><p>{text}</p></article>)}</div></div></section>
+ <section id="download"><div className="max-w-6xl mx-auto px-6"><div className="simple-release-card"><div><span className="simple-kicker">Desktop release</span><h2>For your Mac.<br/>For your own files.</h2><p>The macOS app uses a native desktop interface and local Markdown storage. Apple silicon and Intel packages are being verified.</p><ul>{["No account or subscription","Runtime included","Open source under Apache 2.0"].map(t=><li key={t}><span>{t}</span><CheckIcon className="size-4"/></li>)}</ul></div><div className="simple-release-actions"><Button asChild><a href={`${github}/releases`}>macOS release status<DownloadIcon className="size-4"/></a></Button><Button variant="secondary" asChild><a href={`${github}/blob/main/desktop/README.md`}>Build it yourself<ArrowUpRightIcon className="size-4"/></a></Button><p>The first packages will be unsigned and not Apple-notarized. Release notes will list compatibility, sizes, and checksums.</p></div></div></div></section>
+ <section id="questions"><div className="max-w-6xl mx-auto px-6 simple-questions"><div><span className="simple-kicker">Details</span><h2>Files, features,<br/>and installation.</h2><a className="simple-text-link" href="/alternatives/">Compare Markdown editors<ArrowUpRightIcon className="size-4"/></a></div><Accordion type="single" collapsible>{faqs.map((faq,i)=><AccordionItem key={faq.q} value={`q-${i}`}><AccordionTrigger>{faq.q}</AccordionTrigger><AccordionContent>{faq.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
+ <footer className="landing-footer"><a href="#" className="landing-brand"><LampMark className="brand-lamp"/>diyalamp</a><nav className="footer-socials" aria-label="diyalamp social accounts"><a href="https://github.com/diyalamp">GitHub<SocialIcon name="github"/></a><a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky"/></a><a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit"/></a></nav><span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.png" alt="JRXNA" width="74" height="18"/></a> production.</span></footer>
+ </main>;}

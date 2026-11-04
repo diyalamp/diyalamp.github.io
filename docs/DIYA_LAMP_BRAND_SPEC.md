@@ -63,3 +63,5 @@ Use dark mode only in the website, browser prototype, and desktop app. The ident
 Lead with technical product facts: Markdown editor for macOS, live formatting, local .md files, no sign-up, tabs, and split view. Java is a contributor attribute, not the main pitch. Never claim a sub-10 MB installed footprint without measurement. Current bundled package measurements are materially larger.
 
 The desktop product is local writing. Cloud databases, account services, AI agents, and direct publication are outside this release. Website presentation and the existing Radix/shadcn-style components establish the app's visual direction. Keep installer availability truthful until assets are published.
+
+Owner's final November 4 refinement: simplify the presentation. Clean, elegant, sophisticated components take priority over decorative animation. Remove particles, scroll sequences, and neural illustrations from the marketing page. Keep Radix/shadcn-style controls and the functional Tiptap prototype. Use simple navigation, technical copy, consistent panels, a concise FAQ, and the JRXNA footer credit.
