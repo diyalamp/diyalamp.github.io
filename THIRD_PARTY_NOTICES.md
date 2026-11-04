@@ -64,3 +64,9 @@ Simple Icons social marks: CC0, https://github.com/simple-icons/simple-icons. Li
 Tiptap open-source editor components (React, core, StarterKit, Markdown, task lists and placeholder)
 Source: https://github.com/ueberdosis/tiptap
 License: MIT. Full license retained in website/public/TIPTAP-LICENSE.txt.
+
+## November workspace components
+
+The browser notebook uses adapted shadcn/ui sidebar-07, Sidebar, Breadcrumb, Input, Tooltip, Sheet, Separator and Skeleton components (MIT). Source: https://ui.shadcn.com/r/styles/new-york-v4/sidebar-07.json and the corresponding new-york-v4 registry items. Local adaptations scope the sidebar to an embedded application and disable its conflicting global keyboard shortcut. Copyright and license: licenses/shadcn-ui-LICENSE.md.
+
+Tiptap provides the rendered document editor and Lucide provides the UI icons; their package licenses remain applicable. The site bundles Inter locally and uses it for all interface and code text.
