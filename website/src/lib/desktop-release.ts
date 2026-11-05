@@ -4,6 +4,8 @@ const source = 'https://github.com/diyalamp/diyalamp';
 
 export const desktopRelease = {
   version,
+  appleSiliconBytes: 47054874,
+  intelBytes: 48502211,
   source,
   url: `${source}/releases/tag/v${version}`,
   appleSilicon: `${source}/releases/download/v${version}/diyalamp-${version}-macos-arm64.dmg`,
