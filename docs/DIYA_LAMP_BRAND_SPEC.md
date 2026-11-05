@@ -78,4 +78,4 @@ Version 1.1.3 release references are prepared in the website's shared desktop-re
 
 Keep the **website and browser notebook dark**, with the existing Inter typography and JRXNA palette. Label the browser notebook as a separate browser-local demonstration, not as a screenshot or exact reproduction of the desktop app. Browser storage does not sync with desktop folders. Preserve the approved lamp geometry.
 
-Do not carry installer measurements from an older release into 1.1.3. Use actual release asset byte counts when available, distinguish downloaded and installed size, and keep the under-5-MB target explicitly unachieved. The website omits numeric download-size labels until the current assets are measured.
+Do not carry installer measurements from an older release into 1.1.3. Use actual release asset byte counts when available, distinguish downloaded and installed size, and keep the under-5-MB target explicitly unachieved. The shared desktop-release module records the measured 1.1.3 DMG byte counts. Button labels use decimal MB; the FAQ and product facts include exact bytes. These are download measurements, not installed sizes.

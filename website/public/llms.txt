@@ -40,4 +40,4 @@ Project source is Apache-2.0 licensed. Dependencies and brand artwork retain the
 
 ## Size budget
 
-Under 5 MB installed is an aspirational target, not an achieved size. The self-contained app includes its runtime and UI libraries. Download size and installed size are different measurements; do not reuse figures from an older release. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Matching SHA-256 files accompany both DMGs. Current release assets provide the published byte counts and checksums.
+Under 5 MB installed is an aspirational target, not an achieved size. The self-contained app includes its runtime and UI libraries. Download size and installed size are different measurements; do not reuse figures from an older release. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Version 1.1.3 DMG downloads are 48,033,713 bytes for Apple silicon (48.0 MB) and 49,514,944 bytes for Intel (49.5 MB), using decimal MB. Matching SHA-256 files accompany both DMGs.
