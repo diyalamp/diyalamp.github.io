@@ -4,13 +4,17 @@
 
 ## Desktop app
 
-Version 1.0.2 is published for Apple silicon and Intel Macs at https://github.com/diyalamp/diyalamp/releases/tag/v1.0.2. Both DMGs include a runtime. This release is unsigned and not Apple-notarized; macOS may block launch.
+Version 1.1.1 is available for Apple silicon and Intel Macs at https://github.com/diyalamp/diyalamp/releases/tag/v1.1.1. Both DMGs include a runtime; users do not install Java separately. This release is unsigned and not Apple-notarized; macOS may block launch.
 
-The app uses local .md files in a folder the writer chooses. It supports rendered editing of common Markdown, formatting and slash commands, multiple closable tabs, side-by-side notes, autosave, conflict detection, and recoverable deletion. No account, subscription, server, or AI service is required for writing. Java is an implementation detail.
+The desktop app is light mode only. It uses the installed macOS system font for prose and Menlo for inline code and code blocks. Its JavaFX workspace uses AtlantaFX and RichTextFX controls, with a visible accent picker in the tab bar. Java is an implementation detail, not an account or service dependency.
+
+Open a folder to browse local .md and .markdown files and subfolders. The app supports rendered editing of common Markdown, formatting and slash commands, filename search, closable and reorderable tabs, side-by-side notes, autosave, conflict detection, and recoverable deletion. No account, subscription, server, or AI service is required for writing.
+
+Updates are explicit: Help → Check for updates checks for a newer stable release but does not download it. A user can choose to download the update, then choose Install and Restart. The app checks the download against the published SHA-256 checksum, validates the staged app, and saves notes before installation. A save conflict cancels installation. Checksums are download-integrity checks; the release remains unsigned and not Apple-notarized.
 
 ## Browser notebook
 
-The website also includes a separate browser notebook. Browser notes live in browser storage, which can be cleared; export important writing. Desktop and browser notes are not automatically synced.
+The website and its separate browser notebook retain a dark interface with self-hosted Inter. The browser notebook is a demonstration, not a screenshot of the light desktop app. Browser notes live in browser storage, which can be cleared; export important writing. Desktop and browser notes are not automatically synced, and the browser notebook does not reproduce every desktop control.
 
 ## Scope and alternatives
 
@@ -28,4 +32,4 @@ Project source is Apache-2.0 licensed. Dependencies and brand artwork retain the
 
 ## Size budget
 
-Under 5 MB installed is an aspirational target, not an achieved size. Release downloads are 36,377,208 bytes for Apple silicon and 38,040,077 bytes for Intel. The local bundled Apple silicon app occupies approximately 47 MiB installed. The included runtime accounts for most of the footprint. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Release assets provide exact download sizes and checksums.
+Under 5 MB installed is an aspirational target, not an achieved size. The self-contained app includes its runtime and UI libraries. Download size and installed size are different measurements; do not reuse figures from an older release. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Version1.1.1 download sizes are 47,054,874 bytes for Apple silicon and 48,502,211 bytes for Intel. Matching SHA-256 files accompany both DMGs. Current release assets provide the published byte counts and checksums.

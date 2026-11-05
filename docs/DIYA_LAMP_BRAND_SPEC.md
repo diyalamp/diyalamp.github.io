@@ -65,3 +65,13 @@ Lead with technical product facts: Markdown editor for macOS, live formatting, l
 The desktop product is local writing. Cloud databases, account services, AI agents, and direct publication are outside this release. Website presentation and the existing Radix/shadcn-style components establish the app's visual direction. Keep installer availability truthful until assets are published.
 
 Owner's final November 4 refinement: simplify the presentation. Clean, elegant, sophisticated components take priority over decorative animation. Remove particles, scroll sequences, and neural illustrations from the marketing page. Keep Radix/shadcn-style controls and the functional Tiptap prototype. Use simple navigation, technical copy, consistent panels, a concise FAQ, and the JRXNA footer credit.
+
+## November 5 desktop refinement — authoritative current app facts
+
+The installed macOS app is now **light mode only**; this supersedes the earlier dark-only desktop instruction. Use the installed macOS system font for prose and controls, and Menlo for code. Do not bundle Inter in the desktop app. The writing area uses soft off-white surfaces, neutral text, and a user-selectable accent visible in the tab bar. The desktop shell uses JavaFX, AtlantaFX, and RichTextFX components, with native macOS window controls, a folder explorer showing Markdown extensions, closable tabs, and split view.
+
+Version 1.1.1 release references are prepared in the website's shared desktop-release module. Publish those website references only after matching Apple silicon and Intel assets exist. In-app update checks are explicit under Help; checking does not download or install an update. Installation follows a user-selected verified download and a save check, and save conflicts prevent restart. This remains an unsigned, non-notarized community release.
+
+Keep the **website and browser notebook dark**, with the existing Inter typography and JRXNA palette. Label the browser notebook as a separate browser-local demonstration, not as a screenshot or exact reproduction of the desktop app. Browser storage does not sync with desktop folders. Preserve the approved lamp geometry; the desktop icon adds only a subtle rounded backplate, edge lighting, and shadow.
+
+Do not carry installer measurements from 1.0.2 into the JavaFX release. Use the actual release asset byte counts when available, distinguish downloaded and installed size, and keep the under-5-MB target explicitly unachieved.
