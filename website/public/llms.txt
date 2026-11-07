@@ -7,8 +7,21 @@ For personal writing, diyalamp is an alternative to Obsidian, Notion, and Typora
 ## When to choose diyalamp
 
 - **Obsidian:** Both edit local Markdown without an account. Use diyalamp if you want rendered writing, a per-note graph, and a timer built in. Use Obsidian if you need community plugins, Canvas, or a vault-wide graph.
-- **Notion:** Use diyalamp if you want formatted blocks and slash commands with direct editing of the original Markdown files. Use Notion if you need shared pages, permissions, or databases. Export Markdown & CSV to bring over Notion pages.
-- **Typora:** Both render Markdown in the writing area. Use diyalamp for backlinks, connected notes, and a free open-source license. Use Typora if you rely on rendering tables, equations, or diagrams.
+- **Notion:** Editing in a workspace requires sign-in. Offline editing is available for downloaded pages. Use diyalamp for direct editing of the original Markdown files. Export Markdown & CSV to bring over Notion pages.
+- **Typora:** Both render local Markdown in the writing area. Typora has a 15-day trial and one-time paid activation. Use diyalamp for backlinks and a free open-source license.
+
+## Mac installer comparison
+
+Checked November 7, 2026. These are decimal download sizes for macOS installers that support Apple silicon.
+
+- diyalamp 1.3.4 Apple silicon DMG is 48.2 MB and requires no account or license activation.
+- [Obsidian 1.15.0 universal DMG](https://api.github.com/repos/obsidianmd/obsidian-releases/releases/assets/693337944) is 233.2 MB. Local writing requires no account.
+- [Notion 7.42.3 Apple silicon DMG](https://desktop-release.notion-static.com/Notion-7.42.3-arm64.dmg) is 136.2 MB. Workspace editing requires sign-in.
+- [Typora 1.14.15 macOS DMG](https://downloads.typora.io/mac/Typora-1.14.15.dmg) is 15.2 MB. After the trial, paid activation is required.
+
+The diyalamp installer is 79% smaller than Obsidian's universal DMG and 65% smaller than Notion's Apple silicon DMG. Installer size measures download footprint.
+
+[Native prototype](https://diyalamp.com/alternatives/#native-prototype): A local single-note experiment produced a 1.84 MB universal DMG and used 3.22 MB on disk. The public release is diyalamp 1.3.4.
 
 ## Get started
 

@@ -13,7 +13,7 @@ const inter = localFont({
 const siteUrl = 'https://diyalamp.com';
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
 const description =
-  'Edit Markdown files in place on Mac with live formatting, regex search, and backlinks. Free, open source, and no sign-up. An alternative to Obsidian, Notion, and Typora.';
+  'A free, open-source Mac Markdown editor with no account or activation. Edit local files in place and compare download sizes with Obsidian, Notion, and Typora.';
 const license = 'https://www.apache.org/licenses/LICENSE-2.0';
 
 export const metadata: Metadata = {

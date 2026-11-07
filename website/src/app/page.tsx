@@ -6,23 +6,24 @@ import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 import { desktopRelease } from "@/lib/desktop-release";
+import { decimalMegabytes, downloadReduction, nativePrototype } from "@/lib/mac-downloads";
 
 const github = desktopRelease.source;
-const appleSiliconSize = (desktopRelease.appleSiliconBytes / 1e6).toFixed(1);
-const intelSize = (desktopRelease.intelBytes / 1e6).toFixed(1);
+const appleSiliconSize = decimalMegabytes(desktopRelease.appleSiliconBytes);
+const intelSize = decimalMegabytes(desktopRelease.intelBytes);
 
 const comparisons = [
   {
-    name: "Obsidian", id: "obsidian", title: "Keep your vault files.",
-    text: "Open the same Markdown folder and get a writing workspace with split view, backlinks, and a timer built in. Obsidian is the better fit if your setup depends on plugins or a vault-wide graph.",
+    name: "Obsidian", id: "obsidian", title: "Keep your vault. Download less.",
+    text: `Both edit your Markdown files without an account. The diyalamp Apple silicon DMG is ${downloadReduction.obsidian}% smaller than Obsidian’s universal DMG. Choose Obsidian for plugins or a vault-wide graph.`,
   },
   {
-    name: "Notion", id: "notion", title: "Write without a workspace account.",
-    text: "Keep rendered editing, checklists, and slash commands. Each edit goes directly into a file on your Mac. Choose Notion for shared pages, databases, and permissions.",
+    name: "Notion", id: "notion", title: "Open a file. Skip the login.",
+    text: `Write without signing into a workspace. The diyalamp Apple silicon DMG is ${downloadReduction.notion}% smaller than Notion’s Apple silicon DMG. Choose Notion for shared databases and live collaboration.`,
   },
   {
-    name: "Typora", id: "typora", title: "Add backlinks to rendered editing.",
-    text: "Keep editing the same Markdown files. diyalamp adds a note graph, backlinks, and a built-in timer under a free, open-source license. Choose Typora for richer math, diagrams, and tables.",
+    name: "Typora", id: "typora", title: "Start writing without activation.",
+    text: "Both format the Markdown files on your Mac. diyalamp stays free and activation-free after day one. Typora has a smaller installer and richer rendering for math, diagrams, and tables.",
   },
 ];
 
@@ -79,15 +80,16 @@ export default function Home() {
           <div className="site-frame hero-layout">
             <div className="hero-copy">
               <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Markdown editor for macOS</p>
-              <h1 id="hero-heading">Edit Markdown<br /> files in place.</h1>
-              <p className="simple-intro">Open a folder and write with live formatting. Keep a reference beside your draft, follow backlinks, and save straight to files you can open in other text editors.</p>
+              <h1 id="hero-heading">Local Markdown.<br /> No account.</h1>
+              <p className="simple-intro">Open a folder and start writing. diyalamp formats Markdown as you type, with split view and backlinks built in. Your notes stay in files you can open in any text editor.</p>
               <ul className="hero-promises" aria-label="Price, license, and account">
-                <li>Free forever</li><li>Open source</li><li>No sign-up</li>
+                <li>Free forever</li><li>Open source</li><li>No license activation</li>
               </ul>
               <div className="simple-actions">
                 <a className="site-button site-button-primary" href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a>
                 <a className="site-button site-button-outline" href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
               </div>
+              <p className="hero-download-fact"><strong>{appleSiliconSize} MB</strong> Apple silicon download. <a href="/alternatives/#mac-downloads">Compare Mac installers</a></p>
             </div>
             <div className="hero-image" id="workspace">
               <AppScreenshot name="workspace" priority caption={`diyalamp ${desktopRelease.version} · Editor and Connections`} />
@@ -98,8 +100,8 @@ export default function Home() {
         <section id="compare" aria-labelledby="compare-heading">
           <div className="site-frame">
             <div className="section-heading">
-              <div><p className="simple-kicker">Switching editors</p><h2 id="compare-heading" className="marketing-heading">When diyalamp fits better.</h2></div>
-              <a className="simple-text-link" href="/alternatives/">Compare workflows and move your notes<ArrowUpRightIcon aria-hidden="true" /></a>
+              <div><p className="simple-kicker">Switching editors</p><h2 id="compare-heading" className="marketing-heading">How it compares on Mac.</h2></div>
+              <a className="simple-text-link" href="/alternatives/">Compare download sizes and setup<ArrowUpRightIcon aria-hidden="true" /></a>
             </div>
             <div className="comparison-preview">
               {comparisons.map(({ name, id, title, text }) => (
@@ -110,6 +112,10 @@ export default function Home() {
                 </article>
               ))}
             </div>
+            <p className="hero-download-fact">
+              In development · <strong>{decimalMegabytes(nativePrototype.dmgBytes, 2)} MB prototype DMG</strong>.{" "}
+              <a href="/alternatives/#native-prototype">See the native build measurements</a>
+            </p>
           </div>
         </section>
 
