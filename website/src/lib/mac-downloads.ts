@@ -26,36 +26,34 @@ const notion = {
   setupSource: 'https://www.notion.com/help/sharing-and-permissions#general-access',
 };
 
+const typora = {
+  name: 'Typora',
+  version: '1.14.15',
+  bytes: 15163025,
+  build: 'macOS DMG with Apple silicon support',
+  downloadSource: 'https://downloads.typora.io/mac/Typora-1.14.15.dmg',
+  setup: 'Local files. One-time paid license and activation after a 15-day trial.',
+  setupSource: 'https://support.typora.io/activation/',
+};
+
 export const macDownloads = [
   {
     name: 'diyalamp',
     version: desktopRelease.version,
-    bytes: desktopRelease.appleSiliconBytes,
-    build: 'Apple silicon DMG',
-    downloadSource: desktopRelease.url,
+    bytes: desktopRelease.downloadBytes,
+    build: 'Universal DMG',
+    downloadSource: desktopRelease.dmg,
     setup: 'No account, subscription, or license activation. Edit local files offline.',
     setupSource: '/#questions',
   },
   obsidian,
   notion,
-  {
-    name: 'Typora',
-    version: '1.14.15',
-    bytes: 15163025,
-    build: 'macOS DMG with Apple silicon support',
-    downloadSource: 'https://downloads.typora.io/mac/Typora-1.14.15.dmg',
-    setup: 'Local files. One-time paid license and activation after a 15-day trial.',
-    setupSource: 'https://support.typora.io/activation/',
-  },
+  typora,
 ];
 
-const reduction = (otherBytes: number) => Math.round(100 * (1 - desktopRelease.appleSiliconBytes / otherBytes));
-export const downloadReduction = { obsidian: reduction(obsidian.bytes), notion: reduction(notion.bytes) };
-
-export const nativePrototype = {
-  dmgBytes: 1837968,
-  appBytesOnDisk: 3219456,
-  medianEditMs: 3.067,
-  fixtureBytes: 38423,
-  samples: 11,
+const reduction = (otherBytes: number) => (100 * (1 - desktopRelease.downloadBytes / otherBytes)).toFixed(1);
+export const downloadReduction = {
+  obsidian: reduction(obsidian.bytes),
+  notion: reduction(notion.bytes),
+  typora: reduction(typora.bytes),
 };

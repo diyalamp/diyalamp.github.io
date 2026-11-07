@@ -1,56 +1,44 @@
 # diyalamp
 
-> diyalamp is a free-forever, open-source Markdown editor for macOS. It opens and saves ordinary local Markdown files with no sign-up or subscription.
+> diyalamp is a free, open-source native Markdown editor for macOS. Download the 1.92 MB universal Mac installer and edit ordinary Markdown files without an account.
 
-For personal writing, diyalamp is an alternative to Obsidian, Notion, and Typora. It edits the original UTF-8 Markdown files in a Mac folder and combines rendered writing, regex search, split view, backlinks, and a focus timer in the same workspace.
+diyalamp 0.1.0 requires macOS 15 or later. One 1,915,883-byte installer supports Apple silicon and Intel. The app bundle used 3,686,400 bytes (3.69 MB) on disk on the test Mac. Markdown files stay in the folder you choose and remain readable in other editors.
 
-## When to choose diyalamp
+## Download and verify
 
-- **Obsidian:** Both edit local Markdown without an account. Use diyalamp if you want rendered writing, a per-note graph, and a timer built in. Use Obsidian if you need community plugins, Canvas, or a vault-wide graph.
-- **Notion:** Editing in a workspace requires sign-in. Offline editing is available for downloaded pages. Use diyalamp for direct editing of the original Markdown files. Export Markdown & CSV to bring over Notion pages.
-- **Typora:** Both render local Markdown in the writing area. Typora has a 15-day trial and one-time paid activation. Use diyalamp for backlinks and a free open-source license.
+- [Universal Mac DMG](https://github.com/diyalamp/diyalamp/releases/download/v0.1.0/DiyaLamp-macOS.dmg)
+- [SHA-256 checksum](https://github.com/diyalamp/diyalamp/releases/download/v0.1.0/DiyaLamp-macOS.dmg.sha256)
+- [Release notes and installation steps](https://github.com/diyalamp/diyalamp/releases/tag/v0.1.0)
+- [Source code and issues](https://github.com/diyalamp/diyalamp) under Apache 2.0
+
+Open the DMG, drag diyalamp into Applications, and choose a folder of UTF-8 .md or .markdown files. macOS may ask you to approve the first launch. Writing works offline after installation.
 
 ## Mac installer comparison
 
-Checked November 7, 2026. These are decimal download sizes for macOS installers that support Apple silicon.
+Checked November 7, 2026. Sizes are decimal MB and measure download transfers. These are Mac installers that support Apple silicon. Launch and editing speeds require separate measurements.
 
-- diyalamp 1.3.4 Apple silicon DMG is 48.2 MB and requires no account or license activation.
+- diyalamp 0.1.0 universal DMG is 1.92 MB. Local editing requires no account or license activation.
 - [Obsidian 1.15.0 universal DMG](https://api.github.com/repos/obsidianmd/obsidian-releases/releases/assets/693337944) is 233.2 MB. Local writing requires no account.
 - [Notion 7.42.3 Apple silicon DMG](https://desktop-release.notion-static.com/Notion-7.42.3-arm64.dmg) is 136.2 MB. Workspace editing requires sign-in.
-- [Typora 1.14.15 macOS DMG](https://downloads.typora.io/mac/Typora-1.14.15.dmg) is 15.2 MB. After the trial, paid activation is required.
+- [Typora 1.14.15 Mac DMG](https://downloads.typora.io/mac/Typora-1.14.15.dmg) is 15.2 MB. After the trial, paid activation is required.
 
-The diyalamp installer is 79% smaller than Obsidian's universal DMG and 65% smaller than Notion's Apple silicon DMG. Installer size measures download footprint.
-
-[Native prototype](https://diyalamp.com/alternatives/#native-prototype): A local single-note experiment produced a 1.84 MB universal DMG and used 3.22 MB on disk. The public release is diyalamp 1.3.4.
-
-## Get started
-
-- [Desktop downloads and checksums](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.4): Version 1.3.4 for Apple silicon and Intel Macs.
-- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.4/diyalamp-1.3.4-macos-arm64.dmg): 48,239,105 bytes for Apple silicon (48.2 MB).
-- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.4/diyalamp-1.3.4-macos-x86_64.dmg): 49,634,711 bytes for Intel (49.6 MB).
-- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/main/docs/install.md): Choose the installer for your Mac, verify the optional SHA-256 checksum, and open a folder.
-- [App screenshots](https://diyalamp.com/#workspace): See the installed Mac editor, sidebar, and note tools.
-- [Compare and bring your notes](https://diyalamp.com/alternatives/): See how the writing workflows differ and how to open Markdown from Obsidian, Notion, Typora, Bear, or Coda.
-- [Source and GitHub stars](https://github.com/diyalamp/diyalamp): Review the code, star the project, or report issues. Project source is Apache-2.0 licensed.
-
-Both DMGs include a runtime. The figures are download sizes in decimal MB. The app is ad hoc signed, without Developer ID or Apple notarization. macOS may ask you to approve it on first launch.
+[See the measured Mac installer comparison](https://diyalamp.com/alternatives/#mac-downloads).
 
 ## Desktop features
 
-- **Local files:** Edit UTF-8 `.md` and `.markdown` files in a folder you choose, up to 5 MiB per note. Autosave checks the file fingerprint before writing. On a conflict, edits stay open for export. Recoverable deletes go to `.diyalamp-trash` in the workspace.
-- **Rendered Markdown:** Format text as you type. The editor supports headings, emphasis, links, lists, checklists, quotes, inline code, fenced code blocks, and a slash menu with icons. Rendered H1, H2, and H3 have distinct sizes.
-- **Tabs and split view:** Reorder tabs, work with notes side by side, and drag notes into workspace folders. Both sidebars are resizable.
-- **Workspace search:** Search filenames or raw Markdown, including unsaved edits. Use case, whole-word, or regular-expression matching and include or exclude path globs. Open a text result at its match. The search shows a partial-results notice when it reaches a scan limit.
-- **Connected notes:** Write `[[Note name]]` or a relative Markdown file link to connect existing notes. The local graph and Incoming and Outgoing lists follow the active note. The graph shows up to 60 notes and uses a bounded index of saved Markdown. The toolbar toggles Connections.
-- **Focus:** The desktop uses one shared `#111213` background in Normal mode and `#000000` in Focus. Focus keeps the active writing line bright and dims surrounding text and controls.
-- **Pomodoro:** The toolbar shows Focus or Break and the countdown. Set durations from 1 to 180 minutes. Run one focus and break cycle or repeat. Start, Pause, Resume, and Reset are available in the timer.
-- **Mac workspace:** Use the folder toolbar button, keyboard shortcuts, native window controls, five accent presets or a custom hex color, and status counts for characters, words, lines, and Markdown bytes.
+- **Local files:** Open a folder and edit the original UTF-8 Markdown files. Save checks whether the original changed on disk before writing.
+- **Markdown editing:** Work in the source or edit supported text in the rendered pane.
+- **Workspace search:** Search filenames or note text, including unsaved edits in the active note. Use case, whole-word, or regular-expression matching and include or exclude path globs.
+- **Connected notes:** Click rendered wikilinks to open existing Markdown notes. Incoming and Outgoing lists follow the active note and include resolved wiki and local Markdown links.
+- **Crash recovery:** If diyalamp closes unexpectedly, it can restore edits through its latest checkpoint. If the original file changed, the app lets you save the recovered edits as a separate copy.
 
-## Files, privacy, and updates
+## Bring your notes
 
-Desktop writing works offline after installation. Notes stay in the folder you choose and remain readable by other Markdown editors. The scope is personal writing with local files. Workflows that depend on shared databases, live team collaboration, or Obsidian plugins belong in their respective apps.
+- **Obsidian:** Open the vault folder as local Markdown. Obsidian offers plugins, Canvas, and a vault-wide graph.
+- **Notion:** Export Markdown & CSV and open the resulting folder. Keep the export archive for attachments and database CSVs.
+- **Typora:** Open the folder that already contains your Markdown files. Typora offers richer rendering for math and diagrams.
 
-To check for a newer stable release, choose Help → Check for updates. Downloads and installation are separate user actions. The updater verifies the checksum and staged app and saves notes before installation. A save conflict cancels the update.
+[Compare Markdown editors for Mac](https://diyalamp.com/alternatives/).
 
 ## Links
 

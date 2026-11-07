@@ -1,14 +1,15 @@
-/** Public desktop release references; keep installer byte counts tied to measured assets. */
-const version = '1.3.4';
+/** Public desktop release references tied to the measured universal Mac installer. */
+const version = '0.1.0';
 const source = 'https://github.com/diyalamp/diyalamp';
+const asset = 'DiyaLamp-macOS.dmg';
 
 export const desktopRelease = {
   version,
-  appleSiliconBytes: 48239105,
-  intelBytes: 49634711,
+  downloadBytes: 1915883,
+  installedBytes: 3686400,
+  minimumMacOS: '15',
   source,
   url: `${source}/releases/tag/v${version}`,
-  appleSilicon: `${source}/releases/download/v${version}/diyalamp-${version}-macos-arm64.dmg`,
-  intel: `${source}/releases/download/v${version}/diyalamp-${version}-macos-x86_64.dmg`,
-  installation: `${source}/blob/main/docs/install.md`,
+  dmg: `${source}/releases/download/v${version}/${asset}`,
+  checksum: `${source}/releases/download/v${version}/${asset}.sha256`,
 };
