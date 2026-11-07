@@ -3,11 +3,12 @@ import { ArrowDownRight, ArrowRight, Download, Star } from 'lucide-react';
 import AppScreenshot from '@/components/app-screenshot';
 import LampMark from '@/components/lamp-mark';
 import { desktopRelease } from '@/lib/desktop-release';
+import { comparisonDate, decimalMegabytes, downloadReduction, macDownloads, nativePrototype } from '@/lib/mac-downloads';
 import './alternatives.css';
 
 const title = 'Obsidian, Notion, and Typora Alternatives for Mac';
 const description =
-  'Compare diyalamp with Obsidian, Notion, and Typora. See which writing workflow fits, what you keep, and how to open existing Markdown notes on your Mac.';
+  'Compare Mac download sizes and sign-in requirements for diyalamp, Obsidian, Notion, and Typora. Move your Markdown files and start writing locally.';
 
 export const metadata: Metadata = {
   title,
@@ -97,6 +98,53 @@ export default function Alternatives() {
             </p>
             <a className="site-button site-button-primary" href="/#download"><Download size={17} aria-hidden="true" />Download for Mac</a>
           </header>
+
+          <section id="mac-downloads" className="comparison-section" aria-labelledby="download-size-heading">
+            <h2 id="download-size-heading">Less to download. No account to set up.</h2>
+            <p className="comparison-subtitle">
+              The diyalamp Apple silicon DMG is <strong>{downloadReduction.obsidian}% smaller than Obsidian’s universal download</strong>
+              {' '}and <strong>{downloadReduction.notion}% smaller than Notion’s Apple silicon download</strong>.
+              Typora has the smallest public installer in this comparison.
+            </p>
+            <table className="mac-download-table">
+              <caption className="sr-only">Public macOS installers and what each app requires to edit</caption>
+              <thead>
+                <tr><th scope="col">App</th><th scope="col">Download</th><th scope="col">To start writing</th></tr>
+              </thead>
+              <tbody>
+                {macDownloads.map((app) => (
+                  <tr key={app.name}>
+                    <th scope="row">{app.name}<span>{app.version}</span></th>
+                    <td>
+                      <strong>{decimalMegabytes(app.bytes)} MB</strong><span>{app.build}</span>
+                      <a href={app.downloadSource} aria-label={`${app.name} installer source`}>Installer source</a>
+                    </td>
+                    <td>{app.setup}<span><a href={app.setupSource} aria-label={`${app.name} setup requirements`}>Setup source</a></span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="measurement-note">
+              Checked <time dateTime={comparisonDate}>November 7, 2026</time>. Sizes use decimal MB and measure installer transfers.
+              The comparison uses each vendor’s Apple silicon installer where offered, or its macOS installer that supports Apple silicon.
+              Launch and editing speeds require separate measurements.
+            </p>
+          </section>
+
+          <section id="native-prototype" className="comparison-section" aria-labelledby="native-heading">
+            <p className="comparison-kicker">In development · Local prototype</p>
+            <h2 id="native-heading">A native prototype with a DMG under 2 MB.</h2>
+            <dl className="native-measurements">
+              <div><dt>Prototype DMG</dt><dd>{decimalMegabytes(nativePrototype.dmgBytes, 2)} MB</dd></div>
+              <div><dt>App on disk</dt><dd>{decimalMegabytes(nativePrototype.appBytesOnDisk, 2)} MB</dd></div>
+              <div><dt>Test edit and redraw</dt><dd>{nativePrototype.medianEditMs.toFixed(1)} ms</dd></div>
+            </dl>
+            <p className="comparison-subtitle">
+              The single-note prototype opens, edits, and saves Markdown. On Apple silicon, an in-memory edit and
+              AppKit display call took a median of {nativePrototype.medianEditMs.toFixed(1)} ms over {nativePrototype.samples} samples
+              on a {nativePrototype.fixtureBytes.toLocaleString('en-US')}-byte test note. The public download is diyalamp {desktopRelease.version}.
+            </p>
+          </section>
 
           <section className="comparison-section" aria-labelledby="decision-heading">
             <h2 id="decision-heading">What you gain by switching</h2>

@@ -113,6 +113,9 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .hero-promises li { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
 .hero-promises li + li::before { content: ""; width: 3px; height: 3px; margin-right: 6px; background: #ff6262; border-radius: 50%; }
 .simple-actions { display: flex; gap: 9px; flex-wrap: wrap; margin-top: 22px; }
+.hero-download-fact { margin-top: 12px; color: var(--site-text); font-size: .875rem; }
+.hero-download-fact strong { color: #fff; }
+.hero-download-fact a { text-decoration: underline; text-underline-offset: 3px; }
 .site-button {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px; flex-shrink: 0;
   min-height: 42px; padding-inline: 13px; border: 1px solid transparent; border-radius: 8px;
