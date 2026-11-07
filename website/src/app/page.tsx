@@ -1,37 +1,200 @@
-"use client";
-
-import {ArrowUpRightIcon,CheckIcon,DownloadIcon,FileTextIcon,FolderOpenIcon,PanelLeftIcon,SplitIcon} from "lucide-react";
-import {Button} from "@/components/ui/button";
-import {Accordion,AccordionContent,AccordionItem,AccordionTrigger} from "@/components/ui/accordion";
-import DeferredWorkspace from "@/components/deferred-workspace";
+import {
+  ArrowUpRightIcon, ChevronDownIcon, DownloadIcon,
+  FileTextIcon, GitForkIcon, MoonIcon, SearchIcon, SplitSquareHorizontalIcon,
+  StarIcon, TimerIcon,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
-import {desktopRelease} from "@/lib/desktop-release";
+import { desktopRelease } from "@/lib/desktop-release";
 
-const github=desktopRelease.source;
-const faqs=[
- {q:"What is diyalamp?",a:"An open-source Markdown editor for macOS with live formatting, local .md files, multiple note tabs, and split view. It is an alternative to Typora and a no-sign-up option for personal writing in a Notion-like interface."},
- {q:"Where are the macOS downloads?",a:`Version ${desktopRelease.version} is available for Apple silicon and Intel Macs from the download section and GitHub Releases. Both packages include a runtime; no separate Java installation is needed. This community release is unsigned and not Apple-notarized.`},
- {q:"Which appearance and fonts does the desktop app use?",a:"The desktop app is light mode only, with an AtlantaFX CupertinoLight workspace, a shared top toolbar, and a user-selectable accent. Body text and controls use bundled static Inter at 16 px, with real regular, italic, semibold, and semibold italic faces; headings use larger Inter semibold and code uses Menlo at 16 px. The website and its separate browser notebook keep their own dark interface."},
- {q:"How do I update the app?",a:"Use Help → Check for updates in the installed app. Checking does not download anything. You choose whether to download a newer release, then choose Install and Restart. The app checks the download against the published SHA-256 checksum and saves notes before restarting. A save conflict cancels installation so you can resolve it first."},
- {q:"Does it require an account, subscription, or server?",a:"No. The desktop app uses Markdown files in a folder on your Mac. Local writing requires no account, subscription, backend, or AI service."},
- {q:"Does the browser prototype sync with the desktop app?",a:"No. The dark browser notebook is a separate demonstration, not a screenshot of the light macOS app. It keeps notes in this browser. Export a Markdown copy to keep it or open it in another editor. Desktop files and browser notes are separate."},
- {q:"Which Markdown features are supported?",a:"The desktop editor supports headings, bold, italic, links, lists, checklists, quotes, inline code, and fenced code blocks. This release does not include the full CommonMark specification, rich tables, remote-image previews, plugins, or sync."},
- {q:"Can I connect notes?",a:"Yes. Write [[Note name]] to link to an existing note, or use a relative Markdown file link. Open Connections from the toolbar to see a directed SmartGraph diagram and Incoming and Outgoing lists for the active note. Click a list item or double-click a graph node to open it. The graph indexes saved files locally; it does not create notes, rewrite links, or sync them."},
- {q:"Are there focus tools?",a:"Zen mode hides the workspace controls while preserving your open notes and selection. The top-toolbar Pomodoro control opens an animated AtlantaFX Popover with Start, Stop, and Reset. These are desktop features; the browser notebook has its own separate controls."},
- {q:"How small is the app?",a:`Version ${desktopRelease.version} installers are ${desktopRelease.appleSiliconBytes.toLocaleString("en-US")} bytes for Apple silicon (${(desktopRelease.appleSiliconBytes / 1e6).toFixed(1)} MB) and ${desktopRelease.intelBytes.toLocaleString("en-US")} bytes for Intel (${(desktopRelease.intelBytes / 1e6).toFixed(1)} MB). Both include the runtime and UI libraries. Download size and installed size are different measurements. Under 5 MB installed remains an engineering target, not an achieved size. Matching checksums are published with the release assets.`},
- {q:"Can I contribute?",a:"Yes. The project is Apache-2.0 licensed. The repository includes build instructions, tests, issue templates, and a contributor guide. Bug reports with fictional sample notes, accessibility feedback, and Markdown compatibility tests are useful contributions."}
+const github = desktopRelease.source;
+const appleSiliconSize = (desktopRelease.appleSiliconBytes / 1e6).toFixed(1);
+const intelSize = (desktopRelease.intelBytes / 1e6).toFixed(1);
+
+const features = [
+  {
+    icon: FileTextIcon, title: "Rendered Markdown",
+    description: "Write with rendered headings, checklists, quotes, and code. Type / to insert a block. Every note stays an ordinary Markdown file in your Mac folder.",
+  },
+  {
+    icon: SearchIcon, title: "Filename and full-text search",
+    description: "Search filenames or note text, including unsaved edits. Narrow the results with regex, whole words, case matching, or file filters.",
+  },
+  {
+    icon: GitForkIcon, title: "Wikilinks and backlinks",
+    description: "Link notes with [[wiki links]]. Follow incoming and outgoing links in the Connections sidebar and open related notes from the graph.",
+  },
+  {
+    icon: SplitSquareHorizontalIcon, title: "Tabs, split view, and file actions",
+    description: "Reorder tabs, drag a note into split view, or move it to another folder. Rename files inline and recover deleted notes from the app.",
+  },
+  {
+    icon: MoonIcon, title: "Caret-line Focus",
+    description: "Switch the workspace from charcoal to black. The line at your cursor stays bright while surrounding text and controls dim.",
+  },
+  {
+    icon: TimerIcon, title: "Pomodoro timer",
+    description: "Set your own focus and break lengths. The Pomodoro countdown stays in the toolbar, with controls for one cycle or continuous repeat.",
+  },
 ];
-export default function Home(){return <main className="simple-site">
- <header className="landing-header"><a href="#" className="landing-brand"><LampMark className="brand-lamp"/>diyalamp</a><nav aria-label="Main navigation"><a href="#features">Features</a><a href="#workspace">Prototype</a><a href="#download">macOS app</a></nav><Button variant="secondary" asChild><a href={github}>GitHub<ArrowUpRightIcon className="size-4"/></a></Button></header>
- <section className="simple-hero"><div className="max-w-6xl mx-auto px-6"><div className="simple-kicker"><span className="status-dot"/>Open source · Local files · macOS</div><h1>Markdown editing.<br/>Without an account.</h1><p className="simple-intro">A light-mode Markdown editor for macOS with live formatting, a folder explorer, note tabs, and split view. An open-source alternative to Typora for personal writing.</p><div className="simple-actions"><Button asChild><a href={desktopRelease.appleSilicon}>Download for Apple silicon<DownloadIcon className="size-4"/></a></Button><Button variant="secondary" onClick={()=>document.getElementById("workspace")?.scrollIntoView({behavior:"auto",block:"start"})}>Try the prototype<PanelLeftIcon className="size-4"/></Button></div><p className="simple-status">Version {desktopRelease.version} · macOS · Intel download below · Unsigned community release.</p></div></section>
- <section id="workspace" className="simple-workspace"><div className="mx-auto max-w-6xl px-6"><div className="simple-section-label"><span>Browser notebook</span><span>Separate demonstration · Markdown export</span></div><DeferredWorkspace/><p className="simple-caption">This dark browser notebook is a separate demonstration of rendered writing. The macOS app uses a light workspace, Inter text, Menlo code, and local folders. Browser notes stay in this browser; export a copy to keep your work.</p></div></section>
- <section id="features"><div className="max-w-6xl mx-auto px-6"><div className="simple-feature-grid">{[
- {icon:FileTextIcon,title:"Rendered Markdown",text:"Write directly in formatted notes. Use headings, emphasis, lists, checklists, quotes, and code blocks."},
- {icon:FolderOpenIcon,title:"Local files",text:"Open a folder on your Mac. Browse Markdown files and subfolders, search notes, and create, rename, or recover deleted notes."},
- {icon:SplitIcon,title:"Tabs and split view",text:"Open, close, and reorder note tabs. Drag a note to the right edge to keep a reference beside your writing."}
- ].map(({icon:Icon,title,text})=><article className="simple-feature-card" key={title}><Icon className="size-5"/><h2>{title}</h2><p>{text}</p></article>)}</div></div></section>
- <section id="download"><div className="max-w-6xl mx-auto px-6"><div className="simple-release-card"><div><span className="simple-kicker">Desktop release</span><h2>For your Mac.<br/>For your own files.</h2><p>Version {desktopRelease.version} brings a light CupertinoLight workspace, Inter text, Menlo code, a shared toolbar, and an accent picker. Connect notes with wikilinks, inspect incoming and outgoing links, or focus with Zen mode and Pomodoro. Available for Apple silicon and Intel Macs.</p><ul>{["No account or subscription","Runtime included","Explicit in-app update checks","Open source under Apache 2.0"].map(t=><li key={t}><span>{t}</span><CheckIcon className="size-4"/></li>)}</ul></div><div className="simple-release-actions"><Button asChild><a href={desktopRelease.appleSilicon}>Apple silicon DMG · {(desktopRelease.appleSiliconBytes / 1e6).toFixed(1)} MB<DownloadIcon className="size-4"/></a></Button><Button variant="secondary" asChild><a href={desktopRelease.intel}>Intel Mac DMG · {(desktopRelease.intelBytes / 1e6).toFixed(1)} MB<DownloadIcon className="size-4"/></a></Button><p><strong>Size target: under 5 MB installed.</strong> Not achieved. See the release assets for measured installer sizes and checksums.</p><p>This release is unsigned and not Apple-notarized; macOS may block launch. <a href={desktopRelease.url}>Release notes and checksums</a> · <a href={desktopRelease.installation}>Installation guide</a>.</p></div></div></div></section>
- <section id="questions"><div className="max-w-6xl mx-auto px-6 simple-questions"><div><span className="simple-kicker">Details</span><h2>Files, features,<br/>and installation.</h2><a className="simple-text-link" href="/alternatives/">Compare Markdown editors<ArrowUpRightIcon className="size-4"/></a></div><Accordion type="single" collapsible>{faqs.map((faq,i)=><AccordionItem key={faq.q} value={`q-${i}`}><AccordionTrigger>{faq.q}</AccordionTrigger><AccordionContent>{faq.a}</AccordionContent></AccordionItem>)}</Accordion></div></section>
- <footer className="landing-footer"><a href="#" className="landing-brand"><LampMark className="brand-lamp"/>diyalamp</a><nav className="footer-socials" aria-label="diyalamp social accounts"><a href="https://github.com/diyalamp">GitHub<SocialIcon name="github"/></a><a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky"/></a><a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit"/></a></nav><span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.png" alt="JRXNA" width="74" height="18"/></a> production.</span></footer>
- </main>;}
+
+const faqs = [
+  {
+    question: "Can I use diyalamp instead of Obsidian, Notion, or Typora?",
+    answer: "Open the Markdown files in an Obsidian vault, extract Markdown exported from Notion, or reuse the same files you edit in Typora. See the comparison for differences in plugins, databases, and formatting.",
+  },
+  {
+    question: "Is diyalamp free, and do I need an account?",
+    answer: "The macOS app is free forever and open source under Apache 2.0. Open a folder and start writing. There’s no sign-up, subscription, or server required to edit your notes.",
+  },
+  {
+    question: "How large is the download?",
+    answer: `Version ${desktopRelease.version} is ${desktopRelease.appleSiliconBytes.toLocaleString("en-US")} bytes (${appleSiliconSize} MB) for Apple silicon and ${desktopRelease.intelBytes.toLocaleString("en-US")} bytes (${intelSize} MB) for Intel. Both downloads include the runtime. The app bundle occupies more space after installation.`,
+  },
+  {
+    question: "How do I install and update it?",
+    answer: "Choose the DMG for your Mac and drag diyalamp into Applications. The app is ad hoc signed without Apple notarization, so macOS may ask you to approve the first launch. For updates, choose Help → Check for updates. Pending edits are saved before an update can install.",
+  },
+  {
+    question: "How can I support the project?",
+    answer: "Star diyalamp on GitHub to save the project and help people discover it. Bug reports with fictional sample notes and feedback on accessibility are welcome.",
+  },
+];
+
+export default function Home() {
+  return (
+    <div className="simple-site">
+      <a className="skip-link" href="#main-content">Skip to content</a>
+      <header className="landing-header">
+        <a href="/" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a>
+        <nav aria-label="Main navigation">
+          <a href="#features">Features</a>
+          <a href="#workspace">Screenshots</a>
+          <a href="/alternatives/">Compare</a>
+        </nav>
+        <Button variant="outline" className="header-star" asChild>
+          <a href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
+        </Button>
+      </header>
+
+      <main id="main-content">
+        <section className="simple-hero" aria-labelledby="hero-heading">
+          <div className="site-frame hero-layout">
+            <div>
+              <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Free forever · Open source</p>
+              <h1 id="hero-heading">Free Markdown<br className="hero-break" /> editor for Mac.</h1>
+              <p className="simple-intro">Open a Markdown folder and edit the files in place. Get live formatting, regex search, and a per-note link graph without an account. An alternative to Obsidian, Notion, and Typora.</p>
+              <div className="simple-actions">
+                <Button asChild><a href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a></Button>
+                <Button variant="outline" asChild><a href={github}><StarIcon aria-hidden="true" />Star on GitHub</a></Button>
+              </div>
+            </div>
+            <dl className="hero-spec">
+              <div><dt>UTF-8 Markdown</dt><dd><code>.md</code> and <code>.markdown</code></dd></div>
+              <div><dt>Desktop builds</dt><dd>Apple silicon and Intel</dd></div>
+              <div><dt>Apple silicon DMG</dt><dd>{appleSiliconSize} MB</dd></div>
+              <div><dt>License</dt><dd><a href={`${github}/blob/main/LICENSE`}>Apache 2.0<ArrowUpRightIcon aria-hidden="true" /></a></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <section id="workspace" className="simple-workspace" aria-labelledby="workspace-heading">
+          <div className="site-frame">
+            <div className="demo-heading">
+              <div><p className="simple-kicker">Version {desktopRelease.version}</p><h2 id="workspace-heading" className="marketing-heading">The macOS app.</h2></div>
+              <p>Screenshots from diyalamp with sample notes.</p>
+            </div>
+            <div className="app-screens">
+              <figure>
+                <a href="/screenshots/workspace.webp" aria-label="View full-size workspace screenshot">
+                  <img src="/screenshots/workspace.webp" width="1440" height="900" alt="DiyaLamp shows files and tabs around a rendered Markdown note, with a graph and incoming and outgoing links on the right." decoding="async" />
+                </a>
+                <figcaption>Rendered Markdown and a graph of links to and from the active note.</figcaption>
+              </figure>
+              <figure>
+                <a href="/screenshots/search-and-split.webp" aria-label="View full-size search and split screenshot">
+                  <img src="/screenshots/search-and-split.webp" width="1440" height="900" alt="DiyaLamp finds matching text in the left sidebar and shows a draft and reference in two editor panes." loading="lazy" decoding="async" />
+                </a>
+                <figcaption>Full-text search beside two editable notes in split view.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </section>
+
+        <section id="features" aria-labelledby="feature-heading">
+          <div className="site-frame">
+            <p className="simple-kicker">The Mac app</p>
+            <h2 id="feature-heading" className="marketing-heading">Desktop features.</h2>
+            <p className="section-intro">Open an existing folder and edit offline. The app reads and writes UTF-8 Markdown files directly.</p>
+            <div className="simple-feature-grid">
+              {features.map(({ icon: Icon, title, description }) => (
+                <article className="simple-feature-card" key={title}>
+                  <Icon aria-hidden="true" />
+                  <h3>{title}</h3>
+                  <p>{description}</p>
+                </article>
+              ))}
+            </div>
+            <a className="simple-text-link" href="/alternatives/">Compare with Obsidian, Notion, and Typora<ArrowUpRightIcon aria-hidden="true" /></a>
+          </div>
+        </section>
+
+        <section id="download" aria-labelledby="download-heading">
+          <div className="site-frame">
+            <div className="simple-release-card">
+              <div>
+                <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />macOS · Version {desktopRelease.version}</p>
+                <h2 id="download-heading" className="marketing-heading">Download for Mac.</h2>
+                <p>Choose the installer for your Mac. Both include everything the app needs to run.</p>
+              </div>
+              <div className="simple-release-actions">
+                <Button asChild><a href={desktopRelease.appleSilicon}><span>Apple silicon DMG · {appleSiliconSize} MB</span><DownloadIcon aria-hidden="true" /></a></Button>
+                <Button variant="outline" asChild><a href={desktopRelease.intel}><span>Intel Mac DMG · {intelSize} MB</span><DownloadIcon aria-hidden="true" /></a></Button>
+                <p>Ad hoc signed. macOS may require first-launch approval.</p>
+                <div className="release-links">
+                  <a href={desktopRelease.url}>Release notes and checksums</a>
+                  <a href={desktopRelease.installation}>Install guide</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="questions" aria-labelledby="questions-heading">
+          <div className="site-frame simple-questions">
+            <div>
+              <p className="simple-kicker">FAQ</p>
+              <h2 id="questions-heading" className="marketing-heading">Before you install.</h2>
+            </div>
+            <div className="simple-faq">
+              {faqs.map(({ question, answer }) => (
+                <details key={question}>
+                  <summary>{question}<ChevronDownIcon aria-hidden="true" /></summary>
+                  <p>{answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="simple-support" aria-labelledby="support-heading">
+          <div className="site-frame support-layout">
+            <div><p className="simple-kicker">Built in the open</p><h2 id="support-heading" className="marketing-heading">Star diyalamp on GitHub.</h2><p>Save it for later and help more Mac users find it.</p></div>
+            <Button asChild><a href={github}><StarIcon aria-hidden="true" />Star on GitHub<ArrowUpRightIcon aria-hidden="true" /></a></Button>
+          </div>
+        </section>
+      </main>
+
+      <footer className="landing-footer">
+        <a href="/" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a>
+        <nav className="footer-socials" aria-label="diyalamp social accounts">
+          <a href={github}>GitHub<SocialIcon name="github" /></a>
+          <a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky" /></a>
+          <a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit" /></a>
+        </nav>
+        <span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.png" alt="JRXNA" width="74" height="18" /></a> production.</span>
+      </footer>
+    </div>
+  );
+}

@@ -1,43 +1,39 @@
 # diyalamp
 
-> A free, open-source Markdown writing app for macOS. A tool for the mind.
+> diyalamp is a free-forever, open-source Markdown editor for macOS. It opens and saves ordinary local Markdown files with no sign-up or subscription.
 
-## Desktop app
+For personal writing, diyalamp is an alternative to Obsidian, Notion, and Typora. It combines Obsidian-style local linked notes, a formatted editor and slash commands for people who like writing in Notion, and live rendered Markdown for people who use Typora.
 
-Version 1.1.3 is available for Apple silicon and Intel Macs at https://github.com/diyalamp/diyalamp/releases/tag/v1.1.3. Both DMGs include a runtime; users do not install Java separately. This release is unsigned and not Apple-notarized; macOS may block launch.
+## Get started
 
-The desktop app is light mode only. Its JavaFX workspace uses AtlantaFX CupertinoLight and RichTextFX controls, with a shared top toolbar and user-selectable accent. Body text and controls use bundled static Inter at 16 px, with real regular, italic, semibold, and semibold italic faces. Inline code and code blocks use Menlo at 16 px. Java is an implementation detail, not an account or service dependency.
+- [Desktop downloads and checksums](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.4): Version 1.3.4 for Apple silicon and Intel Macs.
+- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.4/diyalamp-1.3.4-macos-arm64.dmg): 48,239,105 bytes for Apple silicon (48.2 MB).
+- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.4/diyalamp-1.3.4-macos-x86_64.dmg): 49,634,711 bytes for Intel (49.6 MB).
+- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/main/docs/install.md): Choose the installer for your Mac, verify the optional SHA-256 checksum, and open a folder.
+- [App screenshots](https://diyalamp.com/#workspace): See the installed Mac editor, sidebar, and note tools.
+- [Compare and bring your notes](https://diyalamp.com/alternatives/): See how the writing workflows differ and how to open Markdown from Obsidian, Notion, Typora, Bear, or Coda.
+- [Source and GitHub stars](https://github.com/diyalamp/diyalamp): Review the code, star the project, or report issues. Project source is Apache-2.0 licensed.
 
-Open a folder to browse local .md and .markdown files and subfolders. The app supports rendered editing of common Markdown, formatting and slash commands, filename search, closable and reorderable tabs, side-by-side notes, autosave, conflict detection, and recoverable deletion. No account, subscription, server, or AI service is required for writing.
+Both DMGs include a runtime. The figures are download sizes in decimal MB. The app is ad hoc signed, without Developer ID or Apple notarization. macOS may ask you to approve it on first launch.
 
-## Connected notes and focus tools
+## Desktop features
 
-Write [[Note name]] or a relative Markdown file link to connect existing local notes. Wiki links may include a heading or an alias, such as [[Note name#Heading|Label]]. Code, escaped brackets, web links, hidden paths, and symlink or outside-folder destinations do not create graph connections. The inspector uses SmartGraph for a directed diagram in its top third and Incoming and Outgoing lists below it. A link in an origin note is outgoing there and incoming at its target. Open a note from either list or by double-clicking a graph node. The inspector defaults closed; open Connections from the toolbar. It does not create notes or rewrite links.
+- **Local files:** Edit UTF-8 `.md` and `.markdown` files in a folder you choose, up to 5 MiB per note. Autosave checks the file fingerprint before writing. On a conflict, edits stay open for export. Recoverable deletes go to `.diyalamp-trash` in the workspace.
+- **Rendered Markdown:** Format text as you type. The editor supports headings, emphasis, links, lists, checklists, quotes, inline code, fenced code blocks, and a slash menu with icons. Rendered H1, H2, and H3 have distinct sizes.
+- **Tabs and split view:** Reorder tabs, work with notes side by side, and drag notes into workspace folders. Both sidebars are resizable.
+- **Workspace search:** Search filenames or raw Markdown, including unsaved edits. Use case, whole-word, or regular-expression matching and include or exclude path globs. Open a text result at its match. The search shows a partial-results notice when it reaches a scan limit.
+- **Connected notes:** Write `[[Note name]]` or a relative Markdown file link to connect existing notes. The local graph and Incoming and Outgoing lists follow the active note. The graph shows up to 60 notes and uses a bounded index of saved Markdown. The toolbar toggles Connections.
+- **Focus:** The desktop uses one shared `#111213` background in Normal mode and `#000000` in Focus. Focus keeps the active writing line bright and dims surrounding text and controls.
+- **Pomodoro:** The toolbar shows Focus or Break and the countdown. Set durations from 1 to 180 minutes. Run one focus and break cycle or repeat. Start, Pause, Resume, and Reset are available in the timer.
+- **Mac workspace:** Use the folder toolbar button, keyboard shortcuts, native window controls, five accent presets or a custom hex color, and status counts for characters, words, lines, and Markdown bytes.
 
-The index reads saved Markdown in a background worker after safe saves and folder/file operations. It is bounded to 5,000 notes, 30,000 traversed entries, 1 MiB of content per note, and 32 MiB total content per scan. Skipped files or scan limits produce a partial-index notice. The diagram draws up to 60 notes; the lists retain every indexed connection for the active note. This is a local note-link inspector, not Obsidian plugin compatibility or an unbounded knowledge-graph service.
+## Files, privacy, and updates
 
-Zen mode hides workspace controls without closing notes. The top-toolbar Pomodoro control opens an animated AtlantaFX Popover with Start, Stop, and Reset.
+Desktop writing works offline after installation. Notes stay in the folder you choose and remain readable by other Markdown editors. The scope is personal writing with local files. Workflows that depend on shared databases, live team collaboration, or Obsidian plugins belong in their respective apps.
 
-Updates are explicit: Help → Check for updates checks for a newer stable release but does not download it. A user can choose to download the update, then choose Install and Restart. The app checks the download against the published SHA-256 checksum, validates the staged app, and saves notes before installation. A save conflict cancels installation. Checksums are download-integrity checks; the release remains unsigned and not Apple-notarized.
-
-## Browser notebook
-
-The website and its separate browser notebook retain a dark interface with self-hosted Inter. The browser notebook is a demonstration, not a screenshot of the light desktop app. Browser notes live in browser storage, which can be cleared; export important writing. Desktop and browser notes are not automatically synced, and the browser notebook does not reproduce every desktop control.
-
-## Scope and alternatives
-
-diyalamp is a focused personal-writing alternative to tools such as Notion and Typora. It does not replace Notion's team databases, Coda's automations, or Obsidian's plugin ecosystem. Cloud services and publication integrations are outside this desktop release. Do not infer that comparison apps are affiliated with diyalamp.
+To check for a newer stable release, choose Help → Check for updates. Downloads and installation are separate user actions. The updater verifies the checksum and staged app and saves notes before installation. A save conflict cancels the update.
 
 ## Links
 
-- Home: https://diyalamp.com/
-- Downloads and release notes: https://github.com/diyalamp/diyalamp/releases
-- Source and contributions: https://github.com/diyalamp/diyalamp
-- Alternatives guide: https://diyalamp.com/alternatives/
-- Website source: https://github.com/diyalamp/diyalamp.github.io
-
-Project source is Apache-2.0 licensed. Dependencies and brand artwork retain their own notices.
-
-## Size budget
-
-Under 5 MB installed is an aspirational target, not an achieved size. The self-contained app includes its runtime and UI libraries. Download size and installed size are different measurements; do not reuse figures from an older release. Do not describe diyalamp as currently installing in less than 5 MB or 10 MB. Version 1.1.3 DMG downloads are 48,033,713 bytes for Apple silicon (48.0 MB) and 49,514,944 bytes for Intel (49.5 MB), using decimal MB. Matching SHA-256 files accompany both DMGs.
+- [Product website](https://diyalamp.com/)
+- [Website source](https://github.com/diyalamp/diyalamp.github.io)
