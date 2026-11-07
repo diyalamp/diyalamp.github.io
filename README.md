@@ -22,7 +22,7 @@ pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-Build the static site with `pnpm build`; output is `website/out/`. GitHub Pages deploys that output from `main` using `.github/workflows/pages.yml`. The custom domain remains diyalamp.com. The older `dist/` site is retained as legacy source and is not the publication target.
+Build the static site with `pnpm build`; output is `website/out/`. The home and alternatives routes use native HTML controls and ship without a browser JavaScript runtime. GitHub Pages deploys that output from `main` using `.github/workflows/pages.yml`. The custom domain remains diyalamp.com. The older `dist/` site is retained as legacy source and is not the publication target.
 
 ## Brand and release notes
 

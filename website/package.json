@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build --webpack",
+    "build": "next build --webpack && node scripts/trim-static-export.mjs",
     "start": "next start",
     "check": "tsc6 --noEmit"
   },
