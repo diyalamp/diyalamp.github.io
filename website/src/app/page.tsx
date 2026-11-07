@@ -6,7 +6,7 @@ import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 import { desktopRelease } from "@/lib/desktop-release";
-import { decimalMegabytes, downloadReduction } from "@/lib/mac-downloads";
+import { decimalMegabytes, downloadReduction, nativePrototype } from "@/lib/mac-downloads";
 
 const github = desktopRelease.source;
 const appleSiliconSize = decimalMegabytes(desktopRelease.appleSiliconBytes);
@@ -112,6 +112,10 @@ export default function Home() {
                 </article>
               ))}
             </div>
+            <p className="hero-download-fact">
+              In development · <strong>{decimalMegabytes(nativePrototype.dmgBytes, 2)} MB prototype DMG</strong>.{" "}
+              <a href="/alternatives/#native-prototype">See the native build measurements</a>
+            </p>
           </div>
         </section>
 
