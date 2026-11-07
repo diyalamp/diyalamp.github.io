@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { desktopRelease } from '@/lib/desktop-release';
+import { decimalMegabytes } from '@/lib/mac-downloads';
 import './globals.css';
 
 const inter = localFont({
@@ -11,9 +12,10 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
+const downloadSize = decimalMegabytes(desktopRelease.downloadBytes, 2);
+const title = `diyalamp | ${downloadSize} MB Markdown Editor for Mac`;
 const description =
-  'A free, open-source Mac Markdown editor with no account or activation. Edit local files in place and compare download sizes with Obsidian, Notion, and Typora.';
+  `A free, open-source native Markdown editor with a ${downloadSize} MB universal Mac download. Edit local files, search your notes, and follow backlinks without an account.`;
 const license = 'https://www.apache.org/licenses/LICENSE-2.0';
 
 export const metadata: Metadata = {
@@ -69,29 +71,28 @@ const productData = {
       publisher: project,
       description,
       applicationCategory: 'ProductivityApplication',
-      operatingSystem: 'macOS',
+      operatingSystem: `macOS ${desktopRelease.minimumMacOS} or later`,
       softwareVersion: desktopRelease.version,
       isAccessibleForFree: true,
       license,
-      downloadUrl: desktopRelease.url,
-      installUrl: [desktopRelease.appleSilicon, desktopRelease.intel],
+      downloadUrl: desktopRelease.dmg,
+      installUrl: desktopRelease.dmg,
       releaseNotes: desktopRelease.url,
       featureList: [
-        'Rendered Markdown editing and slash commands',
+        'Markdown source and editable rendered text',
         'Edit UTF-8 .md and .markdown files in place',
         'Search filenames and raw Markdown with regex and path globs',
-        'Tabs and side-by-side notes',
-        'Wikilinks, a note graph, and incoming and outgoing links',
-        'Current-line Focus mode and a Pomodoro timer',
+        'Wikilinks and incoming and outgoing links',
+        'Local crash-recovery checkpoints',
       ],
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
     },
     {
       '@type': 'SoftwareSourceCode',
       '@id': `${desktopRelease.source}#source`,
-      name: 'diyalamp desktop source',
+      name: 'diyalamp native Mac source',
       codeRepository: desktopRelease.source,
-      programmingLanguage: 'Java',
+      programmingLanguage: 'Swift',
       license,
     },
   ],
