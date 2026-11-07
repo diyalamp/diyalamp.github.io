@@ -129,8 +129,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .simple-text-link:hover, .comparison-label:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .app-screen { min-width: 0; margin: 0; }
-.app-window { display: block; overflow: hidden; border-radius: 12px; box-shadow: 0 0 0 1px #ffffff2b; }
-.app-window:hover { box-shadow: 0 0 0 1px #ffffff65; }
+.app-window { display: block; overflow: hidden; border: 1px solid var(--diya-line); border-radius: clamp(7px, 1vw, 12px); }
+.app-window:hover { border-color: #ffffff65; }
 .app-screen img { display: block; width: 100%; height: auto; }
 .app-screen figcaption { display: flex; align-items: start; justify-content: space-between; flex-wrap: wrap; gap: 3px 16px; margin-top: 10px; color: var(--site-text); font-size: .8125rem; }
 .app-screen figcaption span { white-space: nowrap; }
