@@ -2,7 +2,13 @@
 
 > diyalamp is a free-forever, open-source Markdown editor for macOS. It opens and saves ordinary local Markdown files with no sign-up or subscription.
 
-For personal writing, diyalamp is an alternative to Obsidian, Notion, and Typora. It combines Obsidian-style local linked notes, a formatted editor and slash commands for people who like writing in Notion, and live rendered Markdown for people who use Typora.
+For personal writing, diyalamp is an alternative to Obsidian, Notion, and Typora. It edits the original UTF-8 Markdown files in a Mac folder and combines rendered writing, regex search, split view, backlinks, and a focus timer in the same workspace.
+
+## When to choose diyalamp
+
+- **Obsidian:** Both edit local Markdown without an account. Use diyalamp if you want rendered writing, a per-note graph, and a timer built in. Use Obsidian if you need community plugins, Canvas, or a vault-wide graph.
+- **Notion:** Use diyalamp if you want formatted blocks and slash commands with direct editing of the original Markdown files. Use Notion if you need shared pages, permissions, or databases. Export Markdown & CSV to bring over Notion pages.
+- **Typora:** Both render Markdown in the writing area. Use diyalamp for backlinks, connected notes, and a free open-source license. Use Typora if you rely on rendering tables, equations, or diagrams.
 
 ## Get started
 
