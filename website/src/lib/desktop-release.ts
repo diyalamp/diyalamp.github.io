@@ -1,11 +1,11 @@
 /** Public desktop release references; keep installer byte counts tied to measured assets. */
-const version = '1.1.3';
+const version = '1.3.4';
 const source = 'https://github.com/diyalamp/diyalamp';
 
 export const desktopRelease = {
   version,
-  appleSiliconBytes: 48033713,
-  intelBytes: 49514944,
+  appleSiliconBytes: 48239105,
+  intelBytes: 49634711,
   source,
   url: `${source}/releases/tag/v${version}`,
   appleSilicon: `${source}/releases/download/v${version}/diyalamp-${version}-macos-arm64.dmg`,
