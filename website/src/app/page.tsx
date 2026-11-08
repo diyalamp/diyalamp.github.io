@@ -151,7 +151,7 @@ export default function Home() {
             <h3 className="feature-gallery-title">A closer look at the editor.</h3>
             <div className="feature-gallery">
               {featureCaptures.map(({ name, title, width, height, crop, wide, alt, instruction }) => {
-                const src = `/screenshots/${name}.webp`;
+                const src = `/screenshots/${name}.webp?v=${desktopRelease.version}`;
                 return (
                   <figure key={name} className="feature-capture" data-wide={wide || undefined}>
                     <a className="feature-preview" data-crop={crop || undefined} href={src} aria-label={`View full-size screenshot. ${alt}`}>
