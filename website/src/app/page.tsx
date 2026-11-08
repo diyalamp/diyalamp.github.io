@@ -131,8 +131,15 @@ export default function Home() {
 
         <section id="features" aria-labelledby="feature-heading">
           <div className="site-frame">
-            <p className="simple-kicker">The writing workspace</p>
-            <h2 id="feature-heading" className="marketing-heading">Keep your sources in view.</h2>
+            <div className="section-heading">
+              <div>
+                <p className="simple-kicker">The writing workspace</p>
+                <h2 id="feature-heading" className="marketing-heading">Keep your sources in view.</h2>
+              </div>
+              <a className="simple-text-link" href="/downloads/database-systems-demo.zip" download>
+                <DownloadIcon aria-hidden="true" />Download the sample notes (ZIP)
+              </a>
+            </div>
             <div className="workflow-layout">
               <AppScreenshot name="search" caption="Find every match for index while keeping two notes open" />
               <div className="workflow-details">
