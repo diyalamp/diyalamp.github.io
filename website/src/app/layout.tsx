@@ -11,7 +11,7 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const socialCard = `/social-card.png?v=${desktopRelease.version}`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-dock`;
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
 const description =
   'Write with live Markdown formatting, search your notes, and open a reference beside your draft. Free and open source for Mac, with no account required.';
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
     canonical: '/',
     types: { 'text/plain': [{ url: '/llms.txt', title: 'diyalamp product facts' }] },
   },
-  icons: { icon: { url: '/lamp-icon.png', type: 'image/png', sizes: '64x64' } },
+  icons: { icon: { url: '/lamp-icon.png?v=dock', type: 'image/png', sizes: '64x64' } },
   openGraph: {
     type: 'website',
     siteName: 'diyalamp',

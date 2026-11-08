@@ -2,12 +2,13 @@ import type { Metadata } from 'next';
 import { ArrowDownRight, ArrowRight, Download, Star } from 'lucide-react';
 import AppScreenshot from '@/components/app-screenshot';
 import LampMark from '@/components/lamp-mark';
+import SiteFooter from '@/components/site-footer';
 import { desktopRelease } from '@/lib/desktop-release';
 import { comparisonDate, decimalMegabytes, macDownloads } from '@/lib/mac-downloads';
 import './alternatives.css';
 
 const title = 'Obsidian, Notion, and Typora Alternatives for Mac';
-const socialCard = `/social-card.png?v=${desktopRelease.version}`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-dock`;
 const description =
   'Compare diyalamp with Obsidian, Notion, and Typora. See which editors use local Markdown, what setup they need, and how to bring your notes.';
 
@@ -211,16 +212,14 @@ export default function Alternatives() {
               <p className="comparison-sources">
                 <a href={desktopRelease.url}>Release notes and checksums</a>
                 <a href={desktopRelease.installation}>Install guide</a>
+                <a href="/llms.txt">Product facts</a>
               </p>
             </div>
             <AppScreenshot name="search" caption="Database Indexes and Query Plans, side by side" />
           </section>
         </div>
       </main>
-      <footer className="landing-footer">
-        <a href="/" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a>
-        <a href="/llms.txt">Product facts</a>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

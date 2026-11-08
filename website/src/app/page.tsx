@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
-import SocialIcon from "@/components/social-icon";
+import SiteFooter from "@/components/site-footer";
 import { desktopRelease } from "@/lib/desktop-release";
 import { decimalMegabytes } from "@/lib/mac-downloads";
 
@@ -188,15 +188,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="landing-footer">
-        <a href="/" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a>
-        <nav className="footer-socials" aria-label="diyalamp social accounts">
-          <a href={github}>GitHub<SocialIcon name="github" /></a>
-          <a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky" /></a>
-          <a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit" /></a>
-        </nav>
-        <span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.webp" alt="JRXNA" width="256" height="60" loading="lazy" decoding="async" /></a> production.</span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
