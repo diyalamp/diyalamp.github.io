@@ -133,8 +133,8 @@ export default function Alternatives() {
                 <tr>
                   <th scope="row">diyalamp<span>{desktopRelease.version}</span></th>
                   <td>
-                    {desktopRelease.downloads.map(({ architecture, label, url }) => (
-                      <span key={architecture}><a href={url}>{label} DMG</a></span>
+                    {desktopRelease.downloads.map(({ architecture, label, url, bytes }) => (
+                      <span key={architecture}><a href={url}>{label} DMG</a> <strong>{decimalMegabytes(bytes)} MB</strong></span>
                     ))}
                   </td>
                   <td>Open a Markdown folder. No account or activation.</td>
@@ -152,8 +152,10 @@ export default function Alternatives() {
               </tbody>
             </table>
             <p className="measurement-note">
-              Other installer sizes were checked on <time dateTime={comparisonDate}>November 7, 2026</time>.
-              The figures are download sizes in decimal MB for installers that support Apple silicon.
+              Figures are compressed DMG download sizes in decimal MB. The other apps’ installers support Apple silicon and were checked on{' '}
+              <time dateTime={comparisonDate}>November 7, 2026</time>. The diyalamp{' '}
+              <a href={desktopRelease.previousUrl}>1.3.4 downloads</a> were{' '}
+              {desktopRelease.downloads.map(({ label, previousBytes }) => `${decimalMegabytes(previousBytes)} MB for ${label}`).join(' and ')}.
             </p>
           </section>
 

@@ -6,6 +6,7 @@ import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 import { desktopRelease } from "@/lib/desktop-release";
+import { decimalMegabytes } from "@/lib/mac-downloads";
 
 const github = desktopRelease.source;
 
@@ -89,7 +90,9 @@ export default function Home() {
                   <a className="site-button site-button-primary" href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a>
                   <a className="site-button site-button-outline" href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
                 </div>
-                <p className="hero-download-fact">Version {desktopRelease.version} · Apple silicon and Intel</p>
+                <p className="hero-download-fact">
+                  {desktopRelease.version} DMGs · {desktopRelease.downloads.map(({ label, bytes }) => `${label} ${decimalMegabytes(bytes)} MB`).join(' · ')}
+                </p>
               </div>
             </div>
             <div className="hero-image" id="workspace">
@@ -147,9 +150,9 @@ export default function Home() {
                 <p>Open the DMG and drag diyalamp into Applications. Check About This Mac in the Apple menu to choose your installer. The runtime is included.</p>
               </div>
               <div className="simple-release-actions">
-                {desktopRelease.downloads.map(({ architecture, label, url }) => (
+                {desktopRelease.downloads.map(({ architecture, label, url, bytes }) => (
                   <a key={architecture} className="site-button site-button-primary" href={url}>
-                    <span>{label} DMG</span><DownloadIcon aria-hidden="true" />
+                    <span>{label} DMG · {decimalMegabytes(bytes)} MB</span><DownloadIcon aria-hidden="true" />
                   </a>
                 ))}
                 <p>Ad hoc signed. macOS may require first-launch approval.</p>
