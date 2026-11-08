@@ -1,15 +1,20 @@
-/** Public desktop release references tied to the measured universal Mac installer. */
-const version = '0.1.0';
+/** Public desktop release and architecture-specific installers. */
+const version = '1.3.5';
 const source = 'https://github.com/diyalamp/diyalamp';
-const asset = 'DiyaLamp-macOS.dmg';
+const assets = `${source}/releases/download/v${version}`;
+
+const downloads = [
+  { label: 'Apple silicon', architecture: 'arm64' },
+  { label: 'Intel', architecture: 'x86_64' },
+].map(({ label, architecture }) => {
+  const url = `${assets}/diyalamp-${version}-macos-${architecture}.dmg`;
+  return { label, architecture, url, checksum: `${url}.sha256` };
+});
 
 export const desktopRelease = {
   version,
-  downloadBytes: 1915883,
-  installedBytes: 3686400,
-  minimumMacOS: '15',
   source,
   url: `${source}/releases/tag/v${version}`,
-  dmg: `${source}/releases/download/v${version}/${asset}`,
-  checksum: `${source}/releases/download/v${version}/${asset}.sha256`,
+  installation: `${source}/blob/v${version}/docs/install.md`,
+  downloads,
 };

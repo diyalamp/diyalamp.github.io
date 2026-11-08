@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import { desktopRelease } from '@/lib/desktop-release';
-import { decimalMegabytes } from '@/lib/mac-downloads';
 import './globals.css';
 
 const inter = localFont({
@@ -12,10 +11,10 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const downloadSize = decimalMegabytes(desktopRelease.downloadBytes, 2);
-const title = `diyalamp | ${downloadSize} MB Markdown Editor for Mac`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}`;
+const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
 const description =
-  `A free, open-source native Markdown editor with a ${downloadSize} MB universal Mac download. Edit local files, search your notes, and follow backlinks without an account.`;
+  'Write with live Markdown formatting, search your notes, and open a reference beside your draft. Free and open source for Mac, with no account required.';
 const license = 'https://www.apache.org/licenses/LICENSE-2.0';
 
 export const metadata: Metadata = {
@@ -28,16 +27,16 @@ export const metadata: Metadata = {
     canonical: '/',
     types: { 'text/plain': [{ url: '/llms.txt', title: 'diyalamp product facts' }] },
   },
-  icons: { icon: '/lamp.svg' },
+  icons: { icon: { url: '/lamp-icon.png', type: 'image/png', sizes: '64x64' } },
   openGraph: {
     type: 'website',
     siteName: 'diyalamp',
     url: '/',
     title,
     description,
-    images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'diyalamp Markdown editor for Mac' }],
+    images: [{ url: socialCard, width: 1200, height: 630, alt: 'diyalamp Markdown editor for Mac' }],
   },
-  twitter: { card: 'summary_large_image', title, description, images: ['/social-card.png'] },
+  twitter: { card: 'summary_large_image', title, description, images: [socialCard] },
 };
 
 export const viewport: Viewport = { colorScheme: 'dark', themeColor: '#000000' };
@@ -52,7 +51,7 @@ const productData = {
       ...project,
       name: 'diyalamp',
       url: `${siteUrl}/`,
-      logo: `${siteUrl}/lamp.svg`,
+      logo: `${siteUrl}/lamp.png`,
       sameAs: ['https://github.com/diyalamp', 'https://bsky.app/profile/diyalamp.com', 'https://www.reddit.com/r/DiyaLamp/'],
     },
     {
@@ -71,28 +70,29 @@ const productData = {
       publisher: project,
       description,
       applicationCategory: 'ProductivityApplication',
-      operatingSystem: `macOS ${desktopRelease.minimumMacOS} or later`,
+      operatingSystem: 'macOS',
       softwareVersion: desktopRelease.version,
       isAccessibleForFree: true,
       license,
-      downloadUrl: desktopRelease.dmg,
-      installUrl: desktopRelease.dmg,
+      downloadUrl: desktopRelease.url,
+      installUrl: desktopRelease.downloads.map(({ url }) => url),
       releaseNotes: desktopRelease.url,
       featureList: [
-        'Markdown source and editable rendered text',
+        'Rendered Markdown editing and slash commands',
         'Edit UTF-8 .md and .markdown files in place',
-        'Search filenames and raw Markdown with regex and path globs',
-        'Wikilinks and incoming and outgoing links',
-        'Local crash-recovery checkpoints',
+        'Search filenames and note text with regex and path globs',
+        'Tabs and side-by-side notes',
+        'Wikilinks, backlinks, and a local note graph',
+        'Current-line Focus mode and a Pomodoro timer',
       ],
       offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD' },
     },
     {
       '@type': 'SoftwareSourceCode',
       '@id': `${desktopRelease.source}#source`,
-      name: 'diyalamp native Mac source',
+      name: 'diyalamp desktop source',
       codeRepository: desktopRelease.source,
-      programmingLanguage: 'Swift',
+      programmingLanguage: 'Java',
       license,
     },
   ],
