@@ -4,7 +4,7 @@ import {
 } from "lucide-react";
 import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
-import SocialIcon from "@/components/social-icon";
+import SiteFooter from "@/components/site-footer";
 import { desktopRelease } from "@/lib/desktop-release";
 import { decimalMegabytes } from "@/lib/mac-downloads";
 
@@ -37,6 +37,34 @@ const workflow = [
   {
     icon: GitForkIcon, title: "Follow a note’s connections",
     text: "Type [[Note name]] to link to an existing note. See incoming and outgoing links in the Connections panel and navigate the local graph.",
+  },
+];
+
+const featureCaptures = [
+  {
+    name: "connections-hover", title: "Connections graph", width: 824, height: 1616, crop: true,
+    alt: "The Connections panel highlights the links and direction arrows for Composite Indexes.",
+    instruction: "Open Connections for a note. Hover over a dot to see which notes link to it and where its links lead.",
+  },
+  {
+    name: "pomodoro-controls", title: "Pomodoro timer", width: 660, height: 792,
+    alt: "A running 25-minute focus timer with a five-minute break and Repeat selected.",
+    instruction: "Open the timer in the toolbar. Set the focus and break lengths, then choose One cycle or Repeat.",
+  },
+  {
+    name: "accent-palette", title: "Accent colors", width: 612, height: 372,
+    alt: "The accent menu shows red, blue, yellow, green, white, and a custom color option.",
+    instruction: "Open the color menu to pick a preset or set a custom accent for the dark workspace.",
+  },
+  {
+    name: "workspace-search", title: "Advanced search", width: 832, height: 876, crop: true,
+    alt: "Workspace search shows the options for case, whole-word, regex, and path filters above highlighted matches.",
+    instruction: "Open search options to match case, whole words, or regular expressions. Use path filters to narrow the results.",
+  },
+  {
+    name: "focus-active-line", title: "Focus mode", width: 1520, height: 620, wide: true,
+    alt: "The current line remains bright while the surrounding heading and code are dimmed.",
+    instruction: "Turn on Focus in the toolbar to keep the current line bright while the rest of the note fades.",
   },
 ];
 
@@ -78,13 +106,13 @@ export default function Home() {
           <div className="site-frame hero-layout">
             <div className="hero-copy">
               <div>
-                <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Markdown editor for macOS</p>
-                <h1 id="hero-heading">Edit Markdown <span>in place.</span></h1>
+                <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Local Markdown editor for macOS</p>
+                <h1 id="hero-heading">Your commonplace book.</h1>
               </div>
               <div className="hero-summary">
-                <p className="simple-intro">Open a folder. Write with live formatting, search across your notes, and keep a reference beside your draft.</p>
+                <p className="simple-intro">Collect what you read and learn in a folder of Markdown notes. Write with live formatting, search your notes, and follow connections between them.</p>
                 <ul className="hero-promises" aria-label="Price, license, and account">
-                  <li>Free forever</li><li>Open source</li><li>No account</li>
+                  <li>Free</li><li>Open source</li><li>No sign-up</li>
                 </ul>
                 <div className="simple-actions">
                   <a className="site-button site-button-primary" href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a>
@@ -119,6 +147,20 @@ export default function Home() {
             <div className="desktop-details">
               <article><MoonIcon aria-hidden="true" /><div><h3>Focus and Pomodoro</h3><p>Keep the active line bright and dim the workspace around it. Set a focus and break cycle or run the timer on repeat.</p></div></article>
               <article><FileCheckIcon aria-hidden="true" /><div><h3>File-safe editing</h3><p>Autosave checks for outside changes before writing. Rename notes in the sidebar and restore deleted notes from the app.</p></div></article>
+            </div>
+            <h3 className="feature-gallery-title">A closer look at the editor.</h3>
+            <div className="feature-gallery">
+              {featureCaptures.map(({ name, title, width, height, crop, wide, alt, instruction }) => {
+                const src = `/screenshots/${name}.webp`;
+                return (
+                  <figure key={name} className="feature-capture" data-wide={wide || undefined}>
+                    <a className="feature-preview" data-crop={crop || undefined} href={src} aria-label={`View full-size screenshot. ${alt}`}>
+                      <img src={src} width={width} height={height} alt={alt} loading="lazy" decoding="async" />
+                    </a>
+                    <figcaption><h4>{title}</h4><p>{instruction}</p></figcaption>
+                  </figure>
+                );
+              })}
             </div>
           </div>
         </section>
@@ -188,15 +230,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="landing-footer">
-        <a href="/" className="landing-brand"><LampMark className="brand-lamp" />diyalamp</a>
-        <nav className="footer-socials" aria-label="diyalamp social accounts">
-          <a href={github}>GitHub<SocialIcon name="github" /></a>
-          <a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky" /></a>
-          <a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit" /></a>
-        </nav>
-        <span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.webp" alt="JRXNA" width="256" height="60" loading="lazy" decoding="async" /></a> production.</span>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
