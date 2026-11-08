@@ -152,7 +152,8 @@ export default function Home() {
               <div className="simple-release-actions">
                 {desktopRelease.downloads.map(({ architecture, label, url, bytes }) => (
                   <a key={architecture} className="site-button site-button-primary" href={url}>
-                    <span>{label} DMG · {decimalMegabytes(bytes)} MB</span><DownloadIcon aria-hidden="true" />
+                    <span><span className="sr-only">Download DMG for </span>{label} · {decimalMegabytes(bytes)} MB</span>
+                    <DownloadIcon aria-hidden="true" />
                   </a>
                 ))}
                 <p>Ad hoc signed. macOS may require first-launch approval.</p>
