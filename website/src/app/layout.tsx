@@ -11,7 +11,7 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const socialCard = `/social-card.png?v=${desktopRelease.version}-dock`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-workspace`;
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
 const description =
   'Write with live Markdown formatting, search your notes, and open a reference beside your draft. Free and open source for Mac, with no account required.';
