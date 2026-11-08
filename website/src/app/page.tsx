@@ -1,44 +1,42 @@
 import {
   ArrowUpRightIcon, ChevronDownIcon, DownloadIcon, FileCheckIcon,
-  GitForkIcon, SearchIcon, StarIcon,
+  GitForkIcon, MoonIcon, SearchIcon, SplitSquareHorizontalIcon, StarIcon,
 } from "lucide-react";
 import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
 import SocialIcon from "@/components/social-icon";
 import { desktopRelease } from "@/lib/desktop-release";
-import { decimalMegabytes, downloadReduction } from "@/lib/mac-downloads";
+import { decimalMegabytes } from "@/lib/mac-downloads";
 
 const github = desktopRelease.source;
-const downloadSize = decimalMegabytes(desktopRelease.downloadBytes, 2);
-const installedSize = decimalMegabytes(desktopRelease.installedBytes, 2);
 
 const comparisons = [
   {
-    name: "Obsidian", id: "obsidian", title: "Keep your vault. Download less.",
-    text: `Both edit your Markdown files without an account. The diyalamp universal DMG is ${downloadReduction.obsidian}% smaller than Obsidian’s universal DMG. Choose Obsidian for plugins or a vault-wide graph.`,
+    name: "Obsidian", id: "obsidian", title: "Open your vault folder.",
+    text: "Both apps edit local Markdown without an account. diyalamp brings a per-note graph and a focus timer into the editor. Obsidian has plugins, Canvas, and a vault-wide graph.",
   },
   {
-    name: "Notion", id: "notion", title: "Open a file. Skip the login.",
-    text: `Write without signing into a workspace. The diyalamp universal DMG is ${downloadReduction.notion}% smaller than Notion’s Apple silicon DMG. Choose Notion for shared databases and live collaboration.`,
+    name: "Notion", id: "notion", title: "Write in a folder on your Mac.",
+    text: "Use slash commands and checklists while editing Markdown files directly. Notion offers shared pages, databases, and workspace permissions.",
   },
   {
-    name: "Typora", id: "typora", title: "Start writing without activation.",
-    text: `Both format the Markdown files on your Mac. The diyalamp universal DMG is ${downloadReduction.typora}% smaller than the compared Typora DMG. Typora offers richer rendering for math and diagrams.`,
+    name: "Typora", id: "typora", title: "Add backlinks to your drafts.",
+    text: "Both apps format Markdown as you write. diyalamp includes linked notes under a free, open-source license. Typora offers richer tables, equations, and diagrams.",
   },
 ];
 
 const workflow = [
   {
-    icon: SearchIcon, title: "Find a passage across the folder.",
-    text: "Search filenames or note text, including unsaved edits. Match with regex and file globs, then jump to the result.",
+    icon: SearchIcon, title: "Search the whole folder",
+    text: "Find a filename or passage, including unsaved edits. Use regular expressions and path filters, then jump to the match.",
   },
   {
-    icon: FileCheckIcon, title: "Keep your Markdown and edits.",
-    text: "Write in the source or edit supported text in the rendered pane. If diyalamp closes unexpectedly, it can restore edits from its last checkpoint.",
+    icon: SplitSquareHorizontalIcon, title: "Write beside a reference",
+    text: "Drag another note into a second pane and keep both editors open. Rearrange tabs or move a note into another folder.",
   },
   {
-    icon: GitForkIcon, title: "See which notes refer to yours.",
-    text: "Click a wiki link to open a note, or use the Connections panel to follow links into and out of the active note.",
+    icon: GitForkIcon, title: "Follow a note’s connections",
+    text: "Type [[Note name]] to link to an existing note. See incoming and outgoing links in the Connections panel and navigate the local graph.",
   },
 ];
 
@@ -52,12 +50,12 @@ const faqs = [
     answer: "No. After installation, you can edit offline. Notes are UTF-8 .md or .markdown files in the folder you select. The free desktop app is licensed under Apache 2.0.",
   },
   {
-    question: "What size are the installers?",
-    answer: `The universal Mac installer is ${desktopRelease.downloadBytes.toLocaleString("en-US")} bytes (${downloadSize} MB) and supports Apple silicon and Intel. The app bundle used ${installedSize} MB of space on the test Mac after installation.`,
+    question: "Which Mac installer should I choose?",
+    answer: "Open About This Mac from the Apple menu. If you see Chip with an Apple chip name, choose Apple silicon. If you see an Intel processor, choose Intel. Both installers include the runtime.",
   },
   {
-    question: "How do I install it?",
-    answer: `On macOS ${desktopRelease.minimumMacOS} or later, open the DMG and drag diyalamp into Applications. macOS may ask you to approve the first launch. Release notes describe the installation steps.`,
+    question: "How do I install and update it?",
+    answer: "Open the DMG and drag diyalamp into Applications. macOS may ask you to approve the first launch. From the app, choose Help → Check for updates when you want to look for a newer release. The updater saves pending edits before installing.",
   },
 ];
 
@@ -75,24 +73,52 @@ export default function Home() {
         <a className="site-button site-button-outline" href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
       </header>
 
-      <main id="main-content">
+      <main id="main-content" tabIndex={-1}>
         <section className="simple-hero" aria-labelledby="hero-heading">
           <div className="site-frame hero-layout">
             <div className="hero-copy">
-              <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Native Markdown editor for macOS</p>
-              <h1 id="hero-heading">Local Markdown.<br /> {downloadSize} MB.</h1>
-              <p className="simple-intro">Open a folder and start writing. Search your notes, follow backlinks, and keep your Markdown in files you can open in any text editor.</p>
-              <ul className="hero-promises" aria-label="Price, license, and account">
-                <li>Free forever</li><li>Open source</li><li>No account</li>
-              </ul>
-              <div className="simple-actions">
-                <a className="site-button site-button-primary" href={desktopRelease.dmg}><DownloadIcon aria-hidden="true" />Download for Mac · {downloadSize} MB</a>
-                <a className="site-button site-button-outline" href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
+              <div>
+                <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Markdown editor for macOS</p>
+                <h1 id="hero-heading">Edit Markdown <span>in place.</span></h1>
               </div>
-              <p className="hero-download-fact"><strong>{installedSize} MB on disk</strong> · macOS {desktopRelease.minimumMacOS}+ · Apple silicon and Intel. <a href="/alternatives/#mac-downloads">Compare Mac installers</a></p>
+              <div className="hero-summary">
+                <p className="simple-intro">Open a folder. Write with live formatting, search across your notes, and keep a reference beside your draft.</p>
+                <ul className="hero-promises" aria-label="Price, license, and account">
+                  <li>Free forever</li><li>Open source</li><li>No account</li>
+                </ul>
+                <div className="simple-actions">
+                  <a className="site-button site-button-primary" href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a>
+                  <a className="site-button site-button-outline" href={github}><StarIcon aria-hidden="true" />Star on GitHub</a>
+                </div>
+                <p className="hero-download-fact">
+                  {desktopRelease.version} DMGs · {desktopRelease.downloads.map(({ label, bytes }) => `${label} ${decimalMegabytes(bytes)} MB`).join(' · ')}
+                </p>
+              </div>
             </div>
             <div className="hero-image" id="workspace">
-              <AppScreenshot name="workspace" priority caption="Earlier diyalamp interface · Editor and Connections" />
+              <AppScreenshot name="workspace" priority caption="Database Indexes with four incoming and five outgoing links" />
+            </div>
+          </div>
+        </section>
+
+        <section id="features" aria-labelledby="feature-heading">
+          <div className="site-frame">
+            <p className="simple-kicker">The writing workspace</p>
+            <h2 id="feature-heading" className="marketing-heading">Keep your sources in view.</h2>
+            <div className="workflow-layout">
+              <AppScreenshot name="search" caption="Find every match for index while keeping two notes open" />
+              <div className="workflow-details">
+                {workflow.map(({ icon: Icon, title, text }) => (
+                  <article key={title}>
+                    <Icon aria-hidden="true" />
+                    <div><h3>{title}</h3><p>{text}</p></div>
+                  </article>
+                ))}
+              </div>
+            </div>
+            <div className="desktop-details">
+              <article><MoonIcon aria-hidden="true" /><div><h3>Focus and Pomodoro</h3><p>Keep the active line bright and dim the workspace around it. Set a focus and break cycle or run the timer on repeat.</p></div></article>
+              <article><FileCheckIcon aria-hidden="true" /><div><h3>File-safe editing</h3><p>Autosave checks for outside changes before writing. Rename notes in the sidebar and restore deleted notes from the app.</p></div></article>
             </div>
           </div>
         </section>
@@ -100,8 +126,8 @@ export default function Home() {
         <section id="compare" aria-labelledby="compare-heading">
           <div className="site-frame">
             <div className="section-heading">
-              <div><p className="simple-kicker">Switching editors</p><h2 id="compare-heading" className="marketing-heading">How it compares on Mac.</h2></div>
-              <a className="simple-text-link" href="/alternatives/">Compare download sizes and setup<ArrowUpRightIcon aria-hidden="true" /></a>
+              <div><p className="simple-kicker">Switching editors</p><h2 id="compare-heading" className="marketing-heading">Which editor fits your notes?</h2></div>
+              <a className="simple-text-link" href="/alternatives/">Compare editors and import your notes<ArrowUpRightIcon aria-hidden="true" /></a>
             </div>
             <div className="comparison-preview">
               {comparisons.map(({ name, id, title, text }) => (
@@ -112,45 +138,31 @@ export default function Home() {
                 </article>
               ))}
             </div>
-            <p className="hero-download-fact">
-              <strong>{downloadSize} MB to download</strong> and <strong>{installedSize} MB on disk</strong>.{" "}
-              <a href="/alternatives/#mac-downloads">See the measured sizes</a>
-            </p>
           </div>
         </section>
 
-        <section id="features" aria-labelledby="feature-heading">
-          <div className="site-frame">
-            <p className="simple-kicker">Search · Markdown editing · Backlinks</p>
-            <h2 id="feature-heading" className="marketing-heading">Find sources while you write.</h2>
-            <div className="workflow-layout">
-              <AppScreenshot name="search" caption="Earlier diyalamp interface · Workspace search" />
-              <div className="workflow-details">
-                {workflow.map(({ icon: Icon, title, text }) => (
-                  <article key={title}>
-                    <Icon aria-hidden="true" />
-                    <div><h3>{title}</h3><p>{text}</p></div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section id="download" aria-labelledby="download-heading">
+        <section id="download" tabIndex={-1} aria-labelledby="download-heading">
           <div className="site-frame">
             <div className="simple-release-card">
               <div>
                 <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Version {desktopRelease.version}</p>
-                <h2 id="download-heading" className="marketing-heading">Download {downloadSize} MB. Start writing.</h2>
-                <p>One installer for Apple silicon and Intel on macOS {desktopRelease.minimumMacOS} or later. Drag diyalamp into Applications, then open a folder of UTF-8 Markdown files.</p>
+                <h2 id="download-heading" className="marketing-heading">Download for Mac.</h2>
+                <p>Open the DMG and drag diyalamp into Applications. Check About This Mac in the Apple menu to choose your installer. The runtime is included.</p>
               </div>
               <div className="simple-release-actions">
-                <a className="site-button site-button-primary" href={desktopRelease.dmg}><span>Universal Mac DMG · {downloadSize} MB</span><DownloadIcon aria-hidden="true" /></a>
-                <p>{installedSize} MB on disk after installation. macOS may require first-launch approval.</p>
+                {desktopRelease.downloads.map(({ architecture, label, url, bytes }) => (
+                  <a key={architecture} className="site-button site-button-primary" href={url}>
+                    <span><span className="sr-only">Download DMG for </span>{label} · {decimalMegabytes(bytes)} MB</span>
+                    <DownloadIcon aria-hidden="true" />
+                  </a>
+                ))}
+                <p>Ad hoc signed. macOS may require first-launch approval.</p>
                 <div className="release-links">
-                  <a href={desktopRelease.url}>Release notes and install steps</a>
-                  <a href={desktopRelease.checksum}>SHA-256 checksum</a>
+                  <a href={desktopRelease.url}>Release notes</a>
+                  <a href={desktopRelease.installation}>Install guide</a>
+                  {desktopRelease.downloads.map(({ architecture, label, checksum }) => (
+                    <a key={architecture} href={checksum}>{label} SHA-256</a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -170,7 +182,7 @@ export default function Home() {
 
         <section className="simple-support" aria-labelledby="support-heading">
           <div className="site-frame support-layout">
-            <div><p className="simple-kicker">Apache 2.0</p><h2 id="support-heading" className="marketing-heading">Help more Mac users find diyalamp.</h2><p>Star the repository to save it and support the open-source project.</p></div>
+            <div><p className="simple-kicker">Open source · Apache 2.0</p><h2 id="support-heading" className="marketing-heading">Help more writers find diyalamp.</h2><p>Star the repository to bookmark the project. You can also try a keyboard or VoiceOver test and share what you find. <a href={`${github}/issues/1`}>Accessibility issue</a></p></div>
             <a className="site-button site-button-primary" href={github}><StarIcon aria-hidden="true" />Star on GitHub<ArrowUpRightIcon aria-hidden="true" /></a>
           </div>
         </section>
@@ -183,7 +195,7 @@ export default function Home() {
           <a href="https://bsky.app/profile/diyalamp.com">Bluesky<SocialIcon name="bluesky" /></a>
           <a href="https://www.reddit.com/r/DiyaLamp/">Reddit<SocialIcon name="reddit" /></a>
         </nav>
-        <span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.png" alt="JRXNA" width="74" height="18" loading="lazy" /></a> production.</span>
+        <span className="production-credit">A <a href="https://jrxna.com" aria-label="JRXNA"><img src="/jrxna-logo.webp" alt="JRXNA" width="256" height="60" loading="lazy" decoding="async" /></a> production.</span>
       </footer>
     </div>
   );

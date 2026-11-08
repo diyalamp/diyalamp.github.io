@@ -1,9 +1,9 @@
 /** Fixed Apple-style lamp artwork; never rendered through a platform emoji font. */
 export default function LampMark({ className = '' }: { className?: string }) {
   return <img
-    src="/lamp.svg"
-    width={106}
-    height={88}
+    src="/lamp-mark.webp"
+    width={72}
+    height={60}
     alt=""
     aria-hidden="true"
     draggable={false}

@@ -1,46 +1,44 @@
 # diyalamp
 
-> diyalamp is a free, open-source native Markdown editor for macOS. Download the 1.92 MB universal Mac installer and edit ordinary Markdown files without an account.
+> diyalamp is a free, open-source Markdown editor for macOS. Write with live formatting and save ordinary local Markdown files without an account.
 
-diyalamp 0.1.0 requires macOS 15 or later. One 1,915,883-byte installer supports Apple silicon and Intel. The app bundle used 3,686,400 bytes (3.69 MB) on disk on the test Mac. Markdown files stay in the folder you choose and remain readable in other editors.
+diyalamp edits UTF-8 .md and .markdown files in place. The writing workspace includes tabs, side-by-side notes, folder search, backlinks, Focus mode, and a Pomodoro timer.
 
 ## Download and verify
 
-- [Universal Mac DMG](https://github.com/diyalamp/diyalamp/releases/download/v0.1.0/DiyaLamp-macOS.dmg)
-- [SHA-256 checksum](https://github.com/diyalamp/diyalamp/releases/download/v0.1.0/DiyaLamp-macOS.dmg.sha256)
-- [Release notes and installation steps](https://github.com/diyalamp/diyalamp/releases/tag/v0.1.0)
-- [Source code and issues](https://github.com/diyalamp/diyalamp) under Apache 2.0
+Version 1.3.5 has separate Apple silicon and Intel installers. Both include the runtime. These figures measure the compressed downloads in decimal MB.
 
-Open the DMG, drag diyalamp into Applications, and choose a folder of UTF-8 .md or .markdown files. macOS may ask you to approve the first launch. Writing works offline after installation.
+- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.5/diyalamp-1.3.5-macos-arm64.dmg), 42.2 MB (42,230,191 bytes)
+- [Apple silicon SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.5/diyalamp-1.3.5-macos-arm64.dmg.sha256)
+- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.5/diyalamp-1.3.5-macos-x86_64.dmg), 43.8 MB (43,770,682 bytes)
+- [Intel SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.5/diyalamp-1.3.5-macos-x86_64.dmg.sha256)
+- [Release notes](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.5)
+- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/v1.3.5/docs/install.md)
 
-## Mac installer comparison
+The [1.3.4 downloads](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.4) measured 48.2 MB (48,239,105 bytes) for Apple silicon and 49.6 MB (49,634,711 bytes) for Intel.
 
-Checked November 7, 2026. Sizes are decimal MB and measure download transfers. These are Mac installers that support Apple silicon. Launch and editing speeds require separate measurements.
-
-- diyalamp 0.1.0 universal DMG is 1.92 MB. Local editing requires no account or license activation.
-- [Obsidian 1.15.0 universal DMG](https://api.github.com/repos/obsidianmd/obsidian-releases/releases/assets/693337944) is 233.2 MB. Local writing requires no account.
-- [Notion 7.42.3 Apple silicon DMG](https://desktop-release.notion-static.com/Notion-7.42.3-arm64.dmg) is 136.2 MB. Workspace editing requires sign-in.
-- [Typora 1.14.15 Mac DMG](https://downloads.typora.io/mac/Typora-1.14.15.dmg) is 15.2 MB. After the trial, paid activation is required.
-
-[See the measured Mac installer comparison](https://diyalamp.com/alternatives/#mac-downloads).
+Open the DMG, drag diyalamp into Applications, and choose a folder. The app is ad hoc signed. macOS may ask you to approve the first launch. Writing works offline after installation. To check for updates, choose Help → Check for updates.
 
 ## Desktop features
 
-- **Local files:** Open a folder and edit the original UTF-8 Markdown files. Save checks whether the original changed on disk before writing.
-- **Markdown editing:** Work in the source or edit supported text in the rendered pane.
-- **Workspace search:** Search filenames or note text, including unsaved edits in the active note. Use case, whole-word, or regular-expression matching and include or exclude path globs.
-- **Connected notes:** Click rendered wikilinks to open existing Markdown notes. Incoming and Outgoing lists follow the active note and include resolved wiki and local Markdown links.
-- **Crash recovery:** If diyalamp closes unexpectedly, it can restore edits through its latest checkpoint. If the original file changed, the app lets you save the recovered edits as a separate copy.
+- **Rendered Markdown:** Format text in the editor with headings, emphasis, links, lists, checklists, quotes, inline code, and code blocks. Open the block menu with a slash.
+- **Tabs and split view:** Reorder tabs and work with two notes side by side. Both sidebars are resizable.
+- **Local files:** Notes stay in the folder you choose. Autosave checks whether the file changed on disk before writing. Deleted notes can be restored.
+- **Workspace search:** Find filenames or note text, including unsaved edits. Use case, whole-word, regular-expression, and path filters.
+- **Connected notes:** Use wiki links or relative Markdown links. Navigate the active note’s incoming and outgoing links in the Connections panel.
+- **Focus and Pomodoro:** Highlight the active line and dim the surrounding workspace. Run a timed focus and break cycle or repeat it.
 
 ## Bring your notes
 
-- **Obsidian:** Open the vault folder as local Markdown. Obsidian offers plugins, Canvas, and a vault-wide graph.
-- **Notion:** Export Markdown & CSV and open the resulting folder. Keep the export archive for attachments and database CSVs.
-- **Typora:** Open the folder that already contains your Markdown files. Typora offers richer rendering for math and diagrams.
+- **Obsidian:** Open the vault folder as local Markdown. Both apps support local notes without an account. Obsidian offers plugins, Canvas, and a vault-wide graph.
+- **Notion:** Export Markdown & CSV and open the resulting folder. Keep the export archive for attachments and databases. Notion offers shared pages, permissions, and databases.
+- **Typora:** Open the folder that already contains your Markdown. Typora offers richer rendering for tables, equations, and diagrams.
 
-[Compare Markdown editors for Mac](https://diyalamp.com/alternatives/).
+[Compare editors and see import steps](https://diyalamp.com/alternatives/).
 
-## Links
+## Project links
 
 - [Product website](https://diyalamp.com/)
+- [Mac app screenshots](https://diyalamp.com/#workspace)
+- [App source and GitHub stars](https://github.com/diyalamp/diyalamp)
 - [Website source](https://github.com/diyalamp/diyalamp.github.io)

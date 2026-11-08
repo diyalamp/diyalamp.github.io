@@ -3,28 +3,30 @@ import { ArrowDownRight, ArrowRight, Download, Star } from 'lucide-react';
 import AppScreenshot from '@/components/app-screenshot';
 import LampMark from '@/components/lamp-mark';
 import { desktopRelease } from '@/lib/desktop-release';
-import { comparisonDate, decimalMegabytes, downloadReduction, macDownloads } from '@/lib/mac-downloads';
+import { comparisonDate, decimalMegabytes, macDownloads } from '@/lib/mac-downloads';
 import './alternatives.css';
 
-const downloadSize = decimalMegabytes(desktopRelease.downloadBytes, 2);
-const installedSize = decimalMegabytes(desktopRelease.installedBytes, 2);
 const title = 'Obsidian, Notion, and Typora Alternatives for Mac';
+const socialCard = `/social-card.png?v=${desktopRelease.version}`;
 const description =
-  `diyalamp is a ${downloadSize} MB native Markdown editor for Mac. Compare measured downloads and sign-in requirements with Obsidian, Notion, and Typora.`;
+  'Compare diyalamp with Obsidian, Notion, and Typora. See which editors use local Markdown, what setup they need, and how to bring your notes.';
 
 export const metadata: Metadata = {
   title,
   description,
-  alternates: { canonical: '/alternatives/' },
+  alternates: {
+    canonical: '/alternatives/',
+    types: { 'text/plain': [{ url: '/llms.txt', title: 'diyalamp product facts' }] },
+  },
   openGraph: {
     type: 'website',
     siteName: 'diyalamp',
     url: '/alternatives/',
     title,
     description,
-    images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'diyalamp Markdown editor for Mac' }],
+    images: [{ url: socialCard, width: 1200, height: 630, alt: 'diyalamp Markdown editor for Mac' }],
   },
-  twitter: { card: 'summary_large_image', title, description, images: ['/social-card.png'] },
+  twitter: { card: 'summary_large_image', title, description, images: [socialCard] },
 };
 
 const comparisons = [
@@ -49,7 +51,7 @@ const comparisons = [
   {
     id: 'notion',
     name: 'Notion',
-    gain: 'Write in Markdown source or edit supported text in the rendered pane. Save straight to Markdown files on your Mac without an account.',
+    gain: 'Use live formatting, checklists, and slash commands. Save to Markdown files on your Mac without an account.',
     keep: 'Shared databases, workspace permissions, and live collaboration.',
     shared: 'Both give you formatting as you write. Notion organizes pages in an account-based workspace. diyalamp opens files from a folder you choose.',
     steps: [
@@ -71,7 +73,7 @@ const comparisons = [
     shared: 'Both format Markdown inside the editor. Typora uses a one-time paid license after its trial. diyalamp is free forever and open source.',
     steps: [
       'Open the folder that already holds your .md files.',
-      'Open a draft and check its source and rendered Markdown. The file stays in the folder you started with.',
+      'Open a draft and check its formatting. The file stays in the folder you started with.',
       'Check files that rely on rich tables, equations, or diagrams. Use Typora when those documents need its rendering.',
     ],
     sources: [
@@ -84,11 +86,12 @@ const comparisons = [
 export default function Alternatives() {
   return (
     <div className="alternatives-page">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <header className="landing-header">
         <a className="landing-brand" href="/"><LampMark className="brand-lamp" />diyalamp</a>
         <a className="comparison-header-link" href="/#features">App features<ArrowRight size={16} aria-hidden="true" /></a>
       </header>
-      <main className="comparison-main" aria-labelledby="comparison-heading">
+      <main id="main-content" className="comparison-main" tabIndex={-1} aria-labelledby="comparison-heading">
         <div className="comparison-content">
           <header className="comparison-hero">
             <p className="comparison-kicker">Markdown editors for Mac</p>
@@ -98,46 +101,8 @@ export default function Alternatives() {
               writing on macOS. Open a folder and edit its UTF-8 <code>.md</code> and <code>.markdown</code> files
               in place. Search note text, follow backlinks, and start writing with no sign-up.
             </p>
-            <a className="site-button site-button-primary" href={desktopRelease.dmg}><Download size={17} aria-hidden="true" />Download for Mac · {downloadSize} MB</a>
+            <a className="site-button site-button-primary" href="/#download"><Download size={17} aria-hidden="true" />Download for Mac</a>
           </header>
-
-          <section id="mac-downloads" className="comparison-section" aria-labelledby="download-size-heading">
-            <span id="native-prototype" aria-hidden="true" />
-            <h2 id="download-size-heading">{downloadSize} MB to download. No account to set up.</h2>
-            <dl className="native-measurements">
-              <div><dt>Download</dt><dd>{downloadSize} MB</dd></div>
-              <div><dt>On disk</dt><dd>{installedSize} MB</dd></div>
-              <div><dt>Requires</dt><dd>macOS {desktopRelease.minimumMacOS}+</dd></div>
-            </dl>
-            <p className="comparison-subtitle">
-              The diyalamp universal DMG is <strong>{downloadReduction.obsidian}% smaller than Obsidian’s universal DMG</strong>,{' '}
-              <strong>{downloadReduction.notion}% smaller than Notion’s Apple silicon DMG</strong>, and{' '}
-              <strong>{downloadReduction.typora}% smaller than the compared Typora DMG</strong>.
-            </p>
-            <table className="mac-download-table">
-              <caption className="sr-only">Public macOS installers and what each app requires to edit</caption>
-              <thead>
-                <tr><th scope="col">App</th><th scope="col">Download</th><th scope="col">To start writing</th></tr>
-              </thead>
-              <tbody>
-                {macDownloads.map((app) => (
-                  <tr key={app.name}>
-                    <th scope="row">{app.name}<span>{app.version}</span></th>
-                    <td>
-                      <strong>{decimalMegabytes(app.bytes, app.name === 'diyalamp' ? 2 : 1)} MB</strong><span>{app.build}</span>
-                      <a href={app.downloadSource} aria-label={`${app.name} installer source`}>Installer source</a>
-                    </td>
-                    <td>{app.setup}<span><a href={app.setupSource} aria-label={`${app.name} setup requirements`}>Setup source</a></span></td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="measurement-note">
-              Checked <time dateTime={comparisonDate}>November 7, 2026</time>. Sizes use decimal MB and measure installer transfers.
-              The comparison uses each vendor’s Apple silicon installer where offered, or its macOS installer that supports Apple silicon.
-              Launch and editing speeds require separate measurements.
-            </p>
-          </section>
 
           <section className="comparison-section" aria-labelledby="decision-heading">
             <h2 id="decision-heading">What you gain by switching</h2>
@@ -155,6 +120,43 @@ export default function Alternatives() {
                 </li>
               ))}
             </ul>
+          </section>
+
+          <section id="mac-downloads" className="comparison-section" aria-labelledby="download-size-heading">
+            <h2 id="download-size-heading">Mac downloads and setup</h2>
+            <table className="mac-download-table">
+              <caption className="sr-only">Public macOS installers and what each app requires to edit</caption>
+              <thead>
+                <tr><th scope="col">App</th><th scope="col">Download</th><th scope="col">To start writing</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">diyalamp<span>{desktopRelease.version}</span></th>
+                  <td>
+                    {desktopRelease.downloads.map(({ architecture, label, url, bytes }) => (
+                      <span key={architecture}><a href={url}>{label} DMG</a> <strong>{decimalMegabytes(bytes)} MB</strong></span>
+                    ))}
+                  </td>
+                  <td>Open a Markdown folder. No account or activation.</td>
+                </tr>
+                {macDownloads.map((app) => (
+                  <tr key={app.name}>
+                    <th scope="row">{app.name}<span>{app.version}</span></th>
+                    <td>
+                      <strong>{decimalMegabytes(app.bytes)} MB</strong><span>{app.build}</span>
+                      <a href={app.downloadSource} aria-label={`${app.name} installer source`}>Source</a>
+                    </td>
+                    <td>{app.setup}<span><a href={app.setupSource} aria-label={`${app.name} setup requirements`}>Setup details</a></span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="measurement-note">
+              Figures are compressed DMG download sizes in decimal MB. The other apps’ installers support Apple silicon and were checked on{' '}
+              <time dateTime={comparisonDate}>November 7, 2026</time>. The diyalamp{' '}
+              <a href={desktopRelease.previousUrl}>1.3.4 downloads</a> were{' '}
+              {desktopRelease.downloads.map(({ label, previousBytes }) => `${decimalMegabytes(previousBytes)} MB for ${label}`).join(' and ')}.
+            </p>
           </section>
 
           <section className="comparison-section" aria-labelledby="migration-heading">
@@ -200,19 +202,18 @@ export default function Alternatives() {
             <div>
               <h2 id="start-heading">Try diyalamp with your own notes.</h2>
               <p>
-                diyalamp is free forever under Apache 2.0. The {downloadSize} MB universal download supports
-                Apple silicon and Intel Macs running macOS {desktopRelease.minimumMacOS} or later.
+                diyalamp is free under Apache 2.0. Choose an Apple silicon or Intel installer, then open a folder you already use.
               </p>
               <div className="comparison-closing-actions">
-                <a className="site-button site-button-primary" href={desktopRelease.dmg}><Download size={17} aria-hidden="true" />Download for Mac · {downloadSize} MB</a>
+                <a className="site-button site-button-primary" href="/#download"><Download size={17} aria-hidden="true" />Download for Mac</a>
                 <a className="site-button site-button-outline" href={desktopRelease.source}><Star size={17} aria-hidden="true" />Star on GitHub</a>
               </div>
               <p className="comparison-sources">
-                <a href={desktopRelease.url}>Release notes and install steps</a>
-                <a href={desktopRelease.checksum}>SHA-256 checksum</a>
+                <a href={desktopRelease.url}>Release notes and checksums</a>
+                <a href={desktopRelease.installation}>Install guide</a>
               </p>
             </div>
-            <AppScreenshot name="search" caption="Earlier diyalamp interface · Workspace search" />
+            <AppScreenshot name="search" caption="Database Indexes and Query Plans, side by side" />
           </section>
         </div>
       </main>

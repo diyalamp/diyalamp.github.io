@@ -22,18 +22,10 @@
 .mac-download-table th:first-child { width: 20%; padding-left: 0; }
 .mac-download-table th:nth-child(2) { width: 32%; }
 .mac-download-table span { display: block; color: var(--site-text); }
+.mac-download-table strong { white-space: nowrap; }
 .mac-download-table span, .mac-download-table a, .measurement-note { font-size: .875rem; }
 .mac-download-table a { display: inline-block; margin-top: 4px; text-decoration: underline; text-underline-offset: 2px; }
 .measurement-note { margin-top: 12px; color: var(--site-text); }
-.native-measurements {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 12px;
-  margin-bottom: 16px;
-}
-.native-measurements > div { padding: 12px; border: 1px solid var(--diya-line); border-radius: var(--diya-radius); }
-.native-measurements dt { color: var(--site-text); font-size: .875rem; }
-.native-measurements dd { margin-top: 4px; font-size: clamp(1rem, 4vw, 1.75rem); font-weight: 650; }
 .alternatives-page .comparison-matrix {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -96,8 +88,8 @@
   .alternatives-page .comparison-secondary { grid-template-columns: 1fr; }
   .mac-download-table { font-size: .875rem; }
   .mac-download-table span, .mac-download-table a { font-size: .8125rem; }
-  .native-measurements { gap: 8px; }
-  .native-measurements > div { padding: 8px; }
+  .mac-download-table th:first-child { width: 25%; }
+  .mac-download-table th:nth-child(2) { width: 33%; }
 }
 @media (min-width: 761px) {
   @supports (grid-template-rows: subgrid) {
