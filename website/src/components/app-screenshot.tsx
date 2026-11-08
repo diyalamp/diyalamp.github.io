@@ -1,3 +1,5 @@
+import { desktopRelease } from "@/lib/desktop-release";
+
 const captures = {
   workspace: {
     src: "/screenshots/workspace.webp",
@@ -23,13 +25,16 @@ export default function AppScreenshot({
   const { src, sizes, alt } = captures[name];
   const width = 2882;
   const height = 1920;
-  const srcSet = [720, 1440].map((candidate) => `${src.replace('.webp', `-${candidate}.webp`)} ${candidate}w`);
-  srcSet.push(`${src} ${width}w`);
+  const versioned = (url: string) => `${url}?v=${desktopRelease.version}`;
+  const srcSet = [720, 1440].map((candidate) =>
+    `${versioned(src.replace('.webp', `-${candidate}.webp`))} ${candidate}w`,
+  );
+  srcSet.push(`${versioned(src)} ${width}w`);
   return (
     <figure className="app-screen">
-      <a className="app-window" href={src} aria-label={`View full-size screenshot. ${alt}`}>
+      <a className="app-window" href={versioned(src)} aria-label={`View full-size screenshot. ${alt}`}>
         <img
-          src={src}
+          src={versioned(src)}
           srcSet={srcSet.join(', ')}
           sizes={sizes}
           width={width}
