@@ -8,7 +8,7 @@ import { comparisonDate, decimalMegabytes, macDownloads } from '@/lib/mac-downlo
 import './alternatives.css';
 
 const title = 'Obsidian, Notion, and Typora Alternatives for Mac';
-const socialCard = `/social-card.png?v=${desktopRelease.version}-workspace`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-commonplace`;
 const description =
   'Compare diyalamp with Obsidian, Notion, and Typora. See which editors use local Markdown, what setup they need, and how to bring your notes.';
 

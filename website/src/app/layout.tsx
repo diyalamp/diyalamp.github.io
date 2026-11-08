@@ -11,8 +11,9 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const socialCard = `/social-card.png?v=${desktopRelease.version}-workspace`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-commonplace`;
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
+const socialTitle = 'Your commonplace book | diyalamp';
 const description =
   'Write with live Markdown formatting, search your notes, and open a reference beside your draft. Free and open source for Mac, with no account required.';
 const license = 'https://www.apache.org/licenses/LICENSE-2.0';
@@ -32,11 +33,11 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'diyalamp',
     url: '/',
-    title,
+    title: socialTitle,
     description,
     images: [{ url: socialCard, width: 1200, height: 630, alt: 'diyalamp Markdown editor for Mac' }],
   },
-  twitter: { card: 'summary_large_image', title, description, images: [socialCard] },
+  twitter: { card: 'summary_large_image', title: socialTitle, description, images: [socialCard] },
 };
 
 export const viewport: Viewport = { colorScheme: 'dark', themeColor: '#000000' };

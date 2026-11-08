@@ -107,12 +107,12 @@ export default function Home() {
             <div className="hero-copy">
               <div>
                 <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Local Markdown editor for macOS</p>
-                <h1 id="hero-heading">Your Markdown notes. <span>No sign-up.</span></h1>
+                <h1 id="hero-heading">Your commonplace book.</h1>
               </div>
               <div className="hero-summary">
-                <p className="simple-intro">Open a folder. Write with live formatting, search across your notes, and keep a reference beside your draft.</p>
+                <p className="simple-intro">Collect what you read and learn in a folder of Markdown notes. Write with live formatting, search your notes, and follow connections between them.</p>
                 <ul className="hero-promises" aria-label="Price, license, and account">
-                  <li>Free forever</li><li>Open source</li><li>Works offline</li>
+                  <li>Free</li><li>Open source</li><li>No sign-up</li>
                 </ul>
                 <div className="simple-actions">
                   <a className="site-button site-button-primary" href="#download"><DownloadIcon aria-hidden="true" />Download for Mac</a>
