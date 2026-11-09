@@ -83,7 +83,7 @@ const faqs = [
   },
   {
     question: "How do I install and update it?",
-    answer: "Open the DMG and drag diyalamp into Applications. macOS may ask you to approve the first launch. From the app, choose Help → Check for updates when you want to look for a newer release. The updater saves pending edits before installing.",
+    answer: "Open the DMG and drag diyalamp into Applications. macOS may block first launch because the current installers are ad hoc signed. From the app, choose Help → Check for updates when you want to look for a newer release. The updater saves pending edits before installing.",
   },
 ];
 
@@ -205,7 +205,7 @@ export default function Home() {
                     <DownloadIcon aria-hidden="true" />
                   </a>
                 ))}
-                <p>Ad hoc signed. macOS may require first-launch approval.</p>
+                <p>Ad hoc signed. macOS may block first launch.</p>
                 <div className="release-links">
                   <a href={desktopRelease.url}>Release notes</a>
                   <a href={desktopRelease.installation}>Install guide</a>

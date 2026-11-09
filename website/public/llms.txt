@@ -6,18 +6,18 @@ diyalamp edits UTF-8 .md and .markdown files in place. The writing workspace inc
 
 ## Download and verify
 
-Version 1.3.7 has separate Apple silicon and Intel installers. Both include the runtime. These figures measure the compressed downloads in decimal MB.
+Version 1.3.8 has separate Apple silicon and Intel installers. Both include the runtime. These figures measure the compressed downloads in decimal MB.
 
-- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.7/diyalamp-1.3.7-macos-arm64.dmg), 42.2 MB (42,230,991 bytes)
-- [Apple silicon SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.7/diyalamp-1.3.7-macos-arm64.dmg.sha256)
-- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.7/diyalamp-1.3.7-macos-x86_64.dmg), 43.8 MB (43,771,558 bytes)
-- [Intel SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.7/diyalamp-1.3.7-macos-x86_64.dmg.sha256)
-- [Release notes](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.7)
-- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/v1.3.7/docs/install.md)
+- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.8/diyalamp-1.3.8-macos-arm64.dmg), 42.2 MB (42,243,359 bytes)
+- [Apple silicon SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.8/diyalamp-1.3.8-macos-arm64.dmg.sha256)
+- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.8/diyalamp-1.3.8-macos-x86_64.dmg), 43.8 MB (43,771,438 bytes)
+- [Intel SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.8/diyalamp-1.3.8-macos-x86_64.dmg.sha256)
+- [Release notes](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.8)
+- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/v1.3.8/docs/install.md)
 
 The [1.3.4 downloads](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.4) measured 48.2 MB (48,239,105 bytes) for Apple silicon and 49.6 MB (49,634,711 bytes) for Intel.
 
-Open the DMG, drag diyalamp into Applications, and choose a folder. The app is ad hoc signed. macOS may ask you to approve the first launch. Writing works offline after installation. To check for updates, choose Help → Check for updates.
+Open the DMG, drag diyalamp into Applications, and choose a folder. The app is ad hoc signed. macOS may block first launch. Writing works offline after installation. To check for updates, choose Help → Check for updates.
 
 ## Desktop features
 
