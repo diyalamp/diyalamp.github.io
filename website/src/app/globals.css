@@ -82,7 +82,31 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 }
 .landing-header { display: flex; gap: 24px; align-items: center; justify-content: space-between; min-height: 68px; border-bottom: 1px solid var(--diya-line); }
 .landing-brand { display: inline-flex; align-items: center; justify-self: start; gap: 8px; white-space: nowrap; font-weight: 600; }
+.lamp-mark { position: relative; display: inline-block; width: 1em; height: 1em; flex-shrink: 0; }
+.lamp-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
 .landing-brand .brand-lamp { width: 28px; height: 28px; flex-shrink: 0; }
+@supports (mask-image: url("/lamp-mark.webp")) {
+  @media (prefers-reduced-motion: no-preference) {
+    .landing-brand .lamp-mark::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      mask: url("/lamp-mark.webp?v=dock") center / contain no-repeat;
+      background: linear-gradient(135deg, transparent 35%, #ffffff29 50%, transparent 65%) 100% 0 / 270% 100% no-repeat;
+      opacity: 0;
+    }
+    .landing-brand:focus-visible .lamp-mark::after { animation: lamp-shine 620ms ease-in-out; }
+    @media (hover: hover) {
+      .landing-brand:hover .lamp-mark::after { animation: lamp-shine 620ms ease-in-out; }
+    }
+  }
+}
+@keyframes lamp-shine {
+  from { background-position: 100% 0; opacity: 0; }
+  15%, 85% { opacity: 1; }
+  to { background-position: 0 0; opacity: 0; }
+}
 .landing-header nav { display: flex; gap: 28px; align-items: center; }
 .landing-header nav a { color: var(--site-text); font-size: .9375rem; }
 .landing-header nav a:hover { color: #fff; }
