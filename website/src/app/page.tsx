@@ -58,8 +58,8 @@ const featureCaptures = [
   },
   {
     name: "workspace-search", title: "Advanced search", width: 768, height: 640,
-    alt: "Workspace search shows the options for case, whole-word, regex, and path filters above highlighted matches.",
-    instruction: "Open search options to match case, whole words, or regular expressions. Use path filters to narrow the results.",
+    alt: "Note text search shows Case, Whole word, and Regex under Match, with File filters above the results.",
+    instruction: "Choose Filenames or Note text, then refine matches by case, whole word, or regular expression. Use File filters to include or exclude paths.",
   },
   {
     name: "focus-active-line", title: "Focus mode", width: 1520, height: 620, wide: true,
