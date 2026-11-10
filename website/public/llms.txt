@@ -6,14 +6,14 @@ diyalamp edits UTF-8 .md and .markdown files in place. The writing workspace inc
 
 ## Download and verify
 
-Version 1.3.9 has separate Apple silicon and Intel installers. Both include the runtime. These figures measure the compressed downloads in decimal MB.
+Version 1.4.0 has separate Apple silicon and Intel installers. Both include the runtime. These figures measure the compressed downloads in decimal MB.
 
-- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.9/diyalamp-1.3.9-macos-arm64.dmg), 42.3 MB (42,256,091 bytes)
-- [Apple silicon SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.9/diyalamp-1.3.9-macos-arm64.dmg.sha256)
-- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.3.9/diyalamp-1.3.9-macos-x86_64.dmg), 43.8 MB (43,782,726 bytes)
-- [Intel SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.3.9/diyalamp-1.3.9-macos-x86_64.dmg.sha256)
-- [Release notes](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.9)
-- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/v1.3.9/docs/install.md)
+- [Apple silicon DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.4.0/diyalamp-1.4.0-macos-arm64.dmg), 45.9 MB (45,912,139 bytes)
+- [Apple silicon SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.4.0/diyalamp-1.4.0-macos-arm64.dmg.sha256)
+- [Intel DMG](https://github.com/diyalamp/diyalamp/releases/download/v1.4.0/diyalamp-1.4.0-macos-x86_64.dmg), 47.5 MB (47,476,062 bytes)
+- [Intel SHA-256](https://github.com/diyalamp/diyalamp/releases/download/v1.4.0/diyalamp-1.4.0-macos-x86_64.dmg.sha256)
+- [Release notes](https://github.com/diyalamp/diyalamp/releases/tag/v1.4.0)
+- [Install and update guide](https://github.com/diyalamp/diyalamp/blob/v1.4.0/docs/install.md)
 
 The [1.3.4 downloads](https://github.com/diyalamp/diyalamp/releases/tag/v1.3.4) measured 48.2 MB (48,239,105 bytes) for Apple silicon and 49.6 MB (49,634,711 bytes) for Intel.
 
@@ -22,7 +22,7 @@ Open the DMG, drag diyalamp into Applications, and choose a folder. The app is a
 ## Desktop features
 
 - **Rendered Markdown:** Format text in the editor with headings, emphasis, links, lists, checklists, quotes, inline code, and code blocks. Open the block menu with a slash.
-- **Tabs and split view:** Reorder tabs and work with two notes side by side. Both sidebars are resizable.
+- **Tabs and split view:** Reorder tabs, edit notes side by side, or preview TXT, PDF, JPEG, PNG, GIF, and BMP beside Markdown. The app restores the last workspace’s tab order, selected documents, and split width. Both sidebars are resizable.
 - **Local files:** Notes stay in the folder you choose. Autosave checks whether the file changed on disk before writing. Restore deleted notes and folders from File → Deleted items.
 - **Workspace search:** Find filenames or note text, including unsaved edits. Use case, whole-word, regular-expression, and path filters.
 - **Connected notes:** Use wiki links or relative Markdown links. Navigate the active note’s incoming and outgoing links in the Connections panel.

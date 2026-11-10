@@ -32,7 +32,7 @@ const workflow = [
   },
   {
     icon: SplitSquareHorizontalIcon, title: "Write beside a reference",
-    text: "Drag another note into a second pane and keep both editors open. Rearrange tabs or move a note into another folder.",
+    text: "Preview a PDF, image, or text file beside your note. Reopen the app to return to your last tabs and split layout.",
   },
   {
     icon: GitForkIcon, title: "Follow a note’s connections",
@@ -57,7 +57,7 @@ const featureCaptures = [
     instruction: "Open the color menu to pick a preset or set a custom accent for the dark workspace.",
   },
   {
-    name: "workspace-search", title: "Advanced search", width: 832, height: 876, crop: true,
+    name: "workspace-search", title: "Advanced search", width: 768, height: 640,
     alt: "Workspace search shows the options for case, whole-word, regex, and path filters above highlighted matches.",
     instruction: "Open search options to match case, whole words, or regular expressions. Use path filters to narrow the results.",
   },
