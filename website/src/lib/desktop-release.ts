@@ -1,5 +1,6 @@
 /** Public desktop release and architecture-specific installers. */
 const version = '1.4.1';
+export const screenshotRevision = '1.4.1-r2';
 const source = 'https://github.com/diyalamp/diyalamp';
 const assets = `${source}/releases/download/v${version}`;
 
