@@ -8,7 +8,12 @@
 .alternatives-page .comparison-subtitle { color: var(--site-text); }
 .alternatives-page .comparison-kicker { font-size: .875rem; font-weight: 600; }
 .alternatives-page .comparison-lead { max-width: 66ch; margin-bottom: 20px; }
-.alternatives-page .comparison-section { padding-block: clamp(22px, 4vw, 40px); border-top: 1px solid var(--diya-line); }
+.alternatives-page .comparison-section {
+  margin-inline: calc(-1 * var(--site-gutter));
+  padding: clamp(22px, 4vw, 40px) var(--site-gutter);
+  border-top: 1px solid var(--diya-line);
+}
+.alternatives-page > .landing-footer { border-top: 1px solid var(--diya-line); }
 .alternatives-page .comparison-section h2 { margin: 0 0 16px; }
 .mac-download-table { width: 100%; margin-top: 16px; border-collapse: collapse; table-layout: fixed; }
 .mac-download-table :is(th, td) {

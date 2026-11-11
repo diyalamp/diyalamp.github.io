@@ -55,6 +55,7 @@
 
 :root {
   --site-width: 1200px;
+  --site-edge: clamp(8px, 1vw, 16px);
   --site-gutter: clamp(18px, 3.5vw, 44px);
   --diya-line: #ffffff26;
   --diya-radius: 10px;
@@ -84,7 +85,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .landing-brand { display: inline-flex; align-items: center; justify-self: start; gap: 8px; white-space: nowrap; font-weight: 600; }
 .lamp-mark { position: relative; display: inline-block; width: 1em; height: 1em; flex-shrink: 0; }
 .lamp-mark img { display: block; width: 100%; height: 100%; object-fit: contain; }
-.landing-brand .brand-lamp { width: 28px; height: 28px; flex-shrink: 0; }
+.landing-brand .brand-lamp { width: 32px; height: 32px; flex-shrink: 0; }
 @supports (mask-image: url("/lamp-mark.webp")) {
   @media (prefers-reduced-motion: no-preference) {
     .landing-brand .lamp-mark::after {
@@ -116,10 +117,21 @@ a:focus-visible, button:focus-visible, summary:focus-visible {
 .footer-socials svg { width: 16px; height: 16px; }
 .footer-socials a:hover { color: #fff; background: #ffffff0f; }
 .production-credit { color: var(--site-text); white-space: nowrap; }
-.production-credit img { display: inline-block; width: auto; height: 1cap; vertical-align: baseline; }
+.production-credit img {
+  display: inline-block;
+  width: auto;
+  /* The wordmark has 58 solid pixel rows in its 60-pixel canvas. */
+  height: calc(60 * 1cap / 58);
+  vertical-align: calc(-1cap / 58);
+}
 
 /* The landing uses the same dark surfaces as the desktop screenshots. */
-.simple-site { min-height: 100vh; }
+.simple-site, .alternatives-page {
+  width: min(calc(100% - var(--site-edge) - var(--site-edge)), var(--site-width));
+  min-height: 100vh;
+  margin-inline: auto;
+  border-inline: 1px solid var(--diya-line);
+}
 .simple-site main > section { border-bottom: 1px solid var(--diya-line); padding-block: clamp(34px, 5.2vw, 70px); }
 .simple-site main > .simple-hero {
   padding-block: clamp(30px, 3.8vw, 54px) clamp(34px, 5.2vw, 70px);

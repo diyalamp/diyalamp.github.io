@@ -5,7 +5,7 @@ import {
 import AppScreenshot from "@/components/app-screenshot";
 import LampMark from "@/components/lamp-mark";
 import SiteFooter from "@/components/site-footer";
-import { desktopRelease } from "@/lib/desktop-release";
+import { desktopRelease, screenshotRevision } from "@/lib/desktop-release";
 import { decimalMegabytes } from "@/lib/mac-downloads";
 
 const github = desktopRelease.source;
@@ -42,17 +42,17 @@ const workflow = [
 
 const featureCaptures = [
   {
-    name: "connections-hover", title: "Connections graph", width: 824, height: 1616, crop: true,
+    name: "connections-hover", title: "Connections graph", width: 818, height: 1616, crop: true,
     alt: "The Connections panel highlights the links and direction arrows for Composite Indexes.",
     instruction: "Open Connections for a note. Hover over a dot to see which notes link to it and where its links lead.",
   },
   {
-    name: "pomodoro-controls", title: "Pomodoro timer", width: 660, height: 792,
+    name: "pomodoro-controls", title: "Pomodoro timer", width: 660, height: 832,
     alt: "A running 25-minute focus timer with a five-minute break and Repeat selected.",
     instruction: "Open the timer in the toolbar. Set the focus and break lengths, then choose One cycle or Repeat.",
   },
   {
-    name: "accent-palette", title: "Accent colors", width: 612, height: 372,
+    name: "accent-palette", title: "Accent colors", width: 612, height: 416,
     alt: "The accent menu shows red, blue, yellow, green, white, and a custom color option.",
     instruction: "Open the color menu to pick a preset or set a custom accent for the dark workspace.",
   },
@@ -107,10 +107,10 @@ export default function Home() {
             <div className="hero-copy">
               <div>
                 <p className="simple-kicker"><span className="status-dot" aria-hidden="true" />Local Markdown editor for macOS</p>
-                <h1 id="hero-heading">Your commonplace book.</h1>
+                <h1 id="hero-heading">A commonplace book for steady practice.</h1>
               </div>
               <div className="hero-summary">
-                <p className="simple-intro">Collect what you read and learn in a folder of Markdown notes. Write with live formatting, search your notes, and follow connections between them.</p>
+                <p className="simple-intro">Keep the passages, ideas, and references you want to return to. Find connections between your notes and turn them into drafts in your own Markdown files.</p>
                 <ul className="hero-promises" aria-label="Price, license, and account">
                   <li>Free</li><li>Open source</li><li>No sign-up</li>
                 </ul>
@@ -158,7 +158,7 @@ export default function Home() {
             <h3 className="feature-gallery-title">A closer look at the editor.</h3>
             <div className="feature-gallery">
               {featureCaptures.map(({ name, title, width, height, crop, wide, alt, instruction }) => {
-                const src = `/screenshots/${name}.webp?v=${desktopRelease.version}`;
+                const src = `/screenshots/${name}.webp?v=${screenshotRevision}`;
                 return (
                   <figure key={name} className="feature-capture" data-wide={wide || undefined}>
                     <a className="feature-preview" data-crop={crop || undefined} href={src} aria-label={`View full-size screenshot. ${alt}`}>

@@ -1,4 +1,4 @@
-import { desktopRelease } from "@/lib/desktop-release";
+import { screenshotRevision } from "@/lib/desktop-release";
 
 const captures = {
   workspace: {
@@ -25,7 +25,7 @@ export default function AppScreenshot({
   const { src, sizes, alt } = captures[name];
   const width = 2882;
   const height = 1920;
-  const versioned = (url: string) => `${url}?v=${desktopRelease.version}`;
+  const versioned = (url: string) => `${url}?v=${screenshotRevision}`;
   const srcSet = [720, 1440].map((candidate) =>
     `${versioned(src.replace('.webp', `-${candidate}.webp`))} ${candidate}w`,
   );
