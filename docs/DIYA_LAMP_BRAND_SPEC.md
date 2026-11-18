@@ -58,7 +58,7 @@ Notebook navigation: panel-left sidebar toggle beside native window controls, an
 
 ## November 4 owner direction — authoritative current palette and release scope
 
-Use dark mode only in the website, browser prototype, and desktop app. The identity now uses JRXNA black #000000, white #FFFFFF, and red #EE0000. Writing areas and app demonstrations may use soothing dark gray surfaces. No light theme or appearance toggle. Preserve the fixed lamp artwork and current Inter typography. Use the approved JRXNA logotype in the footer credit, “A JRXNA production.”
+Use dark mode only in the website, browser prototype, and desktop app. The identity now uses JRXNA black #000000, white #FFFFFF, and red #EE0000. Writing areas and app demonstrations may use soothing dark gray surfaces. No light theme or appearance toggle. Preserve the fixed lamp artwork and current Inter typography.
 
 Lead with technical product facts: Markdown editor for macOS, live formatting, local .md files, no sign-up, tabs, and split view. Java is a contributor attribute, not the main pitch. Never claim a sub-10 MB installed footprint without measurement. Current bundled package measurements are materially larger.
 

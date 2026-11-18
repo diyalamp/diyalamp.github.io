@@ -42,27 +42,27 @@ const workflow = [
 
 const featureCaptures = [
   {
-    name: "connections-hover", title: "Connections graph", width: 818, height: 1616, crop: true,
+    name: "connections-hover", title: "Connections graph", width: 648, height: 1736, crop: true,
     alt: "The Connections panel highlights the links and direction arrows for Composite Indexes.",
     instruction: "Open Connections for a note. Hover over a dot to see which notes link to it and where its links lead.",
   },
   {
-    name: "pomodoro-controls", title: "Pomodoro timer", width: 660, height: 832,
+    name: "pomodoro-controls", title: "Pomodoro timer", width: 660, height: 792,
     alt: "A running 25-minute focus timer with a five-minute break and Repeat selected.",
     instruction: "Open the timer in the toolbar. Set the focus and break lengths, then choose One cycle or Repeat.",
   },
   {
-    name: "accent-palette", title: "Accent colors", width: 612, height: 416,
-    alt: "The accent menu shows red, blue, yellow, green, white, and a custom color option.",
-    instruction: "Open the color menu to pick a preset or set a custom accent for the dark workspace.",
+    name: "accent-palette", title: "Accent colors", width: 612, height: 576,
+    alt: "Five earthy accent colors appear in one column, with a custom color option below.",
+    instruction: "Open the color menu to pick a preset or set a custom accent for the workspace.",
   },
   {
-    name: "workspace-search", title: "Advanced search", width: 768, height: 640,
+    name: "workspace-search", title: "Advanced search", width: 616, height: 708,
     alt: "Note text search shows Case, Whole word, and Regex under Match, with File filters above the results.",
     instruction: "Choose Filenames or Note text, then refine matches by case, whole word, or regular expression. Use File filters to include or exclude paths.",
   },
   {
-    name: "focus-active-line", title: "Focus mode", width: 1520, height: 620, wide: true,
+    name: "focus-active-line", title: "Focus mode", width: 1126, height: 430, wide: true,
     alt: "The current line remains bright while the surrounding heading and code are dimmed.",
     instruction: "Turn on Focus in the toolbar to keep the current line bright while the rest of the note fades.",
   },
@@ -124,7 +124,7 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-image" id="workspace">
-              <AppScreenshot name="workspace" priority caption="Database Indexes with four incoming and five outgoing links" />
+              <AppScreenshot name="workspace" priority caption="Database Indexes with 10 incoming and 11 outgoing links" />
             </div>
           </div>
         </section>
@@ -137,7 +137,7 @@ export default function Home() {
                 <h2 id="feature-heading" className="marketing-heading">Keep your sources in view.</h2>
               </div>
               <a className="simple-text-link" href="/downloads/database-systems-demo.zip" download>
-                <DownloadIcon aria-hidden="true" />Download the sample notes (ZIP)
+                <DownloadIcon aria-hidden="true" />Download the starter notes (ZIP)
               </a>
             </div>
             <div className="workflow-layout">
