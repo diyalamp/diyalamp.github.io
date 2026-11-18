@@ -1,12 +1,12 @@
 .alternatives-page .comparison-content { width: min(100%, var(--site-width)); }
 .alternatives-page .comparison-header-link { display: inline-flex; align-items: center; gap: 8px; color: var(--site-text); font-size: .9375rem; }
-.alternatives-page a:focus-visible { outline: 2px solid #ff7474; outline-offset: 3px; }
+.alternatives-page .comparison-header-link:hover { color: var(--fired-clay-deep); }
+.alternatives-page > .comparison-main { background: var(--lamp-light) top / 100% 520px no-repeat; }
 .alternatives-page .comparison-hero { padding-block: clamp(8px, 2vw, 32px) clamp(24px, 4vw, 44px); }
 .alternatives-page .comparison-hero h1 { max-width: 23ch; }
-.alternatives-page .comparison-kicker,
 .alternatives-page .comparison-lead,
 .alternatives-page .comparison-subtitle { color: var(--site-text); }
-.alternatives-page .comparison-kicker { font-size: .875rem; font-weight: 600; }
+.alternatives-page .comparison-kicker { color: var(--fired-clay-deep); font-size: .875rem; font-weight: 600; }
 .alternatives-page .comparison-lead { max-width: 66ch; margin-bottom: 20px; }
 .alternatives-page .comparison-section {
   margin-inline: calc(-1 * var(--site-gutter));
@@ -23,8 +23,9 @@
   text-align: left;
   overflow-wrap: anywhere;
 }
-.mac-download-table thead { border-top: 1px solid var(--diya-line); }
+.mac-download-table thead { border-top: 1px solid var(--diya-line); background: var(--paper-warm); }
 .mac-download-table th:first-child { width: 20%; padding-left: 0; }
+.mac-download-table thead th:first-child { padding-left: clamp(5px, 1.5vw, 16px); }
 .mac-download-table th:nth-child(2) { width: 32%; }
 .mac-download-table span { display: block; color: var(--site-text); }
 .mac-download-table strong { white-space: nowrap; }
@@ -47,7 +48,7 @@
   padding: clamp(14px, 2.5vw, 22px);
   border: 1px solid var(--diya-line);
   border-radius: var(--diya-radius);
-  background: #111213;
+  background: var(--ivory);
 }
 .alternatives-page .comparison-matrix-title {
   display: inline-flex;
@@ -57,7 +58,7 @@
   font-weight: 650;
   text-decoration: none;
 }
-.alternatives-page .comparison-matrix-title svg { flex-shrink: 0; color: #ff7474; }
+.alternatives-page .comparison-matrix-title svg { flex-shrink: 0; color: var(--fired-clay); }
 .alternatives-page .comparison-matrix dl { padding-top: 12px; border-top: 1px solid var(--diya-line); }
 .alternatives-page .comparison-matrix dt { font-size: .875rem; font-weight: 650; }
 .alternatives-page .comparison-matrix dd,

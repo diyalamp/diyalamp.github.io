@@ -76,6 +76,10 @@ The shared toolbar includes a moon control for Focus mode and a live Pomodoro co
 
 The website's shared desktop-release module contains the public version and measured Apple silicon and Intel DMG sizes. Publish changes to these fields once both matching release assets are public. In-app update checks are explicit under Help; checking does not download or install an update. Installation follows a user-selected verified download and a save check, and save conflicts prevent restart. This community release is ad hoc signed and not Apple-notarized.
 
-Keep the **website dark** with Inter and the JRXNA palette. Use screenshots of the actual desktop app with fictional notes. Preserve the approved lamp geometry.
+Use Inter and screenshots of the actual desktop app with fictional notes. Preserve the approved lamp geometry.
 
 Use the verified byte counts for each published release asset. The under-5-MB installed target remains unachieved. The shared desktop-release module records DMG download sizes. Button labels use decimal MB. The FAQ and product facts include exact download bytes and distinguish them from installed size.
+
+## November 18 website palette
+
+The homepage and comparisons use warm paper (`#FAF8F5`) and warm ink (`#302B26`). Fired Clay (`#A84230`) is the primary action color. Apricot Flame, Honey Gold, Clay Rose, and Wick Ash support the palette. Use the fixed ivory lamp artwork for the shared header and footer mark, favicon, and social card. Keep screenshots faithful to the public release.

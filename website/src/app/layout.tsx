@@ -11,9 +11,9 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const socialCard = `/social-card.png?v=${desktopRelease.version}-commonplace`;
+const socialCard = `/social-card.png?v=${desktopRelease.version}-lamplight`;
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
-const socialTitle = 'Your commonplace book | diyalamp';
+const socialTitle = 'A commonplace book for steady practice | diyalamp';
 const description =
   'Write with live Markdown formatting, search your notes, and open a reference beside your draft. Free and open source for Mac, with no account required.';
 const license = 'https://www.apache.org/licenses/LICENSE-2.0';
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     canonical: '/',
     types: { 'text/plain': [{ url: '/llms.txt', title: 'diyalamp product facts' }] },
   },
-  icons: { icon: { url: '/lamp-icon.png?v=dock', type: 'image/png', sizes: '64x64' } },
+  icons: { icon: { url: '/lamp-icon.png?v=ivory', type: 'image/png', sizes: '64x64' } },
   openGraph: {
     type: 'website',
     siteName: 'diyalamp',
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: socialTitle, description, images: [socialCard] },
 };
 
-export const viewport: Viewport = { colorScheme: 'dark', themeColor: '#000000' };
+export const viewport: Viewport = { colorScheme: 'light', themeColor: '#FAF8F5' };
 
 const project = { '@id': `${siteUrl}/#project` };
 
@@ -101,7 +101,7 @@ const productData = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable}`}>
+    <html lang="en" className={inter.variable}>
       <body>
         <script
           type="application/ld+json"
