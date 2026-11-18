@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import { desktopRelease } from '@/lib/desktop-release';
+import { desktopRelease, screenshotRevision } from '@/lib/desktop-release';
 import './globals.css';
 
 const inter = localFont({
@@ -11,7 +11,7 @@ const inter = localFont({
 });
 
 const siteUrl = 'https://diyalamp.com';
-const socialCard = `/social-card.png?v=${desktopRelease.version}-lamplight`;
+const socialCard = `/social-card.png?v=${screenshotRevision}`;
 const title = 'diyalamp | Free, Open-Source Markdown Editor for Mac';
 const socialTitle = 'A commonplace book for steady practice | diyalamp';
 const description =

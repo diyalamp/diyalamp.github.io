@@ -1,4 +1,4 @@
-import { screenshotRevision } from "@/lib/desktop-release";
+import { desktopRelease, screenshotRevision, screenshotVersion } from "@/lib/desktop-release";
 
 const captures = {
   workspace: {
@@ -23,7 +23,7 @@ export default function AppScreenshot({
   priority?: boolean;
 }) {
   const { src, sizes, alt } = captures[name];
-  const width = 2882;
+  const width = 2884;
   const height = 1920;
   const versioned = (url: string) => `${url}?v=${screenshotRevision}`;
   const srcSet = [720, 1440].map((candidate) =>
@@ -45,7 +45,10 @@ export default function AppScreenshot({
           fetchPriority={priority ? "high" : undefined}
         />
       </a>
-      <figcaption>{caption}<span aria-hidden="true">View full size ↗</span></figcaption>
+      <figcaption>
+        <span>{desktopRelease.version !== screenshotVersion ? `Version ${screenshotVersion} preview · ` : ""}{caption}</span>
+        <span aria-hidden="true">View full size ↗</span>
+      </figcaption>
     </figure>
   );
 }
