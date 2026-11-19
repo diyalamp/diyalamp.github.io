@@ -74,7 +74,7 @@ The resizable folder explorer shows Markdown extensions and subfolders. Note row
 
 The shared toolbar includes a moon control for Focus mode and a live Pomodoro countdown. Focus fades text around the current caret line and dims the workspace chrome and inactive split pane while keeping the controls usable. Accent and Pomodoro share compact, rounded AtlantaFX dropdowns that slide and fade. Selecting an accent keeps each option the same width. The timer supports editable Focus and Break lengths, One cycle and Repeat modes, and Start, Pause, Resume, and Reset.
 
-The website's shared desktop-release module contains the public version and measured Apple silicon and Intel DMG sizes. Publish changes to these fields once both matching release assets are public. In-app update checks are explicit under Help; checking does not download or install an update. Installation follows a user-selected verified download and a save check, and save conflicts prevent restart. This community release is ad hoc signed and not Apple-notarized.
+The website's shared desktop-release module contains the public version and measured Apple silicon and Intel DMG sizes. Publish changes to these fields once both matching release assets are public. In-app update checks are explicit under Help; checking does not download or install an update. Installation follows a user-selected verified download and a save check, and save conflicts prevent restart. Version 1.4.2 has Developer ID signed installers notarized by Apple, with stapled notarization tickets.
 
 Use Inter and screenshots of the actual desktop app with fictional notes. Preserve the approved lamp geometry.
 
