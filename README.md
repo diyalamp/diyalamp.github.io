@@ -8,9 +8,9 @@ This repository hosts [diyalamp.com](https://diyalamp.com/). The website retains
 
 The production source is `website/`: Next.js, React, Tailwind CSS, Radix/shadcn-style controls, and Tiptap. The presentation is static and component-led; decorative particles, animated illustrations, and scroll reveals have been removed. The site uses the textured lamp mark, self-hosted Inter, warm paper, and terracotta accents drawn from the app icon. The screenshots use the desktop app with fictional sample notes.
 
-![DiyaLamp 1.4.2 preview showing the light Markdown editor and linked notes](website/public/screenshots/workspace.webp?v=1.4.2-light)
+![DiyaLamp 1.4.2 showing the light Markdown editor and linked notes](website/public/screenshots/workspace.webp?v=1.4.2-light)
 
-DiyaLamp uses JavaFX, AtlantaFX, and RichTextFX. The 1.4.2 preview adds a warm light workspace, lamp-inspired accents, and continuous PDF scrolling. Focus mode uses a black surface and keeps the current line bright. The website shows the preview alongside the current public Mac downloads.
+DiyaLamp uses JavaFX, AtlantaFX, and RichTextFX. Version 1.4.2 adds a warm light workspace, lamp-inspired accents, and continuous PDF scrolling. Focus mode uses a black surface and keeps the current line bright.
 
 Desktop release links are centralized in `website/src/lib/desktop-release.ts`. Keep them aligned with the published assets before deploying. Do not reuse old installer-size figures; current GitHub release assets provide actual sizes and checksums. The under-5-MB installed target is not achieved.
 
